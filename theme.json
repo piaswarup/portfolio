@@ -1,0 +1,47 @@
+{
+  "_instructions": "Edit this file to change the visual appearance of the website. Save and refresh your browser to see changes.",
+
+  "colors": {
+    "_note": "Use hex (#rrggbb) or rgba(r, g, b, alpha) format. alpha is 0.0 (transparent) to 1.0 (solid).",
+    "background":          "#22356e",
+    "backgroundDarker":    "#1a2d63",
+    "textPrimary":         "#ffffff",
+    "textSecondary":       "#8faad4",
+    "textMuted":           "#5c7db5",
+    "cardBackground":      "rgba(255, 255, 255, 0.05)",
+    "cardBackgroundHover": "rgba(255, 255, 255, 0.09)",
+    "border":              "rgba(255, 255, 255, 0.10)",
+    "borderHover":         "rgba(255, 255, 255, 0.25)"
+  },
+
+  "typography": {
+    "_note": "fontFamily: list fonts in order of preference. The site uses Inter by default. To use CoFo Sans, add the font files to assets/fonts/, uncomment @font-face in styles.css, and put 'CoFo Sans' first here.",
+    "fontFamily":   "'Inter', 'Helvetica Neue', Arial, sans-serif",
+    "baseFontSize": "16px"
+  },
+
+  "sections": {
+    "_note": "Width of each horizontal section in vw units (1vw = 1% of screen width). Rule to avoid sections bleeding into each other: width >= (numberOfEntries - 1) * entryWidth + 100vw. Only change these if you add/remove entries.",
+    "hero":        "100vw",
+    "nav":         "100vw",
+    "experience":  "190vw",
+    "projects":    "280vw",
+    "leadership":  "180vw",
+    "hobbies":     "130vw",
+    "contact":     "100vw"
+  },
+
+  "spacing": {
+    "_note": "sectionPadding: horizontal breathing room inside each section. portraitHeight: height of the portrait photo (e.g. '33vh' = 1/3 screen, '50vh' = half screen, '280px' = fixed pixels).",
+    "sectionPadding": "6vw",
+    "portraitHeight": "50vh"
+  },
+
+  "scroll": {
+    "_note": "wheelMultiplier: scroll speed (1.0 = normal, 2.0 = fast). easing: glide smoothness — lower is slower/silkier (0.05), higher is snappier (0.15). snapDelay: milliseconds of stillness before snap fires. snapCommit: fraction of a segment you must cross before it advances you forward (0.0–0.5, default 0.15 = 15%).",
+    "wheelMultiplier": 1.2,
+    "easing":          0.072,
+    "snapDelay":       500,
+    "snapCommit":      0.15
+  }
+}

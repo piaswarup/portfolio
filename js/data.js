@@ -1,0 +1,228 @@
+// ============================================================
+// PORTFOLIO DATA — edit this file to update all content
+// Replace every [PLACEHOLDER] with your real information
+// ============================================================
+
+export const personal = {
+  name: "[YOUR NAME]",
+  major: "[YOUR ENGINEERING MAJOR]",
+  college: "[YOUR COLLEGE / UNIVERSITY]",
+  tagline: "[ONE-LINE DESCRIPTION, e.g. 'Mechanical & Electrical Engineer']",
+  interests: [
+    "[INTEREST 1]",
+    "[INTEREST 2]",
+    "[INTEREST 3]",
+    "[INTEREST 4]",
+  ],
+  portrait: "./assets/images/portrait.jpg",  // replace with your image
+  closingMessage: "[YOUR CLOSING MESSAGE, e.g. 'Let's build something great together.']",
+};
+
+export const contact = {
+  email: "[YOUR EMAIL]",
+  linkedin: "[YOUR LINKEDIN URL]",
+  github: "[YOUR GITHUB URL]",
+  instagram: "[YOUR INSTAGRAM URL]",
+  resume: "[YOUR RESUME URL]",
+};
+
+// ── EXPERIENCE ────────────────────────────────────────────────
+// Add as many entries as you need. Set hasModel: true to show
+// an interactive 3D placeholder in the right column.
+export const experience = [
+  {
+    id: "exp-1",
+    company: "[COMPANY NAME]",
+    position: "[YOUR POSITION / TITLE]",
+    dates: "[START DATE] – [END DATE]",
+    location: "[CITY, STATE / COUNTRY]",
+    description:
+      "[Brief 1–2 sentence description of the company and what you did there. Focus on impact.]",
+    responsibilities: [
+      "[Key responsibility or achievement — lead with a strong verb]",
+      "[Key responsibility or achievement]",
+      "[Key responsibility or achievement]",
+      "[Key responsibility or achievement]",
+    ],
+    technologies: ["[TOOL 1]", "[TOOL 2]", "[TOOL 3]", "[TOOL 4]"],
+    visual: {
+      type: "model",       // "model" | "image" | "none"
+      modelShape: "gear",  // "gear" | "icosahedron" | "torus" | "cube"
+      image: null,
+      caption: "[VISUAL CAPTION, e.g. 'Prototype CAD model']",
+    },
+  },
+  {
+    id: "exp-2",
+    company: "[COMPANY NAME]",
+    position: "[YOUR POSITION / TITLE]",
+    dates: "[START DATE] – [END DATE]",
+    location: "[CITY, STATE / COUNTRY]",
+    description:
+      "[Brief 1–2 sentence description of the company and what you did there.]",
+    responsibilities: [
+      "[Key responsibility or achievement]",
+      "[Key responsibility or achievement]",
+      "[Key responsibility or achievement]",
+    ],
+    technologies: ["[TOOL 1]", "[TOOL 2]", "[TOOL 3]"],
+    visual: {
+      type: "model",
+      modelShape: "icosahedron",
+      image: null,
+      caption: "[VISUAL CAPTION]",
+    },
+  },
+];
+
+// ── PROJECTS ──────────────────────────────────────────────────
+export const projects = [
+  {
+    id: "proj-1",
+    name: "[PROJECT NAME]",
+    tagline: "[ONE-LINE PROJECT DESCRIPTION]",
+    description:
+      "[2–3 sentences describing the project, the problem it solves, and your approach.]",
+    role: "[YOUR ROLE, e.g. 'Lead Mechanical Designer']",
+    dates: "[DATE RANGE]",
+    technologies: ["[TECH 1]", "[TECH 2]", "[TECH 3]"],
+    achievements: [
+      "[Key result or achievement — be specific with numbers if possible]",
+      "[Key result or achievement]",
+    ],
+    githubUrl: "[GITHUB URL]",         // set to null to hide
+    liveUrl: null,
+    visual: {
+      type: "model",
+      modelShape: "torus",
+      image: null,
+    },
+  },
+  {
+    id: "proj-2",
+    name: "[PROJECT NAME]",
+    tagline: "[ONE-LINE PROJECT DESCRIPTION]",
+    description:
+      "[2–3 sentences describing the project.]",
+    role: "[YOUR ROLE]",
+    dates: "[DATE RANGE]",
+    technologies: ["[TECH 1]", "[TECH 2]"],
+    achievements: [
+      "[Key result or achievement]",
+      "[Key result or achievement]",
+    ],
+    githubUrl: null,
+    liveUrl: null,
+    visual: {
+      type: "image",
+      modelShape: null,
+      image: "./assets/images/project-2.jpg",  // replace with your image
+    },
+  },
+  {
+    id: "proj-3",
+    name: "[PROJECT NAME]",
+    tagline: "[ONE-LINE PROJECT DESCRIPTION]",
+    description:
+      "[2–3 sentences describing the project.]",
+    role: "[YOUR ROLE]",
+    dates: "[DATE RANGE]",
+    technologies: ["[TECH 1]", "[TECH 2]", "[TECH 3]"],
+    achievements: [
+      "[Key result or achievement]",
+      "[Key result or achievement]",
+    ],
+    githubUrl: "[GITHUB URL]",
+    liveUrl: null,
+    visual: {
+      type: "model",
+      modelShape: "cube",
+      image: null,
+    },
+  },
+  {
+    id: "proj-4",
+    name: "[PROJECT NAME]",
+    tagline: "[ONE-LINE PROJECT DESCRIPTION]",
+    description:
+      "[2–3 sentences describing the project.]",
+    role: "[YOUR ROLE]",
+    dates: "[DATE RANGE]",
+    technologies: ["[TECH 1]", "[TECH 2]"],
+    achievements: [
+      "[Key result or achievement]",
+    ],
+    githubUrl: null,
+    liveUrl: null,
+    visual: {
+      type: "model",
+      modelShape: "icosahedron",
+      image: null,
+    },
+  },
+];
+
+// ── ENTREPRENEURSHIP / LEADERSHIP ────────────────────────────
+export const leadership = [
+  {
+    id: "lead-1",
+    organization: "[ORGANIZATION / COMPANY / CLUB NAME]",
+    position: "[YOUR ROLE / TITLE]",
+    dates: "[DATE RANGE]",
+    description:
+      "[What this organization does and what your role involved.]",
+    impact: [
+      "[Measurable impact or achievement]",
+      "[Measurable impact or achievement]",
+      "[Measurable impact or achievement]",
+    ],
+    skills: ["[SKILL 1]", "[SKILL 2]", "[SKILL 3]"],
+    image: null,
+  },
+  {
+    id: "lead-2",
+    organization: "[ORGANIZATION / COMPANY / CLUB NAME]",
+    position: "[YOUR ROLE / TITLE]",
+    dates: "[DATE RANGE]",
+    description:
+      "[What this organization does and what your role involved.]",
+    impact: [
+      "[Measurable impact or achievement]",
+      "[Measurable impact or achievement]",
+    ],
+    skills: ["[SKILL 1]", "[SKILL 2]"],
+    image: null,
+  },
+];
+
+// ── HOBBIES ───────────────────────────────────────────────────
+export const hobbies = [
+  {
+    id: "hobby-1",
+    title: "[HOBBY / INTEREST TITLE]",
+    description: "[1–2 sentences about this hobby and what it means to you.]",
+    image: null,
+    icon: "camera",   // "camera" | "map" | "music" | "book" | "activity" | "code" | "compass"
+  },
+  {
+    id: "hobby-2",
+    title: "[HOBBY / INTEREST TITLE]",
+    description: "[1–2 sentences about this hobby.]",
+    image: null,
+    icon: "map",
+  },
+  {
+    id: "hobby-3",
+    title: "[HOBBY / INTEREST TITLE]",
+    description: "[1–2 sentences about this hobby.]",
+    image: null,
+    icon: "activity",
+  },
+  {
+    id: "hobby-4",
+    title: "[HOBBY / INTEREST TITLE]",
+    description: "[1–2 sentences about this hobby.]",
+    image: null,
+    icon: "music",
+  },
+];

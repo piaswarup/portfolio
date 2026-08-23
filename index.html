@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pia Swarup Portfolio</title>
+  <meta name="description" content="Pia Swarup — Mechanical Engineer at Olin College of Engineering">
+
+  <!-- ── Fonts ── -->
+  <!--
+    CoFo Sans: add your licensed font files to assets/fonts/
+    and uncomment the @font-face rules in css/styles.css.
+    The fallback stack (Inter → Helvetica Neue → Arial) is active by default.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Using Inter as CoFo Sans fallback until you add the font files -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Temporarily override --font to use Inter until CoFo Sans is added -->
+  <style>
+    :root { --font: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+  </style>
+
+  <!-- ── Three.js (global) ── -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.min.js"></script>
+
+  <!-- ── Styles ── -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ════════════════════════════════════════════════════
+       HORIZONTAL SCROLL TRACK
+       All sections live side-by-side inside this element.
+       JS applies transform: translate3d(-Xpx, 0, 0) to it.
+       ════════════════════════════════════════════════════ -->
+  <div id="scroll-track">
+
+    <!-- HERO ──────────────────────────────────────────── -->
+    <section class="section section--hero" id="section-hero" aria-label="Introduction">
+      <!-- populated by renderer.js -->
+    </section>
+
+    <!-- NAVIGATION ─────────────────────────────────────── -->
+    <section class="section section--nav" id="section-nav" aria-label="Navigation">
+      <!-- populated by renderer.js -->
+    </section>
+
+    <!-- EXPERIENCE ─────────────────────────────────────── -->
+    <section class="section section--experience" id="section-experience" aria-label="Experience">
+      <!-- populated by renderer.js -->
+    </section>
+
+    <!-- PROJECTS ───────────────────────────────────────── -->
+    <section class="section section--projects" id="section-projects" aria-label="Projects">
+      <!-- populated by renderer.js -->
+    </section>
+
+    <!-- LEADERSHIP ─────────────────────────────────────── -->
+    <section class="section section--leadership" id="section-leadership" aria-label="Entrepreneurship and Leadership">
+      <!-- populated by renderer.js -->
+    </section>
+
+    <!-- HOBBIES ────────────────────────────────────────── -->
+    <section class="section section--hobbies" id="section-hobbies" aria-label="Hobbies and Other">
+      <!-- populated by renderer.js -->
+    </section>
+
+    <!-- CONTACT ────────────────────────────────────────── -->
+    <section class="section section--contact" id="section-contact" aria-label="Contact">
+      <!-- populated by renderer.js -->
+    </section>
+
+  </div><!-- /scroll-track -->
+
+  <!-- ── Progress indicator ── -->
+  <div id="progress-bar" role="progressbar" aria-label="Portfolio scroll progress">
+    <div id="progress-fill"></div>
+  </div>
+
+  <!-- ── Section nav (top-right) ── -->
+  <nav id="section-label" aria-label="Portfolio sections"></nav>
+
+  <!-- ── Scroll hint ── -->
+  <div id="scroll-hint" aria-hidden="true">
+    <span>Scroll to explore</span>
+    <span class="scroll-hint-arrow"></span>
+  </div>
+
+</div><!-- /app -->
+
+<!-- ── Main module (ES module — requires serving over HTTP or a local server) ── -->
+<!--
+  IMPORTANT: ES modules do not load from file:// in all browsers.
+  To view the portfolio locally, use one of these options:
+
+  Option A (recommended): Python (no install needed on most systems)
+    python -m http.server 3000
+    then open http://localhost:3000
+
+  Option B: Node.js
+    npx serve .
+    or: npx http-server .
+
+  Option C: VS Code — install the "Live Server" extension, right-click
+    index.html → "Open with Live Server"
+
+  Option D (Windows): drag index.html into Chrome.
+    Three.js and animations will work, but data imports may fail in Chrome
+    on Windows from file://. Use a local server for best results.
+-->
+<script type="module" src="js/main.js"></script>
+
+</body>
+</html>
