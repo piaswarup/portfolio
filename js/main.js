@@ -59,6 +59,31 @@ function applyTheme(theme) {
   set('--portrait-height',  sp.portraitHeight);
 }
 
+// ── Auto-fit horizontally-scrolling section widths to their actual
+//    content, so the layout self-adjusts as entries are added to or
+//    removed from content.json instead of relying on a hand-tuned
+//    vw width in theme.json. ─────────────────────────────────────
+function fitSectionWidth(sectionId, innerSelector, entrySelector, cssVar) {
+  const section = document.getElementById(sectionId);
+  const inner   = section?.querySelector(innerSelector);
+  const entries = inner?.querySelectorAll(entrySelector);
+  if (!entries || !entries.length) return;
+
+  const last       = entries[entries.length - 1];
+  const innerLeft  = inner.getBoundingClientRect().left;
+  const lastRight  = last.getBoundingClientRect().right;
+  const neededVw   = Math.ceil(((lastRight - innerLeft) / window.innerWidth) * 100);
+
+  document.documentElement.style.setProperty(cssVar, `${neededVw}vw`);
+}
+
+function fitAllSectionWidths() {
+  if (window.innerWidth <= 768) return; // mobile layout stacks vertically instead
+  fitSectionWidth('section-experience', '.exp-inner',        '.exp-entry',  '--w-experience');
+  fitSectionWidth('section-projects',   '.projects-inner',   '.proj-card',  '--w-projects');
+  fitSectionWidth('section-leadership', '.leadership-inner', '.lead-entry', '--w-leadership');
+}
+
 // ── Build the list of snap points (sections + sub-entries) ─────
 function collectSnapPoints() {
   const points = new Set();
@@ -164,20 +189,27 @@ async function init() {
     });
   });
 
-  // Register snap points after layout
+  // Fit section widths to actual content, then register snap points
   requestAnimationFrame(() => {
+    fitAllSectionWidths();
+    scroller.resize();
     scroller.setSnapPoints(collectSnapPoints());
     anim.tick(0);
   });
 
   window.addEventListener('resize', () => {
+    fitAllSectionWidths();
+    scroller.resize();
     scroller.setSnapPoints(collectSnapPoints());
   });
 
   // ── 3D Models ────────────────────────────────────────────────
   setTimeout(() => {
     document.querySelectorAll('canvas[data-model]').forEach(canvas => {
-      createModel(canvas, canvas.getAttribute('data-model') || 'icosahedron', scroller);
+      createModel(canvas, {
+        shape:     canvas.dataset.model || 'icosahedron',
+        modelPath: canvas.dataset.modelPath || null,
+      }, scroller);
     });
   }, 80);
 

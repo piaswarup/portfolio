@@ -21,7 +21,7 @@
   },
 
   "sections": {
-    "_note": "Width of each horizontal section in vw units (1vw = 1% of screen width). Rule to avoid sections bleeding into each other: width >= (numberOfEntries - 1) * entryWidth + 100vw. Only change these if you add/remove entries.",
+    "_note": "Width of each horizontal section in vw units (1vw = 1% of screen width). experience/projects/leadership are auto-measured from content.json at load time (js/main.js fitAllSectionWidths) and will resize themselves as you add or remove entries — the values below are just the initial fallback shown for a split second before that runs. hero/nav/hobbies/contact are not auto-sized and can be tuned here.",
     "hero":        "100vw",
     "nav":         "100vw",
     "experience":  "190vw",

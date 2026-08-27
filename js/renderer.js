@@ -125,7 +125,7 @@ export function renderExperience(el, experience) {
           <div class="exp-visual" data-reveal="scale" data-delay="2">
             ${job.visual.type === 'model'
               ? `<div class="exp-canvas-wrap">
-                   <canvas data-model="${job.visual.modelShape}" aria-label="Interactive 3D model placeholder"></canvas>
+                   <canvas data-model="${job.visual.modelShape}" ${job.visual.modelPath ? `data-model-path="${job.visual.modelPath}"` : ''} aria-label="Interactive 3D model"></canvas>
                  </div>
                  <p class="visual-caption"><em>Interactive model</em> — ${job.visual.caption}</p>`
               : job.visual.type === 'image' && job.visual.image
@@ -153,7 +153,7 @@ export function renderProjects(el, projects) {
           <div class="proj-visual" data-reveal="scale" data-delay="1">
             ${proj.visual.type === 'model'
               ? `<div class="proj-canvas-wrap">
-                   <canvas data-model="${proj.visual.modelShape}" aria-label="Interactive 3D model"></canvas>
+                   <canvas data-model="${proj.visual.modelShape}" ${proj.visual.modelPath ? `data-model-path="${proj.visual.modelPath}"` : ''} aria-label="Interactive 3D model"></canvas>
                  </div>`
               : `<div class="proj-image-wrap">${imgOrPlaceholder(proj.visual.image, proj.name)}</div>`
             }
@@ -162,8 +162,8 @@ export function renderProjects(el, projects) {
             <p class="proj-number" data-reveal="up" data-delay="1">Project ${String(i + 1).padStart(2, '0')}</p>
             <h2 class="proj-name" data-reveal="up" data-delay="2">${proj.name}</h2>
             <p class="proj-tagline" data-reveal="up" data-delay="2">${proj.tagline}</p>
-            <p class="proj-description" data-reveal="up" data-delay="3">${proj.description}</p>
             <p class="proj-role-line" data-reveal="up" data-delay="3">${proj.role} &nbsp;·&nbsp; ${proj.dates}</p>
+            <p class="proj-description" data-reveal="up" data-delay="3">${proj.description}</p>
             <ul class="proj-achievements" data-reveal="up" data-delay="4">
               ${proj.achievements.map(a => `<li>${a}</li>`).join('')}
             </ul>

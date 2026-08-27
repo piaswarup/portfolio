@@ -1,7 +1,13 @@
 // ============================================================
-// Three.js Placeholder 3D Models
-// Requires THREE to be loaded as a global (via <script> tag)
+// Three.js 3D Models — procedural wireframe placeholders, and
+// real GLTF/GLB models (e.g. exported from CAD) when a modelPath
+// is provided.
 // ============================================================
+
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const gltfLoader = new GLTFLoader();
 
 const COLORS = {
   wireframe:  0xffffff,
@@ -11,9 +17,6 @@ const COLORS = {
 };
 
 function buildScene(canvas, scroller) {
-  if (!window.THREE) return null;
-  const THREE = window.THREE;
-
   const w = canvas.clientWidth  || canvas.offsetWidth  || 300;
   const h = canvas.clientHeight || canvas.offsetHeight || 200;
 
@@ -151,30 +154,104 @@ function attachDrag(canvas, meshes, scroller) {
   };
 }
 
+// ── Loaded GLTF/GLB models ───────────────────────────────────
+
+// Centers and scales a loaded model to roughly match the footprint
+// of the procedural placeholder shapes (radius ~1), so lighting,
+// camera distance, and drag/rotate speed all feel consistent.
+function fitModelToView(THREE, root) {
+  const box = new THREE.Box3().setFromObject(root);
+  const size   = new THREE.Vector3();
+  const center = new THREE.Vector3();
+  box.getSize(size);
+  box.getCenter(center);
+
+  root.position.sub(center);
+  const maxDim = Math.max(size.x, size.y, size.z) || 1;
+  root.scale.setScalar(1.8 / maxDim);
+}
+
+function disposeObject3D(root) {
+  root.traverse(node => {
+    if (node.geometry) node.geometry.dispose();
+    if (node.material) {
+      const mats = Array.isArray(node.material) ? node.material : [node.material];
+      mats.forEach(mat => {
+        Object.values(mat).forEach(v => v?.isTexture && v.dispose());
+        mat.dispose();
+      });
+    }
+  });
+}
+
 // ── Public factory ───────────────────────────────────────────
 
-export function createModel(canvas, shape, scroller) {
+export function createModel(canvas, opts, scroller) {
+  const { shape = 'icosahedron', modelPath = null } =
+    typeof opts === 'string' ? { shape: opts } : (opts || {});
+
   const ctx = buildScene(canvas, scroller);
   if (!ctx) return;
 
   const { THREE, renderer, scene, camera, ro } = ctx;
-  const geometry = buildGeometry(THREE, shape);
-  const { wire, inner } = addWireframe(THREE, scene, geometry);
+  const disposables = [];
+  let rotatables = [];  // objects the drag handler rotates
+  let spins = [];        // { obj, y, x } per-object auto-rotate speeds
+  let dragCtrl;
 
-  const dragCtrl = attachDrag(canvas, [wire, inner], scroller);
+  if (modelPath) {
+    // Real GLTF/GLB models use PBR materials, which need actual lights
+    // (the wireframe placeholders use unlit MeshBasicMaterial instead).
+    const hemi = new THREE.HemisphereLight(0xbfd3ff, 0x1a2d63, 1.2);
+    const key  = new THREE.DirectionalLight(0xffffff, 1.6);
+    key.position.set(3, 4, 5);
+    scene.add(hemi, key);
 
-  // Subtle point light
-  const pt = new THREE.PointLight(0x8faad4, 0.8, 10);
-  pt.position.set(3, 3, 3);
-  scene.add(pt);
+    const group = new THREE.Group();
+    scene.add(group);
+    rotatables = [group];
+    spins = [{ obj: group, y: 0.004, x: 0.0015 }];
+    dragCtrl = attachDrag(canvas, rotatables, scroller);
+
+    gltfLoader.load(
+      modelPath,
+      gltf => {
+        fitModelToView(THREE, gltf.scene);
+        group.add(gltf.scene);
+        disposables.push(() => disposeObject3D(gltf.scene));
+      },
+      undefined,
+      err => {
+        console.error(`Failed to load 3D model "${modelPath}":`, err);
+        const geometry = buildGeometry(THREE, shape);
+        const { wire, inner } = addWireframe(THREE, group, geometry);
+        rotatables.push(wire, inner);
+        spins.push({ obj: wire, y: 0.004, x: 0.0015 }, { obj: inner, y: -0.003, x: 0 });
+        disposables.push(() => geometry.dispose());
+      }
+    );
+  } else {
+    const geometry = buildGeometry(THREE, shape);
+    const { wire, inner } = addWireframe(THREE, scene, geometry);
+    rotatables = [wire, inner];
+    spins = [{ obj: wire, y: 0.004, x: 0.0015 }, { obj: inner, y: -0.003, x: 0 }];
+    disposables.push(() => geometry.dispose());
+
+    const pt = new THREE.PointLight(0x8faad4, 0.8, 10);
+    pt.position.set(3, 3, 3);
+    scene.add(pt);
+
+    dragCtrl = attachDrag(canvas, rotatables, scroller);
+  }
 
   let frameId;
   function animate() {
     frameId = requestAnimationFrame(animate);
     if (dragCtrl.autoRotate) {
-      wire.rotation.y  += 0.004;
-      wire.rotation.x  += 0.0015;
-      inner.rotation.y -= 0.003;
+      for (const { obj, y, x } of spins) {
+        obj.rotation.y += y;
+        obj.rotation.x += x;
+      }
     }
     renderer.render(scene, camera);
   }
@@ -184,7 +261,7 @@ export function createModel(canvas, shape, scroller) {
     dispose() {
       cancelAnimationFrame(frameId);
       ro.disconnect();
-      geometry.dispose();
+      disposables.forEach(d => d());
       renderer.dispose();
     },
   };

@@ -37,39 +37,62 @@
       "position":    "Mechanical Engineer",
       "dates":       "May – August 2026",
       "location":    "Boston, MA",
-      "description": "[Brief 1–2 sentence description of the company and what you did there. Focus on impact.]",
+      "description": "Worked directly under the founder to advance the mechanical design of the assistive robot, ReviMo Niko, toward production and optimized it for manufacturing.",
       "responsibilities": [
-        "[Key responsibility or achievement — lead with a strong verb]",
-        "[Key responsibility or achievement]",
-        "[Key responsibility or achievement]",
-        "[Key responsibility or achievement]"
+        "Integration and testing of motors and actuators",
+        "Optimized part geometries for strength and manufacturability",
+        "Designed stress and fatigue testing setups",
+        "Optimized 3D printing parameters and tested various materials",
+	"Designed custom molds and tested materials for casting"
       ],
-      "technologies": ["[TOOL 1]", "[TOOL 2]", "[TOOL 3]", "[TOOL 4]"],
+      "technologies": ["FUSION 360", "AMTRAK CNC", "BAMBU LAB PRINTERS", "FEA"],
       "visual": {
-        "type":       "model",
+        "type":       "image",
         "modelShape": "gear",
-        "image":      null,
-        "caption":    "[VISUAL CAPTION, e.g. 'Prototype CAD model']"
+        "image":      "./assets/images/niko_front.png",
+        "caption":    "Revimo Niko Assistive Robot"
       }
     },
     {
       "id":          "exp-2",
       "company":     "Movu NV",
       "position":    "Simulation Engineer",
-      "dates":       "[START DATE] – [END DATE]",
+      "dates":       "February 2024 – July 2025",
       "location":    "Lokeren, BE",
-      "description": "[Brief 1–2 sentence description of the company and what you did there.]",
+      "description": "Created 3D simulations of AGVs moving through a conveyor system around a robotic picking arm to optimize picks per hour and throughput.",
       "responsibilities": [
-        "[Key responsibility or achievement]",
-        "[Key responsibility or achievement]",
-        "[Key responsibility or achievement]"
+        "Created custom 3D Simulation environment in Emulate3D",
+        "Improved traffic control",
+        "Modeled complex environment according to real-world parameters"
       ],
-      "technologies": ["[TOOL 1]", "[TOOL 2]", "[TOOL 3]"],
+      "technologies": ["Emulate3D", "3D Simulation", "C#"],
       "visual": {
-        "type":       "model",
+        "type":       "image",
         "modelShape": "icosahedron",
-        "image":      null,
-        "caption":    "[VISUAL CAPTION]"
+        "image":      "./assets/images/movu_escala.png",
+        "caption":    "Movu Escala Robot"
+      }
+    },
+    {
+      "id":          "exp-3",
+      "company":     "Veg Neutraceuticals",
+      "position":    "Web Design and Marketing Intern",
+      "dates":       "January 2022 – August 2025",
+      "location":    "Katowice, Poland (Remote)",
+      "description": "Managed website and e-commerce development while supporting product design, branding, and digital marketing initiatives for a growing nutraceutical company.",
+      "responsibilities": [
+        "Redesigned website and optimized for e-commerce with WordPress and Shopify",
+        "Devised manual labelling apparatus",
+        "Designed labels, posters, and created product mockups",
+	"Created posts and ads to market on Instagram, Facebook, and Google",
+	"Performed SEO and started personalized blog"
+      ],
+      "technologies": ["Adobe Illustrator", "Adobe Photoshop", "WordPress", "SEO", "Shopify"],
+      "visual": {
+        "type":       "image",
+        "modelShape": "icosahedron",
+        "image":      "./assets/images/vitrient_mockup.png",
+        "caption":    "Vitrient Product Mockup"
       }
     }
   ],
@@ -77,42 +100,43 @@
   "projects": [
     {
       "id":          "proj-1",
-      "name":        "[PROJECT NAME]",
-      "tagline":     "[ONE-LINE PROJECT DESCRIPTION]",
-      "description": "[2–3 sentences describing the project, the problem it solves, and your approach.]",
-      "role":        "[YOUR ROLE, e.g. 'Lead Mechanical Designer']",
-      "dates":       "[DATE RANGE]",
-      "technologies": ["[TECH 1]", "[TECH 2]", "[TECH 3]"],
-      "achievements": [
-        "[Key result or achievement — be specific with numbers if possible]",
-        "[Key result or achievement]"
+      "name":        "Autonomous Self-Balancing Bicycle",
+      "tagline":     "Designed and manufactured a self-balancing bicycle using a high-inertia reaction wheel and PID control",
+      "description": "Led the mechanical design, engineering, and manufacturing of a self-balancing bicycle capable of dynamically balancing. Designed and 3D printed custom mounts throughout the system, and designed a steel reaction wheel that was waterjet-cut and milled with a custom lightweighting pattern, along with a machined aluminum motor interface. Integrated the mechanical system with an STM32-based PID controller to achieve dynamic balance adjustment.",
+      "role":        "Lead Mechanical Engineer",
+      "dates":       "February - May 2026",
+      "technologies": ["Waterjet", "Mill", "3D Printing", "PID", "ROS"],
+      "achievements": ["Led the complete mechanical design and manufacturing of the bicycle, including custom 3D-printed mounts and machined components",
+        "Designed and manufactured a lightweight steel reaction wheel and custom-milled aluminum motor interface for high-inertia stabilization",
+        "Integrated the mechanical system with an STM32-based PID control system to achieve stationary dynamic balance"
       ],
-      "githubUrl": "[GITHUB URL]",
+      "githubUrl": "https://github.com/LuckyYoon/autonomous-self-balancing-vehicle",
       "liveUrl":   null,
       "visual": {
-        "type":       "model",
+        "type":       "image",
         "modelShape": "torus",
-        "image":      null
+        "image":      "./assets/images/pia_bike.jpeg"
       }
     },
     {
       "id":          "proj-2",
-      "name":        "[PROJECT NAME]",
-      "tagline":     "[ONE-LINE PROJECT DESCRIPTION]",
-      "description": "[2–3 sentences describing the project.]",
-      "role":        "[YOUR ROLE]",
-      "dates":       "[DATE RANGE]",
-      "technologies": ["[TECH 1]", "[TECH 2]"],
+      "name":        "Baja SAE Wheel Hubs",
+      "tagline":     "Designed and optimized wheel hubs for strength and light-weight",
+      "description": "Created multiple CAD models of wheel hub design possibilities, and optimized after performing hand calculations and FEA.",
+      "role":        "Suspension Engineer",
+      "dates":       "September - November 2025",
+      "technologies": ["OnShape", "SOLIDWORKS", "FEA"],
       "achievements": [
-        "[Key result or achievement]",
-        "[Key result or achievement]"
+        "Reduced mass by ~50% while maintaining a Factor of Safety ~3",
+        "Validated under bump, jump, and tree impact load cases",
+	"Designed focusing on Design for Manufacturing and structural integrity"
       ],
       "githubUrl": null,
       "liveUrl":   null,
       "visual": {
-        "type":       "image",
-        "modelShape": null,
-        "image":      "./assets/images/project-2.jpg"
+        "type":       "model",
+        "modelShape": "icosahedron",
+        "modelPath":  "./assets/models/wheel-hub.glb"
       }
     },
     {
