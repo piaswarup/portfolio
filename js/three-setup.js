@@ -123,7 +123,7 @@ function attachDrag(canvas, meshes, scroller) {
     if (!dragging) return;
     dragging = false;
     canvas.style.cursor = 'grab';
-    autoTimer = setTimeout(() => { autoRotate = true; }, 2000);
+    autoTimer = setTimeout(() => { autoRotate = true; }, 500);
   });
 
   window.addEventListener('mousemove', e => {
@@ -169,6 +169,10 @@ function fitModelToView(THREE, root) {
   root.position.sub(center);
   const maxDim = Math.max(size.x, size.y, size.z) || 1;
   root.scale.setScalar(1.8 / maxDim);
+
+  // CAD exports (Onshape, SolidWorks, ...) are typically Z-up; tip the
+  // model 90° about X so it faces the camera instead of lying flat.
+  root.rotation.x = -Math.PI / 2;
 }
 
 function disposeObject3D(root) {

@@ -141,7 +141,7 @@
     },
     {
       "id":          "proj-3",
-      "name":        "[PROJECT NAME]",
+      "name":        "Biomimetic Hopping Mechanism",
       "tagline":     "[ONE-LINE PROJECT DESCRIPTION]",
       "description": "[2–3 sentences describing the project.]",
       "role":        "[YOUR ROLE]",
@@ -156,7 +156,7 @@
       "visual": {
         "type":       "model",
         "modelShape": "cube",
-        "image":      null
+        "modelPath":  "./assets/models/hopper.glb"
       }
     },
     {
