@@ -1,6 +1,10 @@
-**Pia Swarup's Portfolio**
+# Pia Swarup's Portfolio
 
+Visit **[piaswarup.github.io/portfolio](https://piaswarup.github.io/portfolio)** to view my portfolio!
 
+## Includes
 
-Navigate to piaswarup.github.io/portfolio to view!
-
+- **Work Experience**
+- **Projects**
+- **Leadership & Entrepreneurship**
+- **Hobbies & Smaller Projects**
