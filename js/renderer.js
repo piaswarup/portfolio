@@ -22,6 +22,10 @@ const icons = {
   activity:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
   code:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
   compass:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+  micrometer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4"/><path d="M9 8h9a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9"/><path d="M9 8v8"/><path d="M13 8v3"/><path d="M16 8v3"/></svg>`,
+  LED:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.9V17h8v-2.1A7 7 0 0 0 12 2z"/></svg>`,
+  gears:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  'karate gi': `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3l4 4-3 3-1-1v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l-1 1-3-3 4-4 3 2h2z"/><line x1="4" y1="16" x2="20" y2="16"/></svg>`,
 };
 
 function icon(name) {
@@ -78,7 +82,7 @@ const navItems = [
   { num: '01', label: 'Experience',                  id: 'section-experience' },
   { num: '02', label: 'Projects',                    id: 'section-projects' },
   { num: '03', label: 'Entrepreneurship\n& Leadership', id: 'section-leadership' },
-  { num: '04', label: 'Hobbies\n& Other',            id: 'section-hobbies' },
+  { num: '04', label: 'Hobbies',                     id: 'section-hobbies' },
 ];
 
 export function renderNav(el) {
@@ -125,7 +129,7 @@ export function renderExperience(el, experience) {
           <div class="exp-visual" data-reveal="scale" data-delay="2">
             ${job.visual.type === 'model'
               ? `<div class="exp-canvas-wrap">
-                   <canvas data-model="${job.visual.modelShape}" ${job.visual.modelPath ? `data-model-path="${job.visual.modelPath}"` : ''} aria-label="Interactive 3D model"></canvas>
+                   <canvas data-model="${job.visual.modelShape}" ${job.visual.modelPath ? `data-model-path="${job.visual.modelPath}"` : ''} ${job.visual.decal ? `data-decal="${job.visual.decal}"` : ''} aria-label="Interactive 3D model"></canvas>
                  </div>
                  <p class="visual-caption"><em>Interactive model</em> — ${job.visual.caption}</p>`
               : job.visual.type === 'image' && job.visual.image
@@ -148,12 +152,25 @@ export function renderProjects(el, projects) {
       <div class="section-title-line"></div>
     </div>
     <div class="projects-inner">
+      <nav class="proj-index" aria-label="Project index">
+        <p class="proj-index-title" data-reveal="up" data-delay="1">Index</p>
+        <ol class="proj-index-list">
+          ${projects.map((proj, i) => `
+            <li data-reveal="up" data-delay="${Math.min(i + 2, 5)}">
+              <button class="proj-index-item" data-target="${proj.id}">
+                <span class="proj-index-num">${String(i + 1).padStart(2, '0')}</span>
+                <span class="proj-index-name">${proj.shortName || proj.name}</span>
+                <span class="proj-index-arrow">${icon('arrowRight')}</span>
+              </button>
+            </li>`).join('')}
+        </ol>
+      </nav>
       ${projects.map((proj, i) => `
         <article class="proj-card" id="${proj.id}">
           <div class="proj-visual" data-reveal="scale" data-delay="1">
             ${proj.visual.type === 'model'
               ? `<div class="proj-canvas-wrap">
-                   <canvas data-model="${proj.visual.modelShape}" ${proj.visual.modelPath ? `data-model-path="${proj.visual.modelPath}"` : ''} aria-label="Interactive 3D model"></canvas>
+                   <canvas data-model="${proj.visual.modelShape}" ${proj.visual.modelPath ? `data-model-path="${proj.visual.modelPath}"` : ''} ${proj.visual.decal ? `data-decal="${proj.visual.decal}"` : ''} aria-label="Interactive 3D model"></canvas>
                  </div>`
               : `<div class="proj-image-wrap">${imgOrPlaceholder(proj.visual.image, proj.name)}</div>`
             }
@@ -162,18 +179,19 @@ export function renderProjects(el, projects) {
             <p class="proj-number" data-reveal="up" data-delay="1">Project ${String(i + 1).padStart(2, '0')}</p>
             <h2 class="proj-name" data-reveal="up" data-delay="2">${proj.name}</h2>
             <p class="proj-tagline" data-reveal="up" data-delay="2">${proj.tagline}</p>
-            <p class="proj-role-line" data-reveal="up" data-delay="3">${proj.role} &nbsp;·&nbsp; ${proj.dates}</p>
+            <p class="proj-role-line" data-reveal="up" data-delay="3">${proj.role ? `${proj.role} &nbsp;·&nbsp; ` : ''}${proj.dates}</p>
             <p class="proj-description" data-reveal="up" data-delay="3">${proj.description}</p>
             <ul class="proj-achievements" data-reveal="up" data-delay="4">
               ${proj.achievements.map(a => `<li>${a}</li>`).join('')}
             </ul>
             <div class="proj-footer" data-reveal="up" data-delay="5">
               <div class="proj-tags">${tags(proj.technologies)}</div>
-              ${proj.githubUrl
-                ? `<a class="proj-link" href="${proj.githubUrl}" target="_blank" rel="noopener">
-                     ${icon('github')} GitHub
-                   </a>`
-                : ''}
+              <div class="proj-links">
+                ${(proj.links || (proj.githubUrl ? [{ label: 'GitHub', url: proj.githubUrl }] : [])).map(link => `
+                  <a class="proj-link" href="${link.url}" target="_blank" rel="noopener">
+                    ${icon('github')} ${link.label}
+                  </a>`).join('')}
+              </div>
             </div>
           </div>
         </article>`).join('')}
@@ -217,20 +235,60 @@ export function renderLeadership(el, leadership) {
 export function renderHobbies(el, hobbies) {
   el.innerHTML = `
     <div class="section-header">
-      <span class="section-eyebrow">Hobbies &amp; Other</span>
+      <span class="section-eyebrow">Hobbies and Side Projects</span>
       <div class="section-title-line"></div>
     </div>
     <div class="hobbies-inner">
       ${hobbies.map((hobby, i) => `
-        <div class="hobby-card" data-reveal="up" data-delay="${i + 1}">
+        <button type="button" class="hobby-card" data-reveal="up" data-delay="${i + 1}" data-hobby-id="${hobby.id}" aria-haspopup="dialog">
           <div class="hobby-icon">${icon(hobby.icon)}</div>
           <div class="hobby-image-wrap">
-            ${imgOrPlaceholder(hobby.image, hobby.title)}
+            ${imgOrPlaceholder(hobby.images?.[0]?.src, hobby.title)}
           </div>
           <h3 class="hobby-title">${hobby.title}</h3>
           <p class="hobby-description">${hobby.description}</p>
-        </div>`).join('')}
+        </button>`).join('')}
     </div>`;
+}
+
+// ── HOBBY MODAL ──────────────────────────────────────────────
+// Rendered separately and appended to <body> (not the section el) so its
+// position: fixed isn't captured by the scroll-track's transform ancestor.
+
+const closeIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+
+export function renderHobbyModalShell() {
+  return `
+    <div id="hobby-modal-backdrop" class="hobby-modal-backdrop" hidden>
+      <div class="hobby-modal" role="dialog" aria-modal="true" aria-labelledby="hobby-modal-title">
+        <button type="button" id="hobby-modal-close" class="hobby-modal-close" aria-label="Close">${closeIcon}</button>
+        <div class="hobby-modal-header">
+          <div id="hobby-modal-icon" class="hobby-modal-icon"></div>
+          <h3 id="hobby-modal-title" class="hobby-modal-title"></h3>
+        </div>
+        <div id="hobby-modal-body" class="hobby-modal-body"></div>
+      </div>
+    </div>`;
+}
+
+export function hobbyIcon(hobby) {
+  return icon(hobby.icon);
+}
+
+export function hobbyModalContent(hobby) {
+  return `
+    ${(hobby.images || []).map(img => `
+      <div class="hobby-modal-block">
+        <div class="hobby-modal-image-wrap">
+          ${imgOrPlaceholder(img.src, hobby.title)}
+        </div>
+        <p class="hobby-modal-description">${img.description || ''}</p>
+      </div>`).join('')}
+    ${hobby.machinesUsed ? `
+      <div class="hobby-machines">
+        <span class="hobby-machines-label">Machines used</span>
+        <div class="hobby-machines-tags">${tags(hobby.machinesUsed)}</div>
+      </div>` : ''}`;
 }
 
 // ── CONTACT ──────────────────────────────────────────────────

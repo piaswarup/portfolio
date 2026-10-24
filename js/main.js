@@ -9,6 +9,7 @@ import {
   renderHero, renderNav, renderExperience,
   renderProjects, renderLeadership,
   renderHobbies, renderContact,
+  renderHobbyModalShell, hobbyIcon, hobbyModalContent,
 } from './renderer.js';
 
 // ── Load a JSON file, return null on failure ──────────────────
@@ -146,6 +147,10 @@ async function init() {
   renderHobbies(document.getElementById('section-hobbies'), hobbies);
   renderContact(document.getElementById('section-contact'), personal, contact);
 
+  // Appended to <body>, not the section, so position: fixed isn't captured
+  // by the scroll-track's transformed ancestor.
+  document.body.insertAdjacentHTML('beforeend', renderHobbyModalShell());
+
   // ── Animation observer ──────────────────────────────────────
   const anim = new AnimationObserver();
   document.querySelectorAll('[data-reveal]').forEach(el => anim.observe(el));
@@ -209,6 +214,7 @@ async function init() {
       createModel(canvas, {
         shape:     canvas.dataset.model || 'icosahedron',
         modelPath: canvas.dataset.modelPath || null,
+        decal:     canvas.dataset.decal || null,
       }, scroller);
     });
   }, 80);
@@ -219,6 +225,60 @@ async function init() {
       const target = document.getElementById(btn.dataset.target);
       if (target) scroller.scrollToEl(target);
     });
+  });
+
+  // ── Project index clicks ─────────────────────────────────────
+  // Cards are positioned relative to their section, so add the section offset.
+  document.querySelectorAll('.proj-index-item[data-target]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = document.getElementById(btn.dataset.target);
+      if (!card) return;
+      if (window.innerWidth <= 768) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        scroller.scrollTo(card.closest('.section').offsetLeft + card.offsetLeft);
+      }
+    });
+  });
+
+  // ── Hobby modal (click a hobby card → bigger view with all images) ──
+  const hobbyModalBackdrop = document.getElementById('hobby-modal-backdrop');
+  const hobbyModalIconEl   = document.getElementById('hobby-modal-icon');
+  const hobbyModalTitle    = document.getElementById('hobby-modal-title');
+  const hobbyModalBody     = document.getElementById('hobby-modal-body');
+  const hobbyModalClose    = document.getElementById('hobby-modal-close');
+  let hobbyModalTrigger = null;
+
+  function openHobbyModal(hobby, trigger) {
+    hobbyModalTrigger = trigger;
+    hobbyModalIconEl.innerHTML  = hobbyIcon(hobby);
+    hobbyModalTitle.textContent = hobby.title;
+    hobbyModalBody.innerHTML    = hobbyModalContent(hobby);
+    hobbyModalBackdrop.hidden   = false;
+    scroller.isLocked = true;
+    hobbyModalClose.focus();
+  }
+
+  function closeHobbyModal() {
+    hobbyModalBackdrop.hidden = true;
+    scroller.isLocked = false;
+    hobbyModalTrigger?.focus();
+    hobbyModalTrigger = null;
+  }
+
+  document.querySelectorAll('#section-hobbies .hobby-card[data-hobby-id]').forEach(card => {
+    card.addEventListener('click', () => {
+      const hobby = hobbies.find(h => h.id === card.dataset.hobbyId);
+      if (hobby) openHobbyModal(hobby, card);
+    });
+  });
+
+  hobbyModalClose.addEventListener('click', closeHobbyModal);
+  hobbyModalBackdrop.addEventListener('click', e => {
+    if (e.target === hobbyModalBackdrop) closeHobbyModal();
+  });
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !hobbyModalBackdrop.hidden) closeHobbyModal();
   });
 
   // ── Scroll hint ──────────────────────────────────────────────

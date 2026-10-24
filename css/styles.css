@@ -701,6 +701,81 @@ img {
   padding-top: 7rem;
 }
 
+/* ── Project index (clickable table of contents) ── */
+.proj-index {
+  flex: 0 0 38vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0 0 var(--padding-section);
+}
+.proj-index-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+}
+.proj-index-list {
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+.proj-index-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 0.4rem;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition-med), padding var(--transition-med);
+}
+.proj-index-item:hover,
+.proj-index-item:focus-visible {
+  background: var(--bg-card-hover);
+  padding-left: 0.9rem;
+}
+.proj-index-num {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+}
+.proj-index-name {
+  flex: 1;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.proj-index-arrow {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-med), border-color var(--transition-med);
+}
+.proj-index-item:hover .proj-index-arrow {
+  transform: translateX(4px);
+  border-color: var(--border-hover);
+}
+.proj-index-arrow svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--text-primary);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.proj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
 .proj-card {
   flex: 0 0 90vw;
   display: flex;
@@ -948,6 +1023,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
   padding: 2rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -1000,6 +1076,119 @@ img {
   font-size: 0.82rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.hobby-machines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.hobby-machines-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hobby-machines-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ── Hobby modal ──────────────────────────────────────────────
+   Appended to <body>, so it sits outside the scroll-track and is
+   positioned relative to the real viewport, not a transformed ancestor. */
+.hobby-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+.hobby-modal-backdrop[hidden] {
+  display: none;
+}
+
+.hobby-modal {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+}
+
+.hobby-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background var(--transition-med);
+}
+.hobby-modal-close:hover {
+  background: var(--bg-card-hover);
+}
+.hobby-modal-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-secondary);
+}
+
+.hobby-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-right: 2.5rem;
+}
+.hobby-modal-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--text-secondary);
+  fill: none;
+  stroke-width: 1.5;
+}
+.hobby-modal-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hobby-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.hobby-modal-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.hobby-modal-image-wrap {
+  height: 40vh;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.hobby-modal-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hobby-modal-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
 /* ============================================================
@@ -1163,6 +1352,7 @@ img {
 
   /* projects */
   .projects-inner { flex-direction: column; padding-top: 5rem; }
+  .proj-index     { flex: none; width: 100%; padding: 1rem 1.5rem 2rem; }
   .proj-card      { flex-direction: column; flex: none; width: 100%; padding: 2rem 1.5rem; height: auto; gap: 2rem; }
   .proj-visual    { flex: none; width: 100%; }
 

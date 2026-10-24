@@ -8,6 +8,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const gltfLoader = new GLTFLoader();
+const textureLoader = new THREE.TextureLoader();
 
 const COLORS = {
   wireframe:  0xffffff,
@@ -175,6 +176,51 @@ function fitModelToView(THREE, root) {
   root.rotation.x = -Math.PI / 2;
 }
 
+// Some CAD-to-glTF exporters (Onshape's included) bake an alpha value into
+// baseColorFactor/opacity but omit `alphaMode: "BLEND"`. Per the glTF spec,
+// that means renderers MUST ignore alpha and draw fully opaque — so a
+// material authored as translucent silently renders solid. Since the
+// opacity value itself is still there (GLTFLoader sets material.opacity
+// from it either way), we only need to flip on blending.
+//
+// `decalTexture`, if given, is painted onto whichever material is
+// translucent — CAD exports of bottles/jars in this style put the tinted,
+// semi-transparent material on the body (where a wraparound label goes)
+// and a flat opaque material on the cap, so "the translucent one" is a
+// reliable way to find the body without needing per-model material names.
+function fixGltfTransparency(root, decalTexture) {
+  root.traverse(node => {
+    if (!node.material) return;
+    const mats = Array.isArray(node.material) ? node.material : [node.material];
+    mats.forEach(mat => {
+      if (mat.opacity < 1) {
+        mat.transparent = true;
+        if (decalTexture) {
+          mat.map = decalTexture;
+          mat.color.set(0xffffff); // let the texture's own colors show through undistorted
+          mat.needsUpdate = true;
+        }
+      }
+    });
+  });
+}
+
+function loadDecalTexture(path) {
+  return new Promise((resolve, reject) => {
+    textureLoader.load(
+      path,
+      texture => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.flipY = true;
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        resolve(texture);
+      },
+      undefined,
+      reject
+    );
+  });
+}
+
 function disposeObject3D(root) {
   root.traverse(node => {
     if (node.geometry) node.geometry.dispose();
@@ -191,7 +237,7 @@ function disposeObject3D(root) {
 // ── Public factory ───────────────────────────────────────────
 
 export function createModel(canvas, opts, scroller) {
-  const { shape = 'icosahedron', modelPath = null } =
+  const { shape = 'icosahedron', modelPath = null, decal = null } =
     typeof opts === 'string' ? { shape: opts } : (opts || {});
 
   const ctx = buildScene(canvas, scroller);
@@ -206,10 +252,19 @@ export function createModel(canvas, opts, scroller) {
   if (modelPath) {
     // Real GLTF/GLB models use PBR materials, which need actual lights
     // (the wireframe placeholders use unlit MeshBasicMaterial instead).
-    const hemi = new THREE.HemisphereLight(0xbfd3ff, 0x1a2d63, 1.2);
-    const key  = new THREE.DirectionalLight(0xffffff, 1.6);
+    // Three-point setup (key/fill/rim) reads much nicer on PBR materials
+    // than a single flat light.
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+
+    const hemi = new THREE.HemisphereLight(0xbfd3ff, 0x1a2d63, 0.9);
+    const key  = new THREE.DirectionalLight(0xffffff, 2.2);
     key.position.set(3, 4, 5);
-    scene.add(hemi, key);
+    const fill = new THREE.DirectionalLight(0xbfd3ff, 0.8);
+    fill.position.set(-4, 1, 2);
+    const rim  = new THREE.DirectionalLight(0xffffff, 1.4);
+    rim.position.set(-1, 3, -4);
+    scene.add(hemi, key, fill, rim);
 
     const group = new THREE.Group();
     scene.add(group);
@@ -217,14 +272,20 @@ export function createModel(canvas, opts, scroller) {
     spins = [{ obj: group, y: 0.004, x: 0.0015 }];
     dragCtrl = attachDrag(canvas, rotatables, scroller);
 
-    gltfLoader.load(
-      modelPath,
-      gltf => {
+    Promise.all([
+      new Promise((resolve, reject) => gltfLoader.load(modelPath, resolve, undefined, reject)),
+      decal ? loadDecalTexture(decal).catch(err => {
+        console.error(`Failed to load decal texture "${decal}":`, err);
+        return null;
+      }) : Promise.resolve(null),
+    ]).then(
+      ([gltf, decalTexture]) => {
         fitModelToView(THREE, gltf.scene);
+        fixGltfTransparency(gltf.scene, decalTexture);
         group.add(gltf.scene);
         disposables.push(() => disposeObject3D(gltf.scene));
+        if (decalTexture) disposables.push(() => decalTexture.dispose());
       },
-      undefined,
       err => {
         console.error(`Failed to load 3D model "${modelPath}":`, err);
         const geometry = buildGeometry(THREE, shape);
