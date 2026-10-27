@@ -179,15 +179,16 @@
 
   /* ── Cards ───────────────────────────────────────────── */
 
+  // Picture-only card; the title and blurb sit in an overlay shown on hover.
+  // A page without a photo yet shows its title on a light box instead.
   function cardHtml(page) {
     const media = page.thumb
       ? '<img class="card__media" src="' + ROOT + page.thumb + '" alt="' + esc(page.thumbAlt || page.title) + '" loading="lazy">'
-      : '<div class="card__media placeholder">Photo coming soon</div>';
+      : '<div class="card__media placeholder card__placeholder" aria-hidden="true">' + esc(page.title) + '</div>';
 
-    return '<a class="card" href="' + pageUrl(page) + '">' +
+    return '<a class="card' + (page.thumb ? '' : ' card--no-photo') + '" href="' + pageUrl(page) + '">' +
       media +
-      '<div class="card__body">' +
-        '<span class="tag">' + esc(page.tag) + '</span>' +
+      '<div class="card__overlay">' +
         '<h3 class="card__title">' + esc(page.title) + '</h3>' +
         '<p class="card__blurb">' + esc(page.blurb) + '</p>' +
       '</div>' +

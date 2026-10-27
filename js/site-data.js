@@ -10,10 +10,12 @@
      slug     file name in pages/ without ".html"
      title    card title (also used in the dropdown menu)
      blurb    one-line description under the card title
-     tag      small label on the card, e.g. "Project"
-     section  which home-page grid: "work" | "leadership" | "hobbies"
-     thumb    card image, relative to the site root, or null for
-              a "Photo coming soon" placeholder
+     tag      "Project" | "Internship" | ... (not shown on cards right now)
+     section  "work" | "leadership" | "hobbies" — only "work" pages get a
+              card on the home page; the others are reached through the
+              dropdown menus and the "More work" rows
+     thumb    card image, relative to the site root, or null to show
+              the title on a light box until there's a photo
      thumbAlt (optional) alt text for the card image
      menu     which dropdown lists it: "projects" | "experience" | null
 
