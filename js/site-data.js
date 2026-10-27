@@ -50,7 +50,7 @@ const SITE_PAGES = [
   {
     slug: 'baja-suspension',
     title: 'Baja SAE Suspension',
-    blurb: 'Wheel hubs, brakes, and suspension geometry for an off-road racing vehicle.',
+    blurb: 'Wheel hubs, a lighter pedal assembly, and a CVT cooling model for an off-road racing vehicle.',
     tag: 'Project',
     section: 'work',
     thumb: 'assets/images/baja-suspension/thumb.jpg',
@@ -70,10 +70,11 @@ const SITE_PAGES = [
   {
     slug: 'soil-probing-rover',
     title: 'Soil Probing Ground Rover',
-    blurb: 'A retractable gantry that lets a farm rover autonomously probe soil moisture and health.',
+    blurb: 'A gantry that lets a farm rover autonomously probe soil moisture and health.',
     tag: 'Project',
     section: 'work',
-    thumb: null,
+    thumb: 'assets/images/soil-probing-rover/thumb.jpg',
+    thumbAlt: 'CAD of the soil probing gantry',
     menu: 'projects'
   },
   {
