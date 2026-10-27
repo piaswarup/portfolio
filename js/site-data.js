@@ -40,7 +40,7 @@ const SITE_PAGES = [
     blurb: 'A self-balancing bicycle using a high-inertia reaction wheel and PID control.',
     tag: 'Project',
     section: 'work',
-    thumb: 'assets/images/pia_bike.jpeg',
+    thumb: 'assets/images/self-balancing-bicycle/thumb.jpg',
     thumbAlt: 'Self-balancing bicycle with reaction wheel',
     menu: 'projects'
   },
@@ -78,7 +78,28 @@ const SITE_PAGES = [
     blurb: 'Robot behaviors, localization, and vision written in ROS2 and Python.',
     tag: 'Project',
     section: 'work',
-    thumb: null,
+    thumb: 'assets/images/robotics-software/thumb.jpg',
+    thumbAlt: 'Particle filter running on a Neato robot in Gazebo',
+    menu: 'projects'
+  },
+  {
+    slug: 'animatronic-flying-pig',
+    title: 'Peric the Flying Pig',
+    blurb: 'An animatronic pig that spins faster when you approach and flaps its wings at loud noises.',
+    tag: 'Project',
+    section: 'work',
+    thumb: 'assets/images/animatronic-flying-pig/cad.jpg',
+    thumbAlt: 'CAD of Peric the animatronic pig',
+    menu: 'projects'
+  },
+  {
+    slug: 'pan-tilt-scanner',
+    title: 'Pan-Tilt 3D Scanner',
+    blurb: 'Two servos and an infrared distance sensor that turn readings into 2D and 3D scans.',
+    tag: 'Project',
+    section: 'work',
+    thumb: 'assets/images/pan-tilt-scanner/thumb.jpg',
+    thumbAlt: '3D-printed pan-tilt scanner with an infrared distance sensor',
     menu: 'projects'
   },
   {

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Robotics Software: State Machine, Particle Filter &amp; Computer Vision | Pia Swarup</title>
-  <meta name="description" content="Robot behaviors, localization, and vision in ROS2 and Python: a state machine for a vacuum robot, a particle filter, and an eye-tracking system.">
+  <meta name="description" content="Robot behaviors, localization, and vision in ROS2 and Python: a finite state machine for a Neato robot, a particle filter, and an eye-tracking system.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,17 +22,18 @@
   <main>
     <article class="container page">
 
-      <img class="page-hero" src="../assets/images/robotics-software/hero.jpg" alt="[TODO: describe the image, e.g. particle filter running in Rviz2]">
+      <img class="page-hero page-hero--contain" src="../assets/images/robotics-software/pf-gazebo.gif" alt="Particle filter running on a Neato robot in Gazebo, with the particle cloud shown on the map">
       <h1>Robotics Software: State Machine, Particle Filter &amp; Computer Vision</h1>
       <p class="page-tagline">Robot behaviors, localization, and vision written in ROS2 and Python.</p>
 
       <div class="prose">
         <h2>Overview</h2>
         <p>
-          Since September 2026, I've been working on a set of robotics software projects: a
-          <strong>ROS2</strong> finite state machine for a vacuum robot, a particle filter that localizes a robot on
-          a known map, and a computer-vision eye-tracking system that's still in progress.
-          [TODO: the context — e.g. which class or lab these are for.]
+          Since September 2026, I've been working on a set of robotics software projects for Computational
+          Introduction to Robotics (ENGR3590) at Olin, using <strong>ROS2</strong> and <strong>Python</strong> on
+          Neato robots, both real and simulated: a finite state machine that chains robot behaviors, a particle
+          filter that localizes a robot on a known map, and a computer-vision eye-tracking system that's still in
+          progress.
         </p>
         <p>
           Code on GitHub:
@@ -42,37 +43,71 @@
 
         <h2>My role</h2>
         <p>
-          I worked as a robotics software engineer, writing in <strong>Python</strong> and <strong>ROS2</strong>
-          and testing in <strong>Rviz2</strong> and <strong>Gazebo</strong>.
-          [TODO: who you worked with on each project, and which parts you wrote.]
+          I built the state machine and the particle filter, each with a teammate, writing in
+          <strong>Python</strong> and <strong>ROS2</strong> and testing with <strong>rviz2</strong>,
+          <strong>Gazebo</strong>, and recorded ROS bags.
+          [TODO: which parts of each project you wrote.]
         </p>
 
         <h2>Design &amp; build</h2>
 
-        <h3>State machine</h3>
+        <h3>Finite state machine</h3>
         <p>
-          I built a <strong>ROS2</strong> state machine that fuses odometry, lidar, and bump data so a vacuum robot
-          follows people and drives a pentagon.
-          [TODO: the states and what triggers each transition.]
+          The robot runs three behaviors linked in one finite state machine. It searches by driving forward slowly
+          until its <strong>lidar</strong> sees an object within 0.6 m, follows that person for 30 seconds at a
+          0.2 m distance, turns 180° in place, then draws a pentagon with 72° turns at each corner. Following uses
+          proportional control on all 361 lidar readings per scan, and keeps turning toward the last-seen angle
+          for 0.7 s if it loses the target. The <strong>bump sensor</strong> acts as an emergency stop that
+          overrides every state. Everything runs from a timer-driven loop every 0.1 s instead of sleeps, so the
+          emergency stop keeps working even mid-turn.
         </p>
 
         <figure>
-          <img src="../assets/images/robotics-software/01.jpg" alt="[TODO: describe the image, e.g. state machine diagram]" loading="lazy">
-          <figcaption>[TODO: caption]</figcaption>
+          <div class="gallery">
+            <img src="../assets/images/robotics-software/fsm-states.jpg" alt="Whiteboard sketch of the state sequence: person following, then a 180 degree turn after 30 seconds, then draw shape" loading="lazy">
+            <img src="../assets/images/robotics-software/fsm-follow.jpg" alt="Whiteboard sketch of person following: the robot keeps a 0.2 m distance to legs detected within 0.6 m" loading="lazy">
+          </div>
+          <figcaption>Sketches of the state sequence (left) and the person-following geometry (right)</figcaption>
         </figure>
+
+        <figure>
+          <div class="embed embed--portrait">
+            <iframe src="https://www.youtube-nocookie.com/embed/ZRA7LjG8dLs" title="Finite state machine demo on a Neato robot" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <figcaption>The full state machine running on a Neato</figcaption>
+        </figure>
+
+        <p>
+          The real Neato behaved differently from the simulator: we had to increase the detection radius on the real
+          robot, and because the turn and the pentagon are timed rather than measured, they drift on the physical
+          robot. Adding odometry feedback to those two states is the next improvement.
+        </p>
 
         <h3>Particle filter</h3>
         <p>
-          I coded a likelihood-field particle filter using augmented Monte Carlo localization to solve the
-          kidnapped-robot problem. I tested it with recorded ROS bags in <strong>Rviz2</strong> and in
-          <strong>Gazebo</strong> simulation.
-          [TODO: what was hardest to get right, and how you fixed it.]
+          Odometry drifts, and lidar alone can't tell similar-looking places apart, so the particle filter combines
+          both to estimate the robot's pose on a known map. It starts with 1,050 particles: 1,000 spread around the
+          initial pose estimate and 50 spread uniformly over the map. Each time the robot moves 0.2 m or turns π/6,
+          every particle is moved by the odometry change plus noise, then weighted with a likelihood field that
+          scores how well every fifth lidar beam lines up with the map. The pose estimate is the weighted mean, with
+          heading averaged on the circle so it wraps correctly at ±π. Resampling adds noise, and adaptive injection
+          (augmented Monte Carlo localization) adds random particles when the fit gets worse, which lets the filter
+          recover after being moved.
         </p>
 
         <figure>
-          <img src="../assets/images/robotics-software/02.jpg" alt="[TODO: describe the image, e.g. particles converging in Rviz2]" loading="lazy">
-          <figcaption>[TODO: caption]</figcaption>
+          <div class="gallery">
+            <img src="../assets/images/robotics-software/pf-overview.png" alt="Flowchart of the particle filter: initialize, wait for movement, motion update, sensor update, estimate pose, resample, publish" loading="lazy">
+            <img src="../assets/images/robotics-software/pf-nodes.png" alt="Diagram of ROS nodes and topics: map server, bag player, particle filter and rviz2" loading="lazy">
+          </div>
+          <figcaption>The particle filter's update loop (left) and its ROS nodes and topics (right)</figcaption>
         </figure>
+
+        <p>
+          We tested in stages: unit tests with <strong>pytest</strong> for weight normalization, angle wrapping,
+          heading averaging, and initialization, then recorded bags in <strong>rviz2</strong>, then the Gauntlet
+          world in <strong>Gazebo</strong>.
+        </p>
 
         <h3>Eye tracking (in progress)</h3>
         <p>
@@ -83,8 +118,9 @@
 
         <h2>Results</h2>
         <ul>
-          <li>Vacuum robot follows people and drives a pentagon using fused odometry, lidar, and bump data</li>
-          <li>Particle filter solves the kidnapped-robot problem, converging in 7 update cycles</li>
+          <li>The Neato follows a person, turns, and draws a pentagon, with a bump-sensor emergency stop that works in every state</li>
+          <li>The particle filter converged in 7–8 updates on recorded bags of the MAC 1st floor, with the main particle cluster within 0.22 m on average</li>
+          <li>It recovered from a 0.7 m kidnapping after 22 updates; a 2.8 m kidnapping locked onto the wrong spot</li>
         </ul>
         <p>[TODO: what you learned, and next steps for the eye-tracking system.]</p>
       </div>

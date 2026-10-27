@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Pan-Tilt 3D Scanner | Pia Swarup</title>
+  <meta name="description" content="A two-servo pan-tilt scanner that turns infrared distance readings into 2D and 3D scans of cardboard shapes, built for PIE.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/pan-tilt-scanner/hero.jpg" alt="3D-printed pan-tilt scanner with an infrared distance sensor, wired to an Arduino on a breadboard">
+      <h1>Pan-Tilt 3D Scanner</h1>
+      <p class="page-tagline">A two-servo pan-tilt scanner that turns infrared distance readings into 2D and 3D scans.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          For Mini Project 2 in PIE (Principles of Integrated Engineering) in September 2026, a teammate and I
+          built a 2.5D scanner from two hobby servos and a <strong>Sharp IR distance sensor</strong>. The sensor
+          pairs an LED with a photodiode and outputs an analog voltage that depends on how much light reflects off
+          an object. Two servos pan and tilt it across a cardboard cutout, and the voltage, servo angles, and
+          calibration turn each reading into a point in 3D.
+        </p>
+
+        <figure>
+          <div class="embed">
+            <iframe src="https://drive.google.com/file/d/11t1xSEZsFgNAIFKVWOEPJdXI1IuoM05x/preview" title="Pan-tilt scanner demo video" allow="autoplay" loading="lazy" allowfullscreen></iframe>
+          </div>
+          <figcaption>
+            The scanner in action
+            (<a href="https://drive.google.com/file/d/11t1xSEZsFgNAIFKVWOEPJdXI1IuoM05x/view" target="_blank" rel="noopener">open in Google Drive</a>)
+          </figcaption>
+        </figure>
+
+        <h2>My role</h2>
+        <p>
+          I designed the sensor mount and attachment system and the scanner's rotation mechanism, printed two
+          iterations of our CAD on the <strong>3D printers</strong>, and assembled the first version. I crimped pins
+          onto the servos and sensor so they plugged cleanly into the breadboard. On the software side, I wrote the
+          <strong>MATLAB</strong> code that collects IR data during a scan and processes it into 2D and 3D plots.
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Calibration</h3>
+        <p>
+          We measured the sensor at 21 known distances from 20 to 60 cm in 2 cm steps, averaging 50 voltage readings
+          taken 45 ms apart at each one. Sharp IR sensors follow an inverse relationship, so we fit the curve
+          <em>d</em> = <em>a</em> / (<em>V</em> − <em>b</em>) + <em>c</em> with <code>fminsearch</code>, giving
+          <em>a</em> = 88.8713, <em>b</em> = −0.2382, and <em>c</em> = −9.9964. Below a minimum distance, the
+          sensor's voltage falls again and becomes ambiguous, so we dropped readings closer than the voltage peak. We
+          then checked the fit with three extra points at 65, 68, and 75 cm.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/pan-tilt-scanner/calibration.png" alt="Calibration curve of sensor voltage versus distance from 20 to 60 cm with the fitted model" loading="lazy">
+            <img src="../assets/images/pan-tilt-scanner/calibration-error.png" alt="Fitted curve with three test points at 65, 68 and 75 cm and their errors" loading="lazy">
+          </div>
+          <figcaption>Calibration curve (left) and the fit checked against three test points (right)</figcaption>
+        </figure>
+
+        <h3>Mechanism</h3>
+        <p>
+          The tilt servo and sensor share an axis, with the servo arm bolted to the main body so the sensor assembly
+          tilts as one piece. The main body has a second servo facing downward, whose arm is held in a separate base,
+          so the whole body pans while the arm stays fixed. All three parts were <strong>3D printed</strong>, over
+          three rapid iterations: concept testing and clearances, then slots for the rotating motor and bolt
+          clearance, then a wider base and a tighter fit around the arm. The first base was too light to keep the
+          scanner steady; widening it solved that.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/pan-tilt-scanner/cad-tilt.png" alt="CAD of the servo and sensor tilt assembly" loading="lazy">
+            <img src="../assets/images/pan-tilt-scanner/cad-base.png" alt="CAD of the main body on its base" loading="lazy">
+            <img src="../assets/images/pan-tilt-scanner/wiring.jpg" alt="Top view of the scanner wired to an Arduino and breadboard" loading="lazy">
+          </div>
+          <figcaption>The tilt assembly, the main body on its base, and the wired scanner</figcaption>
+        </figure>
+
+        <h3>Scanning software</h3>
+        <p>
+          The scan is a nested loop: the outer loop steps the tilt servo from −7° to 40° and the inner loop sweeps
+          the pan servo from −40° to 40°, in 1° steps. The pan sweep reverses direction every row, which makes the
+          scan faster and avoids jerky servo moves, making the data more accurate. After each move the servo settles
+          for 0.04 s before a reading, and any voltage outside the calibrated range is discarded. Each distance is
+          then converted from pan and tilt angles to <em>x</em>, <em>y</em>, <em>z</em> with spherical-to-Cartesian
+          trigonometry and plotted as a 2D heat map and a 3D point cloud, with an optional depth slice to isolate the
+          object.
+        </p>
+
+        <h2>Results</h2>
+        <p>
+          We scanned our own cutout, a peeling banana, and a heart-eyed emoji provided by the course assistants.
+          Both scans capture the general shape and depth of the objects. They aren't perfect: there are scattered
+          points around each object, likely from other things in view, and distortion near the bottom from the table
+          and holder.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/pan-tilt-scanner/banana-cutout.jpg" alt="Cardboard cutout of a peeling banana on a table" loading="lazy">
+            <img src="../assets/images/pan-tilt-scanner/scan-banana-2d.png" alt="2D distance heat map of the banana scan" loading="lazy">
+            <img src="../assets/images/pan-tilt-scanner/scan-banana-3d.png" alt="3D point cloud of the banana scan" loading="lazy">
+          </div>
+          <figcaption>Our banana cutout, its 2D scan, and its 3D point cloud</figcaption>
+        </figure>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/pan-tilt-scanner/scan-emoji-2d.png" alt="2D distance heat map of the heart-eyed emoji scan" loading="lazy">
+            <img src="../assets/images/pan-tilt-scanner/scan-emoji-3d.png" alt="3D point cloud of the heart-eyed emoji scan" loading="lazy">
+          </div>
+          <figcaption>2D and 3D scans of the heart-eyed emoji cutout</figcaption>
+        </figure>
+
+        <p>
+          Next time, I'd keep the table out of the scan, use smaller pan and tilt steps for more detail, stabilize
+          the sensor to reduce rattling, and add a quick preliminary scan that finds the object so the full scan
+          only covers the angles that matter.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>
