@@ -168,7 +168,8 @@ const SITE_PAGES = [
     blurb: 'Leading a 50+ member team designing and building an off-road racing vehicle.',
     tag: 'Leadership',
     section: 'leadership',
-    thumb: null,
+    thumb: 'assets/images/baja-sae-pm/thumb.jpg',
+    thumbAlt: "Olin Baja SAE's car on the course at competition",
     menu: 'experience'
   },
   {
