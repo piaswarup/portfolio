@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Robotics Software: State Machine, Particle Filter &amp; Computer Vision | Pia Swarup</title>
+  <meta name="description" content="Robot behaviors, localization, and vision in ROS2 and Python: a state machine for a vacuum robot, a particle filter, and an eye-tracking system.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero" src="../assets/images/robotics-software/hero.jpg" alt="[TODO: describe the image, e.g. particle filter running in Rviz2]">
+      <h1>Robotics Software: State Machine, Particle Filter &amp; Computer Vision</h1>
+      <p class="page-tagline">Robot behaviors, localization, and vision written in ROS2 and Python.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          Since September 2026, I've been working on a set of robotics software projects: a
+          <strong>ROS2</strong> finite state machine for a vacuum robot, a particle filter that localizes a robot on
+          a known map, and a computer-vision eye-tracking system that's still in progress.
+          [TODO: the context — e.g. which class or lab these are for.]
+        </p>
+        <p>
+          Code on GitHub:
+          <a href="https://github.com/piaswarup/comprobo26_FSM_piavani" target="_blank" rel="noopener">State Machine</a>,
+          <a href="https://github.com/MatthewT1107/robot_localization_project" target="_blank" rel="noopener">Particle Filter</a>.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          I worked as a robotics software engineer, writing in <strong>Python</strong> and <strong>ROS2</strong>
+          and testing in <strong>Rviz2</strong> and <strong>Gazebo</strong>.
+          [TODO: who you worked with on each project, and which parts you wrote.]
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>State machine</h3>
+        <p>
+          I built a <strong>ROS2</strong> state machine that fuses odometry, lidar, and bump data so a vacuum robot
+          follows people and drives a pentagon.
+          [TODO: the states and what triggers each transition.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/robotics-software/01.jpg" alt="[TODO: describe the image, e.g. state machine diagram]" loading="lazy">
+          <figcaption>[TODO: caption]</figcaption>
+        </figure>
+
+        <h3>Particle filter</h3>
+        <p>
+          I coded a likelihood-field particle filter using augmented Monte Carlo localization to solve the
+          kidnapped-robot problem. I tested it with recorded ROS bags in <strong>Rviz2</strong> and in
+          <strong>Gazebo</strong> simulation.
+          [TODO: what was hardest to get right, and how you fixed it.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/robotics-software/02.jpg" alt="[TODO: describe the image, e.g. particles converging in Rviz2]" loading="lazy">
+          <figcaption>[TODO: caption]</figcaption>
+        </figure>
+
+        <h3>Eye tracking (in progress)</h3>
+        <p>
+          I'm building a computer-vision eye-tracking system for hands-free cursor control and eye-strain break
+          reminders.
+          [TODO: how it works so far.]
+        </p>
+
+        <h2>Results</h2>
+        <ul>
+          <li>Vacuum robot follows people and drives a pentagon using fused odometry, lidar, and bump data</li>
+          <li>Particle filter solves the kidnapped-robot problem, converging in 7 update cycles</li>
+        </ul>
+        <p>[TODO: what you learned, and next steps for the eye-tracking system.]</p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

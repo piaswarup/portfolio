@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Autonomous Self-Balancing Bicycle | Pia Swarup</title>
+  <meta name="description" content="A self-balancing bicycle using a high-inertia reaction wheel and PID control: mechanical design and manufacturing by Pia Swarup.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--bottom" src="../assets/images/pia_bike.jpeg" alt="Pia kneeling next to the self-balancing bicycle">
+      <h1>Autonomous Self-Balancing Bicycle</h1>
+      <p class="page-tagline">A self-balancing bicycle using a high-inertia reaction wheel and PID control.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          From February to May 2026, I worked on a bicycle capable of dynamically balancing itself, using a
+          high-inertia reaction wheel and PID control. The long-term goal is a self-balancing, driverless bicycle
+          that can navigate autonomously indoors and outdoors; this phase focused on getting it to balance.
+          [TODO: was this a class or team project, and why a self-balancing bike?]
+        </p>
+        <p>
+          Code on <a href="https://github.com/LuckyYoon/autonomous-self-balancing-vehicle" target="_blank" rel="noopener">GitHub</a>.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          As Lead Mechanical Engineer, I led the complete mechanical design, engineering, and manufacturing of the
+          bicycle, including custom 3D-printed mounts and machined components.
+          [TODO: team size, and who worked on the electronics and software.]
+        </p>
+
+        <h2>Design &amp; build</h2>
+        <p>
+          The heart of the system is an active reaction wheel, driven by a 24V 200W BLDC motor under
+          <strong>STM32</strong> control. I designed the lightweight steel wheel with a custom lightweighting
+          pattern, had it cut on the <strong>waterjet</strong>, and finished it on the <strong>mill</strong>,
+          along with a machined aluminum motor interface for high-inertia stabilization.
+          [TODO: how you chose the wheel's size and inertia.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/cad.jpg" alt="CAD render of the bicycle with the reaction wheel and custom mounts" loading="lazy">
+          <figcaption>CAD of the bicycle with the reaction wheel and mounts</figcaption>
+        </figure>
+
+        <p>
+          I designed and <strong>3D printed</strong> custom mounts throughout the system, and integrated the
+          mechanical system with the STM32-based <strong>PID</strong> controller for dynamic balance adjustment.
+          [TODO: what went wrong along the way and how you fixed it.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/01.jpg" alt="[TODO: describe the photo, e.g. the steel reaction wheel]" loading="lazy">
+          <figcaption>[TODO: caption, e.g. waterjet-cut steel reaction wheel]</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <p>
+          The integrated bicycle achieved stationary dynamic balance.
+          [TODO: how well it balanced (e.g. how long, how much disturbance it recovered from).]
+        </p>
+
+        <h3>Next steps</h3>
+        <p>
+          The plan for the next phase is to turn the bike into a fully autonomous platform: convert the lightweight
+          fixed-gear frame to electric drive with servo steering and braking and a chain-driven motor, run a
+          <strong>ROS2</strong>-based SLAM and planning stack on an <strong>NVIDIA Jetson Orin Nano Super</strong>,
+          use visual SLAM with RRT* for real-time mapping and motion planning in unknown environments, and add a
+          <strong>2D LiDAR</strong> for fast obstacle detection and avoidance.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

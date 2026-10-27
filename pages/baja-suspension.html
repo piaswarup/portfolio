@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Baja SAE Suspension | Pia Swarup</title>
+  <meta name="description" content="Wheel hubs, brakes, suspension geometry and a CVT thermal model for Olin Baja SAE's off-road racing vehicle, by Pia Swarup.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/baja-suspension/hub-machined.jpg" alt="Machined Baja SAE wheel hub">
+      <h1>Baja SAE Suspension</h1>
+      <p class="page-tagline">Wheel hubs, brakes, and suspension geometry for an off-road racing vehicle.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          Olin Baja SAE designs and manufactures a custom off-road racing vehicle for the Baja SAE collegiate
+          competition series. From September 2025 to May 2026, I worked on the car's wheel hubs, brakes, and
+          suspension geometry, and modeled how hot its CVT gets during an endurance race.
+        </p>
+        <p>
+          The suspension connects the wheels to the chassis: it absorbs shocks from the terrain, allows controlled
+          motion, and affects steering and braking. The wheel hub sits at the center of each corner. It carries road
+          loads into the suspension and chassis through the knuckle, holds the brake rotor and the wheel studs, and
+          transfers power from the CV axle to the wheel through a spline.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/suspension-corner.png" alt="Exploded CAD view of a suspension corner: wheel hub, brake rotor, caliper, knuckle and A-arms" loading="lazy">
+          <figcaption>A suspension corner: wheel hub, brake rotor and caliper, knuckle, and A-arms</figcaption>
+        </figure>
+
+        <h2>My role</h2>
+        <p>
+          As a Suspension Engineer, I designed and FEA-validated lightweight wheel hubs, sized the front brakes,
+          and analyzed suspension kinematics. I modeled in <strong>Onshape</strong> and <strong>SOLIDWORKS</strong>,
+          ran <strong>FEA</strong> in SOLIDWORKS, used <strong>MATLAB/Simulink</strong> for kinematics, and
+          machined parts on the <strong>manual and CNC mill</strong>.
+          [TODO: who you worked with on the suspension sub-team.]
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Wheel hubs</h3>
+        <p>
+          The hub had to be machinable in-house and support every expected load, while matching the wheel studs'
+          hole size and pitch circle diameter, lining up with the brake rotor's mounting holes, and fitting the
+          splined hub's mounting pattern. My goal was to minimize weight while staying robust, since the hub is
+          unsprung mass. I moved from the previous round hub to a four-arm shape to remove unnecessary mass.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/baja-suspension/hub-original.png" alt="Previous round wheel hub design" loading="lazy">
+            <img src="../assets/images/baja-suspension/hub-design-304g.png" alt="Four-arm hub concept, 303.93 g" loading="lazy">
+            <img src="../assets/images/baja-suspension/hub-design-147g.png" alt="Skeletal four-arm hub concept, 146.56 g" loading="lazy">
+            <img src="../assets/images/baja-suspension/hub-design-488g.png" alt="Curved four-arm hub concept, 487.59 g" loading="lazy">
+          </div>
+          <figcaption>The previous round hub (left) and three four-arm concepts: 303.93 g, 146.56 g, and 487.59 g</figcaption>
+        </figure>
+
+        <p>
+          I presented the concepts at my first suspension design review in October 2025. In
+          <strong>SOLIDWORKS</strong> I ran FEA with remote loads for a jump (8,818 N) and a bump
+          (8,000 N, 13,600 N, and 8,000 N in x, y, and z). Under the jump load, Design 1 only reached a factor of
+          safety of 0.84, while Design 3 reached 2.1.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/baja-suspension/fea-jump-design1.png" alt="Von Mises stress plot of hub Design 1 under the jump load" loading="lazy">
+            <img src="../assets/images/baja-suspension/fea-jump-design3.png" alt="Von Mises stress plot of hub Design 3 under the jump load" loading="lazy">
+          </div>
+          <figcaption>Jump load case: Design 1 (left, factor of safety 0.84) and Design 3 (right, factor of safety 2.1)</figcaption>
+        </figure>
+
+        <p>
+          My next steps from the review were to put less emphasis on weight and more on structural integrity:
+          trying different materials and adding support at the weak spots the FEA showed. The final hub, designed with a focus on
+          Design for Manufacturing, was validated under bump, jump, and tree-impact load cases and reduced mass by
+          ~50% while maintaining a factor of safety of ~3. I machined it on the manual and CNC mill, programming
+          the toolpaths in <strong>Fusion CAM</strong>.
+          [TODO: the final material, and how the final design differs from Design 3.]
+        </p>
+
+        <h3>Brakes</h3>
+        <p>
+          I sized the front brakes and selected COTS components based on safety factor, braking force, cost, and
+          fit within the rim.
+        </p>
+
+        <h3>Suspension kinematics</h3>
+        <p>
+          I analyzed suspension kinematics in <strong>Onshape</strong> and <strong>MATLAB/Simulink</strong> to
+          minimize bump steer across full wheel travel.
+          [TODO: what you changed in the geometry as a result.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/02.jpg" alt="[TODO: describe the image, e.g. a bump steer plot]" loading="lazy">
+          <figcaption>[TODO: caption]</figcaption>
+        </figure>
+
+        <h3>CVT thermal model</h3>
+        <p>
+          Every Baja SAE team runs the same engine, so performance depends heavily on the drivetrain and the
+          continuously variable transmission (CVT). The rubber belt CVT loses around 18% of the power passing through
+          it as heat (mean efficiency 0.818 while moving), and the rules require a guard that fully encloses it and
+          traps hot air. If the belt gets too hot, the rubber softens and glazes, grip drops, and the belt can fail
+          mid-race.
+        </p>
+        <p>
+          For Introduction to Thermodynamics, Owen Kelly, Haakon Olsen, and I asked: how hot does our CVT get during
+          the 4-hour endurance race, and which design and driving factors control its temperature? We built a
+          thermal resistance network with four lumped nodes (sheaves, belt, guard air, and guard wall), included
+          heat from the engine, and simulated it second by second over a measured 114-minute drive cycle from
+          McMaster Baja's endurance GPS data, processed in <strong>MATLAB</strong>.
+          [TODO: which parts of the model you built.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/cvt-network.png" alt="Thermal resistance network of the CVT with conductances between sheaves, belt, guard air, guard wall and ambient" loading="lazy">
+          <figcaption>Thermal resistance network of the CVT (conductances in W/K at run-average conditions)</figcaption>
+        </figure>
+
+        <p>
+          At average conditions the belt reaches a steady-state temperature of about 109 °C (sheaves 106 °C).
+          Over the drive cycle, the belt crosses its ~93 °C continuous operating limit after about 35 minutes and
+          peaks at about 132 °C. About 87% of the heat (565 of 649 W) leaves by air exchange through the guard's
+          mesh panel, so mesh airflow is the main cooling path.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/cvt-temperatures.png" alt="Drive trace speed and predicted CVT belt, sheave, guard air and guard wall temperatures over the 114-minute run" loading="lazy">
+          <figcaption>Drive trace and predicted CVT temperatures; the belt passes its 93 °C limit after about 35 minutes</figcaption>
+        </figure>
+
+        <p>
+          To find a fix, we swept vehicle speed against airflow and the diameter of a ram-air intake duct. At the
+          3.45 m/s race average, a 4-inch duct brings the steady belt temperature down to about 91 °C, under the
+          limit, and lowers the transient peak from 132 °C to about 107 °C. A duct of at least 4 inches, combined
+          with more mesh area or less time idling, is needed to keep the belt within its limit for the whole race.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/cvt-sweep.png" alt="Contour plot of steady-state belt temperature versus vehicle velocity and airflow factor" loading="lazy">
+          <figcaption>Steady-state belt temperature as a function of vehicle speed and airflow factor</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <ul>
+          <li>Wheel hubs ~50% lighter while keeping a factor of safety of ~3, machined in-house</li>
+          <li>Front brakes sized and COTS components selected to fit within the rim</li>
+          <li>Suspension geometry tuned to minimize bump steer across full wheel travel</li>
+          <li>CVT model predicts a 132 °C belt peak; a 4-inch intake duct lowers it to about 107 °C</li>
+        </ul>
+        <p>[TODO: how the car performed at competition or in testing, and what you'd do next.]</p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

@@ -50,8 +50,8 @@ const SITE_PAGES = [
     blurb: 'Wheel hubs, brakes, and suspension geometry for an off-road racing vehicle.',
     tag: 'Project',
     section: 'work',
-    thumb: 'assets/images/wheel_hub_FEA.png',
-    thumbAlt: 'FEA of a Baja SAE wheel hub',
+    thumb: 'assets/images/baja-suspension/thumb.jpg',
+    thumbAlt: 'Machined Baja SAE wheel hub',
     menu: 'projects'
   },
   {
@@ -87,7 +87,38 @@ const SITE_PAGES = [
     blurb: 'A hopping mechanism based on elastic energy storage observed in grasshopper legs.',
     tag: 'Project',
     section: 'work',
-    thumb: null,
+    thumb: 'assets/images/hopping-mechanism/cad.jpg',
+    thumbAlt: 'CAD render of the hopping mechanism',
+    menu: 'projects'
+  },
+  {
+    slug: 'arctic-kinetic-sculpture',
+    title: 'The Arctic Kinetic Sculpture',
+    blurb: 'A seal, bear, and shark set in motion by chains, sprockets, and bevel gears.',
+    tag: 'Project',
+    section: 'work',
+    thumb: 'assets/images/arctic-kinetic-sculpture/thumb.jpg',
+    thumbAlt: 'The Arctic kinetic sculpture',
+    menu: 'projects'
+  },
+  {
+    slug: 'flying-automata',
+    title: 'Flying Automata',
+    blurb: 'A mechanical bird automaton with articulated wings, driven by gears and linkages.',
+    tag: 'Project',
+    section: 'work',
+    thumb: 'assets/images/flying-automata/thumb.jpg',
+    thumbAlt: 'Mechanical bird automaton with wooden wings',
+    menu: 'projects'
+  },
+  {
+    slug: 'matlab-modeling',
+    title: 'Modeling & Simulation in MATLAB',
+    blurb: 'Facial recognition, transit delays, disease spread, and lighting optimization.',
+    tag: 'Project',
+    section: 'work',
+    thumb: 'assets/images/matlab-modeling/mbta-arrivals.png',
+    thumbAlt: 'Heat map of MBTA passenger arrival rates by station and time of day',
     menu: 'projects'
   },
   {
@@ -127,33 +158,26 @@ const SITE_PAGES = [
     blurb: "Founded and led my high school's VEX Robotics competition team.",
     tag: 'Leadership',
     section: 'leadership',
-    thumb: null,
+    thumb: 'assets/images/vex-robotics/robot-02.jpg',
+    thumbAlt: 'VEX competition robot',
     menu: 'experience'
   },
 
   /* ── Hobbies ───────────────────────────────────────────── */
   {
     slug: 'machining',
-    title: 'Machining',
+    title: 'Machining & Fabrication',
     blurb: 'Custom parts for precise engineering purposes and decorative pieces.',
     tag: 'Hobby',
     section: 'hobbies',
-    thumb: null,
+    thumb: 'assets/images/machining/thumb.jpg',
+    thumbAlt: 'Machined fork bushing housing',
     menu: 'projects'
   },
   {
     slug: 'electronics',
     title: 'Circuits & Electronics',
     blurb: 'An LED grid that displays the noise level in a room, built with an Arduino Nano.',
-    tag: 'Hobby',
-    section: 'hobbies',
-    thumb: null,
-    menu: 'projects'
-  },
-  {
-    slug: 'mechanical-sculptures',
-    title: 'Mechanical Sculptures',
-    blurb: 'Sculptures driven by rack and pinions, scotch yokes, gears, belts, and chains.',
     tag: 'Hobby',
     section: 'hobbies',
     thumb: null,

@@ -474,10 +474,16 @@ a:hover {
   margin-bottom: var(--space-5);
 }
 
-/* Product renders / photos on white: show the whole image instead of cropping */
+/* Product renders / photos on white: show the whole image instead of cropping
+   (and never enlarge a small image beyond its real size) */
 img.page-hero--contain {
-  object-fit: contain;
+  object-fit: scale-down;
   background: var(--color-bg);
+}
+
+/* Photo whose subject sits low in the frame: crop from the top instead of both ends */
+.page-hero--bottom {
+  object-position: center bottom;
 }
 
 .page-tagline {
@@ -492,6 +498,11 @@ img.page-hero--contain {
 
 .prose h2 {
   margin-top: var(--space-6);
+}
+
+.prose h3 {
+  margin: var(--space-5) 0 var(--space-2);
+  color: var(--color-text);
 }
 
 .prose > :first-child {
@@ -512,10 +523,40 @@ img.page-hero--contain {
   margin: var(--space-5) 0;
 }
 
+/* Inline images show at their natural size (never stretched), centred */
 .prose figure img,
+.prose figure video {
+  width: auto;
+  max-width: 100%;
+  max-height: 80vh;
+  margin-inline: auto;
+  border-radius: var(--radius);
+}
+
 .prose figure .placeholder {
   width: 100%;
-  border-radius: var(--radius);
+}
+
+.prose figure video {
+  display: block;
+  width: 100%;
+  max-width: 48rem;
+  height: auto;
+  background: #000;
+}
+
+/* Several images side by side with one shared caption:
+   <figure><div class="gallery"><img ...><img ...></div><figcaption>...</figcaption></figure> */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.prose .gallery img {
+  max-height: 28rem;
+  object-fit: contain;
 }
 
 .prose figcaption {

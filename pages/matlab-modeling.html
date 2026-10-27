@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Modeling &amp; Simulation in MATLAB | Pia Swarup</title>
+  <meta name="description" content="MATLAB modeling projects by Pia Swarup: Eigenfaces facial recognition, MBTA delay simulation, SIR disease models, and light position optimization.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/matlab-modeling/mbta-arrivals.png" alt="Heat map of MBTA passenger arrival rates by station and time of day">
+      <h1>Modeling &amp; Simulation in MATLAB</h1>
+      <p class="page-tagline">Facial recognition, transit delays, disease spread, and lighting optimization.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          A collection of modeling and analysis projects in <strong>MATLAB</strong>: each one starts from a
+          question, builds a model, and uses simulation or linear algebra to answer it.
+          [TODO: which classes these were for, and when.]
+        </p>
+
+        <h2>Eigenfaces facial recognition</h2>
+        <p>
+          I implemented the Eigenfaces algorithm using <strong>PCA</strong> and
+          <strong>nearest-neighbor classification</strong>, and analyzed how the number of principal components
+          affects recognition accuracy. The classifier reached more than 92% accuracy on the test dataset with just
+          4 principal components.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/matlab-modeling/eigenface.png" alt="A low-resolution face image from the Eigenfaces dataset" loading="lazy">
+            <img src="../assets/images/matlab-modeling/eigenfaces-accuracy.png" alt="Plot of percent accuracy versus number of principal components, reaching 92.27% at 4 components" loading="lazy">
+          </div>
+          <figcaption>Recognition accuracy versus number of principal components (92.27% at 4)</figcaption>
+        </figure>
+
+        <h2>Delay on the MBTA</h2>
+        <p>
+          How does passenger arrival rate, which varies by time of day, influence expected travel delay between
+          Riverside and North Station on the MBTA Green Line D Branch? With a teammate, I built a stochastic model
+          using Poisson-distributed passenger arrivals and station-specific arrival-rate scaling factors from MBTA
+          data, and ran repeated simulations across different arrival rates and times of day. As arrival rates
+          increase, the expected delay increases, with peak travel times producing the largest delays.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/matlab-modeling/mbta-periods.png" alt="Bar chart of expected total delay across nine time periods from 100 Poisson runs" loading="lazy">
+            <img src="../assets/images/matlab-modeling/mbta-delay.png" alt="Average delay as the base arrival rate increases, over 100 runs" loading="lazy">
+          </div>
+          <figcaption>Expected total delay by time period (left) and as the base arrival rate increases (right)</figcaption>
+        </figure>
+
+        <h2>COVID-19 spread in a grocery store</h2>
+        <p>
+          How does the number of staff members in a grocery store affect the peak number of COVID-19 infections?
+          I developed an agent-based SIR model, simulated grocery store interactions under varying staff counts,
+          and quantified the impact of staffing levels on peak infection rates.
+          [TODO: the key finding.]
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/matlab-modeling/sir-network.png" alt="Network graph of shoppers and staff at a grocery store" loading="lazy">
+            <img src="../assets/images/matlab-modeling/sir-peak-vs-staff.png" alt="Plot of peak infections versus number of staff" loading="lazy">
+          </div>
+          <figcaption>The network of shoppers and staff (left) and peak infections versus number of staff (right)</figcaption>
+        </figure>
+
+        <h2>Mask effectiveness</h2>
+        <p>
+          How effective do masks need to be to cut the peak number of infected people by 50%? With a teammate, I
+          built a stock-and-flow SIR model based on real data from the 2017 A/H3N2 flu strain and ran a parameter
+          sweep over mask effectiveness. We found that masks need to be at least 89% effective to halve the peak
+          number of infected people.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/matlab-modeling/masks-sketch.jpg" alt="Hand-drawn stock-and-flow diagram of the SIR model with a system boundary" loading="lazy">
+            <img src="../assets/images/matlab-modeling/masks-curves.png" alt="Infected people over time at 1% mask effectiveness increments" loading="lazy">
+            <img src="../assets/images/matlab-modeling/masks-peak.png" alt="Peak infected people versus mask effectiveness, crossing the 50% line near 0.89" loading="lazy">
+          </div>
+          <figcaption>Model sketch, infection curves for each effectiveness level, and peak infections versus mask effectiveness</figcaption>
+        </figure>
+
+        <h2>Light position optimization</h2>
+        <p>
+          For Quantitative Engineering Analysis (Fall 2025), Avani Patil and I asked how to place and orient a
+          single light in a 3D room to best serve several occupants. We modeled illumination with Lambert's cosine
+          law and the inverse-square law, scored each placement on minimum illumination, mean illumination,
+          uniformity, and a weighted combination, and compared five strategies, from exhaustive searches over
+          position and direction to methods based on <strong>principal component analysis</strong> of where
+          occupants stand. Across a hundred randomized rooms, optimizing position and direction together scored
+          highest on average.
+        </p>
+
+        <figure>
+          <img src="../assets/images/matlab-modeling/light-poster.jpg" alt="Research poster: Light Position Optimization" loading="lazy">
+          <figcaption>Project poster</figcaption>
+        </figure>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>
