@@ -29,18 +29,11 @@
       <div class="prose">
         <h2>Overview</h2>
         <p>
-          Soil moisture is one of the biggest factors in crop yield and irrigation efficiency. Variable-rate
-          irrigation, which waters each part of a field based on measured soil moisture, can cut irrigation water
-          use by 25–40% and raise yields by up to 15% for some crops. But it needs dense moisture maps, roughly one
-          measurement per acre, and over 75% of farmers still rely on hand sampling and rules of thumb.
-        </p>
-        <p>
-          From January to May 2026, I worked at the Olin College Robotics Lab on <strong>HydroFleet</strong>, a
-          multi-drone system for high-resolution soil moisture mapping, in collaboration with MIT. HydroFleet has
-          four parts: a drone platform, a multi-drone path planner, a farmer dashboard, and, at its core, a
-          cable-suspended soil sampling module that takes in-ground moisture measurements without the drone having
-          to land. That sampling module, designed from scratch during the project, is what I worked on. We tested
-          the system on a working 109-acre farm, Powisset Farm in Dover, MA.
+          From January to May 2026, I worked on the soil sampling module for <strong>HydroFleet</strong>, a
+          multi-drone system for high-resolution soil moisture mapping built at the Olin College Robotics Lab in
+          collaboration with MIT. The module hangs on a cable about 2 m below each drone: it lands on the soil, anchors
+          itself, drills an auger with a moisture probe into the ground, takes a reading, and lifts off again, so the
+          drone never has to land. We tested the system on a working farm, Powisset Farm in Dover, MA.
         </p>
 
         <figure>
@@ -57,79 +50,23 @@
 
         <h2>My role</h2>
         <p>
-          I was a Mechanical and Hardware Engineer on the soil sampler, as a first-year on an 11-student team.
-          I designed the patent-pending retractable claw anchor that holds the sampler to the ground while the
-          auger runs, and the lightweight base, optimized for stability with robust mounting points for the servos.
-          I designed in <strong>Onshape</strong>, printed parts on <strong>Prusa 3D printers</strong>, and worked
-          with the <strong>Arduino</strong> that runs the sampler.
-          [TODO: any other parts of the sampler you designed, built, or tested.]
+          I was a Mechanical and Hardware Engineer on the soil sampling module, as a first-year on an 11-student team.
+          My main parts were the anchor design, a redesign of the base, switching to more powerful servos for the
+          anchors, adding an ultrasonic sensor so the auger could start and stop on its own, and shortening the soil
+          moisture probe to save weight. On the software side, I worked out the landing and probing sequence: how to
+          get the anchors into the ground most reliably. I designed in <strong>Onshape</strong>, printed parts on
+          <strong>Prusa 3D printers</strong>, and programmed the sampler's <strong>Arduino</strong>.
         </p>
 
         <h2>Design &amp; build</h2>
 
-        <h3>Choosing a concept</h3>
-        <p>
-          We started from the farmers' problem: they need a reliable, affordable way to collect soil moisture data at
-          field scale. The sampler had to probe up to 6 in deep, insert and retract its sensor without breaking it,
-          stay within the drone's payload capacity, sample without damaging plants, and read within a 5% margin of
-          error. We sketched three ideas: an embedded drill probe driven down a lead screw, a spring-loaded harpoon,
-          and a sliding hammer. We chose the embedded drill probe because it was the most consistent: it wasn't
-          clear a spring could reliably drive a harpoon 6 in into dirt, and the sliding hammer relied on force from
-          the drone.
-        </p>
-
-        <figure>
-          <div class="gallery">
-            <img src="../assets/images/soil-sampling-drone/concept-drill.jpg" alt="Sketch of the embedded drill probe concept" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/concept-harpoon-spring.jpg" alt="Sketch of the spring harpoon concept" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/concept-harpoon-cam.jpg" alt="Sketch of the harpoon with a helical cam" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/concept-hammer.jpg" alt="Sketch of the sliding hammer concept" loading="lazy">
-          </div>
-          <figcaption>Concept sketches: embedded drill probe, spring harpoon, harpoon with helical cam, and sliding hammer</figcaption>
-        </figure>
-
-        <h3>From mockup to Version 1</h3>
-        <p>
-          A quick physical mockup let us check the two-plate frame, the vertical supports, and how the sampler would
-          hang before we moved to CAD. To drive the auger and sensor, we chose 3D-printed gears over chains (too
-          heavy) and belts (they need exact ratios and tensioning), since gears are light and easy to change. We then
-          prototyped two drive layouts: one with separate motors for the lead screw and the auger (about 610 g), and
-          one where a single motor drives both by spinning the lead nut around a fixed screw (626 g, or 509 g without
-          the probe, heavier mainly because it used steel rods instead of aluminum). Weight was the major constraint,
-          so we went with the single motor, which became Version 1.
-        </p>
-
-        <figure>
-          <div class="gallery">
-            <img src="../assets/images/soil-sampling-drone/mockup.jpg" alt="Low-fidelity physical mockup of the sampler frame made of cardboard and dowels" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/first-cad.jpg" alt="First CAD iteration of the embedded probe sampler" loading="lazy">
-          </div>
-          <figcaption>The first physical mockup and the first CAD iteration</figcaption>
-        </figure>
-
-        <figure>
-          <div class="gallery">
-            <img src="../assets/images/soil-sampling-drone/two-motor.jpg" alt="Two-motor sampler prototype in CAD and as built" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/one-motor.jpg" alt="One-motor sampler prototype in CAD and as built" loading="lazy">
-          </div>
-          <figcaption>Two-motor (left) and one-motor (right) prototypes</figcaption>
-        </figure>
-
-        <p>
-          Two more problems came up in testing. At first the sensor stayed still while the auger turned around it,
-          but the friction was too high and the sensor blocked the auger from clearing dirt. We clamped the gear,
-          auger, and sensor together with a set screw so they spin as one, and added a slip ring so the sensor's
-          wires don't twist. Switching to a continuous servo to save weight also lost us position feedback, so we
-          added a distance sensor between the plates. We tried a time-of-flight sensor and an ultrasonic sensor; the
-          time-of-flight sensor was thrown off by leaves and grass in the field, so we chose the ultrasonic.
-        </p>
-
         <h3>Anchors</h3>
         <p>
-          To drill reliably, the sampler needs a firm grip on the ground. Passive spikes stopped it twisting but not
-          lifting, so we moved to active, servo-driven anchors. The 9 g servos were too weak to pierce the ground;
-          switching to 8.5 kg MEUS Racing servos (about 22 g each) worked far better, but the anchors were too flimsy
-          and broke as soon as they hit dirt. Thicker mounting screws fixed the breaking. A tapered profile, narrow at
+          To drill reliably, the sampler needs a firm grip on the ground: otherwise the auger lifts the whole module
+          instead of digging. Passive spikes stopped it twisting but not lifting, so we moved to active, servo-driven
+          anchors. The first 9 g servos were too weak to pierce the ground, so we switched to three 8.5 kg·cm coreless
+          MEUS Racing servos, which have a much higher torque-to-weight ratio and dug in far better. The anchors were then too
+          flimsy and broke as soon as they hit dirt, which thicker mounting screws fixed. A tapered profile, narrow at
           the tip and widening, made the anchor easier to dig in, but it stopped where the taper ended and could be
           pulled out. Making the anchor circular let the taper continue along an arc, so it digs deeper and sits
           perpendicular to the force from the auger, which also minimizes how much the sampler lifts.
@@ -153,23 +90,12 @@
           <figcaption>Three servo-driven anchors at about 120° intervals, dug into the soil</figcaption>
         </figure>
 
-        <h3>Final design</h3>
+        <h3>Base redesign</h3>
         <p>
-          Every change in the final design (Version 4) aimed to cut weight while keeping the sampler flat and stable
-          on the ground. We pocketed the base to lighten it and added holes for spikes, which gave good contact with
-          the soil before the anchors went in. We switched from a steel auger to a 3D-printed one, which dug just as
-          well for less weight. The biggest single saving came from the sensor: we cut its long probe shorter,
-          TIG-welded it back together, and rewired it to our own circuit, saving 47 g. Version 4 was substantially
-          lighter than Version 3 while still reaching a 5.25 in sampling depth.
+          I redesigned the base from scratch to cut weight while keeping it flat and stable on the ground. I pocketed it to lighten
+          it and added holes for spikes, which give the sampler good contact with the soil before the anchors go in and
+          stop it rotating while the auger digs.
         </p>
-
-        <figure>
-          <div class="gallery">
-            <img src="../assets/images/soil-sampling-drone/final-cad.jpg" alt="CAD of the final soil sampler with blue curved anchors" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/final-fabricated.jpg" alt="The finished soil sampler with its green auger and curved anchors, on display in front of the Farm Robotics Challenge banner" loading="lazy">
-          </div>
-          <figcaption>The final sampler in CAD and as built, at the Farm Robotics Challenge</figcaption>
-        </figure>
 
         <figure>
           <div class="gallery">
@@ -179,14 +105,43 @@
           <figcaption>The lightened base plate, and the spikes on its underside that resist rotation</figcaption>
         </figure>
 
-        <figure>
-          <img src="../assets/images/soil-sampling-drone/lightened-probe.jpg" alt="The original long soil moisture probe above the shortened, re-welded probe" loading="lazy">
-          <figcaption>The original sensor probe and our shortened, re-welded version</figcaption>
-        </figure>
+        <h3>Ultrasonic sensor for autonomous digging</h3>
+        <p>
+          The auger is driven by a continuous servo, which gives no position feedback, so the sampler had no way to
+          know how far the probe had gone into the soil. I changed the design to mount an <strong>ultrasonic
+          sensor</strong> that measures the distance between the stationary part of the module, sitting on the soil,
+          and the moving part that carries the auger. With that measurement, the sampler can turn the auger's digging
+          on and off autonomously, and abort instead of recording bad data if the probe can't get deep enough, for
+          example because of a rock or a poor landing. I tested it against a time-of-flight sensor: the time-of-flight
+          sensor was more precise on paper but was easily thrown off by leaves and grass between the plates, while the
+          ultrasonic sensor gave reliable readings in the field.
+        </p>
+
+        <h3>Lighter moisture probe</h3>
+        <p>
+          The soil moisture sensor came with a long probe and a heavy housing that carried weight we didn't need. I
+          shortened the probe: it was cut down, TIG-welded back together, and rewired to the module's own circuit,
+          saving 47 g.
+        </p>
 
         <figure>
-          <img src="../assets/images/soil-sampling-drone/sampler-labeled.jpg" alt="Labeled CAD of the soil sampler: drone attachment frame, slip ring, gear system, lead screw, auger, soil sampler and anchor servos" loading="lazy">
-          <figcaption>The soil sampling module with its main components labeled</figcaption>
+          <img src="../assets/images/soil-sampling-drone/lightened-probe.jpg" alt="The original long soil moisture probe above the shortened, re-welded probe" loading="lazy">
+          <figcaption>The original sensor probe and the shortened, re-welded version</figcaption>
+        </figure>
+
+        <h3>Landing and probing sequence</h3>
+        <p>
+          On the software side, I worked out the landing and probing sequence the sampler's <strong>Arduino</strong>
+          runs once it touches down: extend the anchors, drive the auger and probe into the soil, take several moisture
+          readings, retract the probe, and retract the anchors. The hardest part was getting the anchors into the
+          ground reliably, so I tested different approaches: driving them in all at once in one fast motion, digging
+          them in over multiple passes, and running them at different speeds. Digging in incrementally at high
+          intensity worked best across different soils: the anchors went deepest and held best over repeated tests.
+        </p>
+
+        <figure>
+          <img src="../assets/images/soil-sampling-drone/state-diagram.jpg" alt="State diagram of the sampling routine: off, paused, claw extending, main extending, sampling, main retracting, claw retracting" loading="lazy">
+          <figcaption>The sampling routine's state diagram</figcaption>
         </figure>
 
         <figure>
@@ -197,40 +152,25 @@
           <figcaption>The sampler running (sped up)</figcaption>
         </figure>
 
-        <h3>Electronics and the sampling routine</h3>
+        <h3>Final design</h3>
         <p>
-          An <strong>Arduino Nano</strong> on top of the sampler runs the whole routine: extend the anchors, drive
-          the auger and probe into the soil, take several moisture readings, retract the probe, and retract the
-          anchors. The ultrasonic sensor checks how far the probe actually traveled; if it didn't get deep enough,
-          because of a rock or a poor landing, the sampler aborts instead of recording junk data. Because the motors
-          are electrically noisy and the cable is 2 m long, the drone and sampler talk over a <strong>CAN
-          bus</strong>. The drone's 14.8 V battery powers the sampler, stepped down to 8.4 V so the servos reach
-          full torque.
+          The final version brought these changes together: refined anchors that grip the soil reliably, a lighter
+          base, a shortened probe, and ultrasonic feedback on the auger, reaching a 5.25 in sampling depth.
         </p>
 
         <figure>
-          <div class="gallery">
-            <img src="../assets/images/soil-sampling-drone/hardware-diagram.jpg" alt="Hardware diagram of the soil sampler: buck converter, Arduino Nano, CAN board, ultrasonic sensor, signal conditioning board, servos and moisture sensor" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/state-diagram.jpg" alt="State diagram of the sampling routine: off, paused, claw extending, main extending, sampling, main retracting, claw retracting" loading="lazy">
-          </div>
-          <figcaption>Hardware diagram (left) and the sampling routine's state diagram (right)</figcaption>
+          <img src="../assets/images/soil-sampling-drone/sampler-labeled.jpg" alt="Labeled CAD of the soil sampler: drone attachment frame, slip ring, gear system, lead screw, auger, soil sampler and anchor servos" loading="lazy">
+          <figcaption>The soil sampling module with its main components labeled</figcaption>
         </figure>
 
-        <h3>Sensor calibration</h3>
         <p>
-          The sensor is a capacitive DSMM500 soil moisture probe; water raises the soil's dielectric constant, which
-          raises the probe's capacitance. To log it on the drone, we dropped the original housing and read the bare
-          probe through a custom LMC555 timer circuit. We calibrated it in soil mixed to 0%, 15%, 20%, 25%, 30%, and
-          50% gravimetric water content, which gave a strongly linear calibration curve (R² = 0.9969). An unmodified
-          factory probe showed the same trend, confirming the custom circuit worked.
+          The team calibrated the moisture sensor against soil mixed to known water contents from 0% to 50%, giving a
+          strongly linear calibration curve (R² = 0.9969).
         </p>
 
-        <figure>
-          <div class="gallery">
-            <img src="../assets/images/soil-sampling-drone/calibration-setup.jpg" alt="Cups of soil at different moisture levels lined up on a table for calibration" loading="lazy">
-            <img src="../assets/images/soil-sampling-drone/calibration-curve.jpg" alt="Calibration curve of gravimetric water content versus output voltage, R squared 0.9969" loading="lazy">
-          </div>
-          <figcaption>Calibration samples from 0% to 50% water content, and the resulting calibration curve</figcaption>
+        <figure class="figure--small">
+          <img src="../assets/images/soil-sampling-drone/calibration-curve.jpg" alt="Calibration curve of gravimetric water content versus output voltage, R squared 0.9969" loading="lazy">
+          <figcaption>Moisture sensor calibration curve</figcaption>
         </figure>
 
         <h2>Results</h2>
@@ -250,12 +190,32 @@
           <figcaption>Drone versus hand-held moisture measurements (left) and sampler landing accuracy (right)</figcaption>
         </figure>
 
-        <p>
-          Next, the team plans to add an RTK base station and vision-based landing to reduce oscillation during
-          the final descent, and adaptive sampling that picks new sampling points where the moisture map is most
-          uncertain.
-          [TODO: what you learned, or what you'd do next on the sampler.]
-        </p>
+        <h3>What I learned</h3>
+        <ul>
+          <li>
+            <strong>Hanging loads don't stay still.</strong> With the sampler hung from one point, every twist it made
+            in the air was passed up to the drone, which spun along with it. Spreading the load over three braided cords
+            that meet at a low-friction marine fishing swivel let the sampler turn on its own without dragging the drone
+            around.
+          </li>
+          <li>
+            <strong>Soil pushes back.</strong> In compacted clay, the auger's push into the ground turned into an upward
+            force that lifted the whole sampler off the surface. Solving that took many rounds of iteration and testing
+            in real soil. The final setup uses three anchor arms spaced about 120° apart, with curved, tapered tips that
+            slide into the clay at right angles to the auger's reaction force so they don't pull out, plus fixed spikes
+            under the base that keep it from spinning.
+          </li>
+          <li>
+            <strong>Every gram has to earn its place.</strong> Staying under the drone's payload limit shaped every
+            decision: 3D-printed gears, an aluminum shaft, a lightweight Arduino Nano for onboard computing, and power
+            drawn directly from the drone's battery instead of a separate power source.
+          </li>
+          <li>
+            <strong>Get creative, and don't get attached to old designs.</strong> Some of the biggest weight savings
+            came from unconventional ideas, like cutting down and rebuilding the soil moisture sensor by hand, and from
+            questioning earlier design decisions. Rather than tweaking the old base, I redesigned it from scratch.
+          </li>
+        </ul>
       </div>
 
     </article>
