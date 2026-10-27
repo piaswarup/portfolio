@@ -92,7 +92,7 @@ const SITE_PAGES = [
     blurb: 'An animatronic pig that spins faster when you approach and flaps its wings at loud noises.',
     tag: 'Project',
     section: 'work',
-    thumb: 'assets/images/animatronic-flying-pig/cad.jpg',
+    thumb: 'assets/images/animatronic-flying-pig/thumb.jpg',
     thumbAlt: 'CAD of Peric the animatronic pig',
     menu: 'projects'
   },
@@ -112,7 +112,7 @@ const SITE_PAGES = [
     blurb: 'A hopping mechanism based on elastic energy storage observed in grasshopper legs.',
     tag: 'Project',
     section: 'work',
-    thumb: 'assets/images/hopping-mechanism/cad.jpg',
+    thumb: 'assets/images/hopping-mechanism/thumb.jpg',
     thumbAlt: 'CAD render of the hopping mechanism',
     menu: 'projects'
   },
