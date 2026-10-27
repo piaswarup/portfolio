@@ -63,7 +63,7 @@ Leadership and hobby pages have no home card; they're reached from the dropdowns
 - Each dropdown lists every page with that `menu` value. A sub-heading (Leadership, Hobbies) appears where the
   `section` changes, so **entries must stay grouped: all `work`, then `leadership`, then `hobbies`.**
 - Footer: email as text `pswarup(at)olin(dot)edu` (keep this obfuscated format, not a mailto link), LinkedIn,
-  GitHub, Instagram, "Would love to chat, just reach out :)", and "© Pia Swarup".
+  GitHub, "Would love to chat, just reach out :)", and "© Pia Swarup".
 - Bottom of each detail page: "More work" row with 3 cards to the next pages in the list.
 
 ## `SITE_PAGES` entry fields

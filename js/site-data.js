@@ -74,7 +74,7 @@ const SITE_PAGES = [
     tag: 'Project',
     section: 'work',
     thumb: 'assets/images/soil-probing-rover/thumb.jpg',
-    thumbAlt: 'CAD of the soil probing gantry',
+    thumbAlt: 'The farm-ng Amiga rover',
     menu: 'projects'
   },
   {
@@ -222,6 +222,5 @@ const SITE_CONTACT = {
   email: 'pswarup(at)olin(dot)edu',
   linkedin: 'https://linkedin.com/in/piaswarup',
   github: 'https://github.com/piaswarup',
-  instagram: 'https://instagram.com/ppiiias',
   resume: 'assets/files/resume.pdf'
 };

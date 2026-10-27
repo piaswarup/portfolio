@@ -170,7 +170,6 @@
           '<ul class="footer__links">' +
             social('LinkedIn', c.linkedin) +
             social('GitHub', c.github) +
-            social('Instagram', c.instagram) +
           '</ul>' +
         '</section>' +
       '</div>' +
