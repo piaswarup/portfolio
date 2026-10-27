@@ -431,14 +431,14 @@ a:hover {
 
 .intro {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto;   /* text left, portrait right */
   align-items: center;
   gap: var(--space-6);
   padding-block: var(--space-7) var(--space-5);
 }
 
 .intro__portrait {
-  width: 12.5rem;           /* the source image is small; keep it near its real size */
+  width: 17rem;
   border-radius: var(--radius);
 }
 
@@ -479,6 +479,13 @@ a:hover {
 img.page-hero--contain {
   object-fit: scale-down;
   background: var(--color-bg);
+}
+
+/* Hero that keeps its own shape (e.g. a looping video) instead of being cropped to 16:9 */
+.page-hero--natural {
+  display: block;
+  height: auto;
+  aspect-ratio: auto;
 }
 
 /* Photo whose subject sits low in the frame: crop from the top instead of both ends */
@@ -763,7 +770,8 @@ img.page-hero--contain {
   }
 
   .intro__portrait {
-    width: 9rem;
+    order: -1;              /* on phones the photo sits above the text */
+    width: 11rem;
   }
 }
 

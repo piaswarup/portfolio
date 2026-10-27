@@ -30,8 +30,8 @@ const SITE_PAGES = [
     blurb: 'Advanced the mechanical design of the assistive robot ReviMo Niko toward production.',
     tag: 'Internship',
     section: 'work',
-    thumb: 'assets/images/niko_front.png',
-    thumbAlt: 'ReviMo Niko assistive robot',
+    thumb: 'assets/images/revimo/thumb.jpg',
+    thumbAlt: 'Render of the ReviMo Niko assistive robot',
     menu: 'experience'
   },
   {

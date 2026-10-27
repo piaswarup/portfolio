@@ -22,7 +22,9 @@
   <main>
     <article class="container page">
 
-      <img class="page-hero page-hero--contain" src="../assets/images/robotics-software/pf-gazebo.gif" alt="Particle filter running on a Neato robot in Gazebo, with the particle cloud shown on the map">
+      <video class="page-hero page-hero--natural" autoplay muted loop playsinline poster="../assets/images/robotics-software/pf-hero-poster.jpg" aria-label="Particle filter running on a Neato robot in Gazebo's Gauntlet world, with the particle cloud shown on the map in rviz2">
+        <source src="../assets/videos/pf-hero-loop.mp4" type="video/mp4">
+      </video>
       <h1>Robotics Software: State Machine, Particle Filter &amp; Computer Vision</h1>
       <p class="page-tagline">Robot behaviors, localization, and vision written in ROS2 and Python.</p>
 
@@ -97,7 +99,7 @@
 
         <figure>
           <div class="gallery">
-            <img src="../assets/images/robotics-software/pf-overview.png" alt="Flowchart of the particle filter: initialize, wait for movement, motion update, sensor update, estimate pose, resample, publish" loading="lazy">
+            <img src="../assets/images/robotics-software/pf-overview.png" alt="Flowchart of the particle filter: 2D pose estimate, initialize, wait for a new scan until the robot has moved more than 0.2 m or turned more than 30 degrees, then motion update, sensor update, estimate pose, resample, and publish the particle cloud" loading="lazy">
             <img src="../assets/images/robotics-software/pf-nodes.png" alt="Diagram of ROS nodes and topics: map server, bag player, particle filter and rviz2" loading="lazy">
           </div>
           <figcaption>The particle filter's update loop (left) and its ROS nodes and topics (right)</figcaption>
