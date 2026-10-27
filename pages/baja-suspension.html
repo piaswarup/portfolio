@@ -22,7 +22,7 @@
   <main>
     <article class="container page">
 
-      <img class="page-hero page-hero--contain" src="../assets/images/baja-suspension/hub-machined.jpg" alt="Machined Baja SAE wheel hub">
+      <img class="page-hero page-hero--contain" src="../assets/images/baja-suspension/pedal-final-cad.jpg" alt="CAD of the final top-mounted pedal assembly: two pedals hanging from steel plates that pin to tabs on the chassis tubes">
       <h1>Baja SAE Suspension</h1>
       <p class="page-tagline">Wheel hubs, a lighter pedal assembly, and a CVT cooling model for an off-road racing vehicle.</p>
 
@@ -48,7 +48,7 @@
         <h2>My role</h2>
         <p>
           I was on the suspension sub-team. I worked on wheel hub design, researched whether the car could use an
-          anti-roll bar, redesigned and lightweighted the pedal assembly, and helped fabricate the car. For my
+          anti-roll bar, worked on redesigning and lightweighting the pedal assembly, and helped fabricate the car. For my
           thermodynamics class I also built the cooling model of the car's CVT. I modeled in <strong>Onshape</strong>
           and <strong>SOLIDWORKS</strong>, ran <strong>FEA</strong> in SOLIDWORKS, and machined parts on the
           <strong>manual and CNC mill</strong>.
@@ -96,33 +96,28 @@
 
         <h3>Pedal assembly</h3>
         <p>
-          I redesigned the throttle and brake pedal assembly to be much lighter, top-mounted, and attached to the
-          chassis with tabs, so the whole assembly can easily be removed and repaired. The assembly is all
-          <strong>steel</strong>, since it's welded to the chassis. The old assembly weighed about 31.35 lb, and my
-          goal was to stay below about 18 lb while getting the factor of safety above 2 everywhere. The final
-          assembly weighs 17.26 lb, about 45% less than the old one.
+          We redesigned the throttle and brake pedal assembly (shown at the top of this page) to be much lighter,
+          top-mounted, and attached to the chassis with tabs, so the whole assembly can easily be removed and
+          repaired. The assembly is all <strong>steel</strong>, since it's welded to the chassis. The old assembly
+          weighed about 31.35 lb, and our goal was to stay below about 18 lb while getting the factor of safety
+          above 2 everywhere. The final assembly weighs 17.26 lb, about 45% less than the old one.
         </p>
 
-        <figure>
-          <img src="../assets/images/baja-suspension/pedal-final-cad.jpg" alt="CAD of the final pedal assembly: two pedals hanging from steel plates that pin to tabs on the chassis tubes" loading="lazy">
-          <figcaption>The final top-mounted pedal assembly</figcaption>
-        </figure>
-
         <p>
-          I optimized the throttle assembly first and used what I learned for the brake assembly. For the load
-          case, I assumed a driver can leg press 500 lb and push at up to 30° away from straight down on the pedal,
-          which gives a side load of about 1,000 N. The three things I varied were the vertical plate thickness
+          We optimized the throttle assembly first and used what we learned for the brake assembly. For the load
+          case, we assumed a driver can leg press 500 lb and push at up to 30° away from straight down on the pedal,
+          which gives a side load of about 1,000 N. The three things we varied were the vertical plate thickness
           (high weight cost), the top and bottom plate width (medium weight cost), and the top and bottom plate
           position, moving them closer to the pivot (no weight cost).
         </p>
 
         <p>
-          I iterated in <strong>SOLIDWORKS FEA</strong>:
+          We iterated in <strong>SOLIDWORKS FEA</strong>:
         </p>
         <ul>
           <li><strong>Iteration 1:</strong> the first steel check had a minimum factor of safety of 0.51.</li>
           <li><strong>Iteration 2:</strong> lengthening the top plates raised it to 1.013, at 9.915 lb.</li>
-          <li><strong>Iteration 3:</strong> I added material around the holes in the top plates and removed the
+          <li><strong>Iteration 3:</strong> we added material around the holes in the top plates and removed the
             pedal's top pin, which had been causing inaccuracy. Removing the pin dropped the minimum factor of safety
             to 0.9172 (9.85 lb).</li>
           <li><strong>Iteration 4:</strong> larger tabs brought it to 0.99 at 10.062 lb. The only region below a
@@ -139,10 +134,10 @@
         </figure>
 
         <p>
-          For the brake pedal I also worked out how far the pedal needs to travel. The car has separate front and
+          For the brake pedal we also worked out how far the pedal needs to travel. The car has separate front and
           back brake circuits, each with its own master cylinder, linked to the pedal by a bias bar. If one circuit
           fails, the pedal must travel far enough to actuate the surviving circuit, but not so far that it hits the
-          hard stop before it generates braking force. I calculated the fluid volume needed to close the pad-to-rotor
+          hard stop before it generates braking force. We calculated the fluid volume needed to close the pad-to-rotor
           clearance from the caliper piston areas, the master cylinder travel that needs, and the pedal travel
           through the pedal ratio.
         </p>

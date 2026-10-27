@@ -501,6 +501,16 @@ img.page-hero--contain {
   aspect-ratio: auto;
 }
 
+/* Small photo: keep its own shape at a modest size instead of a full-width box */
+.page-hero--small {
+  display: block;
+  max-width: 40rem;
+  height: auto;
+  aspect-ratio: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Photo whose subject sits low in the frame: crop from the top instead of both ends */
 .page-hero--bottom {
   object-position: center bottom;

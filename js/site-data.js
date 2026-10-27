@@ -54,7 +54,7 @@ const SITE_PAGES = [
     tag: 'Project',
     section: 'work',
     thumb: 'assets/images/baja-suspension/thumb.jpg',
-    thumbAlt: 'Machined Baja SAE wheel hub',
+    thumbAlt: 'CAD of the top-mounted pedal assembly',
     menu: 'projects'
   },
   {
@@ -138,6 +138,16 @@ const SITE_PAGES = [
     menu: 'projects'
   },
   {
+    slug: 'machining',
+    title: 'Machining & Fabrication',
+    blurb: 'Custom parts for precise engineering purposes and decorative pieces.',
+    tag: 'Project',
+    section: 'work',
+    thumb: 'assets/images/machining/thumb.jpg',
+    thumbAlt: 'Machined Baja SAE wheel hub',
+    menu: 'projects'
+  },
+  {
     slug: 'movu',
     title: 'Movu NV',
     role: 'Warehouse Robotics Intern',
@@ -186,16 +196,6 @@ const SITE_PAGES = [
 
   /* ── Hobbies ───────────────────────────────────────────── */
   {
-    slug: 'machining',
-    title: 'Machining & Fabrication',
-    blurb: 'Custom parts for precise engineering purposes and decorative pieces.',
-    tag: 'Hobby',
-    section: 'hobbies',
-    thumb: 'assets/images/machining/thumb.jpg',
-    thumbAlt: 'Machined fork bushing housing',
-    menu: 'projects'
-  },
-  {
     slug: 'matlab-modeling',
     title: 'Modeling & Simulation in MATLAB',
     blurb: 'Facial recognition, transit delays, disease spread, and lighting optimization.',
@@ -211,7 +211,8 @@ const SITE_PAGES = [
     blurb: 'Black belt and multiple international medalist.',
     tag: 'Hobby',
     section: 'hobbies',
-    thumb: null,
+    thumb: 'assets/images/karate/thumb.jpg',
+    thumbAlt: 'A kumite match',
     menu: 'projects'
   }
 ];
