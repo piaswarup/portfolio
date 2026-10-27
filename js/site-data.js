@@ -40,7 +40,7 @@ const SITE_PAGES = [
   {
     slug: 'self-balancing-bicycle',
     title: 'Autonomous Self-Balancing Bicycle',
-    blurb: 'A self-balancing bicycle using a high-inertia reaction wheel and PID control.',
+    blurb: 'A modular, open-source bicycle that balances itself with a high-inertia reaction wheel.',
     tag: 'Project',
     section: 'work',
     thumb: 'assets/images/self-balancing-bicycle/thumb.jpg',
