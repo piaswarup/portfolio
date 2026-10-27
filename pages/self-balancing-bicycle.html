@@ -54,11 +54,6 @@
           [TODO: how you chose the wheel's size and inertia.]
         </p>
 
-        <figure>
-          <img src="../assets/images/self-balancing-bicycle/cad.jpg" alt="CAD render of the bicycle with the reaction wheel and custom mounts" loading="lazy">
-          <figcaption>CAD of the bicycle with the reaction wheel and mounts</figcaption>
-        </figure>
-
         <p>
           I designed and <strong>3D printed</strong> custom mounts throughout the system, and integrated the
           mechanical system with the STM32-based <strong>PID</strong> controller for dynamic balance adjustment.
@@ -68,6 +63,20 @@
         <figure>
           <img src="../assets/images/self-balancing-bicycle/electronics.jpg" alt="Close-up of the bike's control electronics: an STM32 board and an ODESC V4.2 motor controller with wiring and a 50 W resistor" loading="lazy">
           <figcaption>The control electronics, with the STM32 board and the ODESC V4.2 motor controller</figcaption>
+        </figure>
+
+        <h3>Steering</h3>
+        <p>
+          I designed and built a custom bevel gear steering system so a servo can steer the bike. The bike's fork and
+          head tube sit at an angle to the top tube, so off-the-shelf bevel gears wouldn't line up; I designed custom
+          bevel gears at the matching angle and <strong>3D printed</strong> them. The angled gears also let the servo
+          sit as close as possible to the top tube, which keeps its weight near the frame for better stability.
+          [TODO: the servo model, gear ratio, and how the gears mount to the steering column.]
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/steering.jpg" alt="[TODO: describe the photo, e.g. the servo and 3D-printed bevel gears on the head tube]" loading="lazy">
+          <figcaption>[TODO: caption, e.g. the custom bevel gear steering system]</figcaption>
         </figure>
 
         <h3>Manufacturing</h3>
@@ -117,7 +126,7 @@
         <h3>Next steps</h3>
         <p>
           The plan for the next phase is to turn the bike into a fully autonomous platform: convert the lightweight
-          fixed-gear frame to electric drive with servo steering and braking and a chain-driven motor, run a
+          fixed-gear frame to electric drive with servo braking and a chain-driven motor, run a
           <strong>ROS2</strong>-based SLAM and planning stack on an <strong>NVIDIA Jetson Orin Nano Super</strong>,
           use visual SLAM with RRT* for real-time mapping and motion planning in unknown environments, and add a
           <strong>2D LiDAR</strong> for fast obstacle detection and avoidance.
