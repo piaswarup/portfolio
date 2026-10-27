@@ -149,7 +149,7 @@ const SITE_PAGES = [
     blurb: '3D simulations of AGV fleets around the Eligo robotic picking arm to optimize throughput.',
     tag: 'Internship',
     section: 'work',
-    thumb: 'assets/images/movu_escala.png',
+    thumb: 'assets/images/movu/thumb.jpg',
     thumbAlt: 'Movu Escala robot',
     menu: 'experience'
   },
@@ -159,7 +159,7 @@ const SITE_PAGES = [
     blurb: 'Website, e-commerce, branding, and digital marketing for a nutraceutical company.',
     tag: 'Internship',
     section: 'work',
-    thumb: 'assets/images/vitrient_mockup.png',
+    thumb: 'assets/images/veg-nutraceuticals/thumb.jpg',
     thumbAlt: 'Vitrient product mockup',
     menu: 'experience'
   },

@@ -543,6 +543,11 @@ img.page-hero--contain {
   width: 100%;
 }
 
+/* A smaller inline image: <figure class="figure--small"> */
+.prose .figure--small img {
+  max-height: 22rem;
+}
+
 .prose figure video {
   display: block;
   width: 100%;
