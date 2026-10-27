@@ -516,6 +516,15 @@ img.page-hero--contain {
   object-position: center bottom;
 }
 
+/* Photo credit right under a hero that isn't Pia's own photo */
+.page-hero__credit {
+  margin-top: calc(var(--space-2) - var(--space-5));
+  margin-bottom: var(--space-5);
+  color: var(--color-muted);
+  font-size: var(--text-small);
+  text-align: center;
+}
+
 .page-tagline {
   color: var(--color-muted);
   font-size: 1.1875rem;
@@ -804,6 +813,7 @@ img.page-hero--contain {
   .intro__portrait {
     order: -1;              /* on phones the photo sits above the text */
     width: 11rem;
+    justify-self: center;
   }
 }
 

@@ -80,15 +80,17 @@ Each page has `<header id="site-header">`, `<article class="container page">`, `
 Inside the article, top to bottom:
 1. Hero image (or looping muted video), `<h1>` title, `.page-tagline`.
 2. `.prose` write-up with `<h2>` sections: **Overview**, **My role**, **Design & build** (jobs: **What I did**),
-   **Results**, then `<h3>` **What I learned** / **Next steps** where Pia has given them. In-progress projects
-   use **Status and next steps**. Hobby pages are shorter.
+   **Results**, then `<h2>` **What I learned** / **Next steps** where Pia has given them (own sections, not
+   sub-headings of Results; the machining page keeps an `<h3>` one inside its 8 ball section). In-progress
+   projects use **Status and next steps**. Hobby pages are shorter.
 3. Images and videos between paragraphs, each in a `<figure>` with a short `<figcaption>`.
 
 ## CSS helpers
 
 - Hero: `.page-hero` (16:9, cropped); add `--contain` (whole image on white, never enlarged), `--natural`
   (keeps its own shape, e.g. video), `--small` (small photo at its own shape, centred, max 40rem),
-  `--bottom` (crop from the top).
+  `--bottom` (crop from the top). `<p class="page-hero__credit">` right after a hero adds a small centred
+  photo credit (used for the farm-ng Amiga photo on the rover page).
 - Inline: `.gallery` (images side by side, one caption), `.figure--small`, `video.video--portrait`
   (phone videos), `.embed` / `.embed--portrait` (YouTube / Google Drive iframes).
 - Cards: `.card`, `.card__overlay`, `.card__role`, `.card__placeholder`. Missing photo: `.placeholder`
@@ -107,7 +109,8 @@ Inside the article, top to bottom:
 - Card images (`thumb.jpg`): 1200×900, object trimmed and scaled to fit 80% × 72% of the card, centred on
   white, so every home card shows its object at about the same scale. Transparent PNGs are flattened onto white.
 - Videos: H.264 `.mp4`, compressed for the web, with a poster image. Bike page videos have no audio.
-- Only use Pia's own photos, CAD and plots, not other teams' or papers' images.
+- Only use Pia's own photos, CAD and plots, not other teams' or papers' images. Exception: the farm-ng Amiga
+  photo on the rover page (hero and card), credited under the hero.
 
 ## Adding a project
 
