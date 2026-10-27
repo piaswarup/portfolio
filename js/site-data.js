@@ -1,5 +1,5 @@
 /* ==========================================================
-   site-data.js — the ONE list of every page on the site.
+   site-data.js: the ONE list of every page on the site.
 
    To add a page: copy pages/_template.html to pages/<slug>.html,
    then add one entry below. The home-page grids, the Projects /
@@ -9,9 +9,11 @@
    Fields:
      slug     file name in pages/ without ".html"
      title    card title (also used in the dropdown menu)
+     role     (optional) job title, shown under the title in the
+              dropdown and on the card, e.g. "Hardware Robotics Intern"
      blurb    one-line description under the card title
      tag      "Project" | "Internship" | ... (not shown on cards right now)
-     section  "work" | "leadership" | "hobbies" — only "work" pages get a
+     section  "work" | "leadership" | "hobbies". Only "work" pages get a
               card on the home page; the others are reached through the
               dropdown menus and the "More work" rows
      thumb    card image, relative to the site root, or null to show
@@ -26,7 +28,8 @@ const SITE_PAGES = [
   /* ── Projects & Experience ─────────────────────────────── */
   {
     slug: 'revimo',
-    title: 'ReviMo — Hardware Robotics Intern',
+    title: 'ReviMo',
+    role: 'Hardware Robotics Intern',
     blurb: 'Advanced the mechanical design of the assistive robot ReviMo Niko toward production.',
     tag: 'Internship',
     section: 'work',
@@ -134,18 +137,9 @@ const SITE_PAGES = [
     menu: 'projects'
   },
   {
-    slug: 'matlab-modeling',
-    title: 'Modeling & Simulation in MATLAB',
-    blurb: 'Facial recognition, transit delays, disease spread, and lighting optimization.',
-    tag: 'Project',
-    section: 'work',
-    thumb: 'assets/images/matlab-modeling/mbta-arrivals.png',
-    thumbAlt: 'Heat map of MBTA passenger arrival rates by station and time of day',
-    menu: 'projects'
-  },
-  {
     slug: 'movu',
-    title: 'Movu NV — Warehouse Robotics Intern',
+    title: 'Movu NV',
+    role: 'Warehouse Robotics Intern',
     blurb: '3D simulations of AGV fleets around the Eligo robotic picking arm to optimize throughput.',
     tag: 'Internship',
     section: 'work',
@@ -155,7 +149,8 @@ const SITE_PAGES = [
   },
   {
     slug: 'veg-nutraceuticals',
-    title: 'Veg Nutraceuticals — Web Design & Marketing Intern',
+    title: 'Veg Nutraceuticals',
+    role: 'Web Design & Marketing Intern',
     blurb: 'Website, e-commerce, branding, and digital marketing for a nutraceutical company.',
     tag: 'Internship',
     section: 'work',
@@ -167,7 +162,8 @@ const SITE_PAGES = [
   /* ── Leadership ────────────────────────────────────────── */
   {
     slug: 'baja-sae-pm',
-    title: 'Olin Baja SAE — Project Manager',
+    title: 'Olin Baja SAE',
+    role: 'Project Manager',
     blurb: 'Leading a 50+ member team designing and building an off-road racing vehicle.',
     tag: 'Leadership',
     section: 'leadership',
@@ -176,7 +172,8 @@ const SITE_PAGES = [
   },
   {
     slug: 'vex-robotics',
-    title: 'High School VEX Robotics — Founder & President',
+    title: 'High School VEX Robotics',
+    role: 'Founder & President',
     blurb: "Founded and led my high school's VEX Robotics competition team.",
     tag: 'Leadership',
     section: 'leadership',
@@ -197,12 +194,13 @@ const SITE_PAGES = [
     menu: 'projects'
   },
   {
-    slug: 'electronics',
-    title: 'Circuits & Electronics',
-    blurb: 'An LED grid that displays the noise level in a room, built with an Arduino Nano.',
+    slug: 'matlab-modeling',
+    title: 'Modeling & Simulation in MATLAB',
+    blurb: 'Facial recognition, transit delays, disease spread, and lighting optimization.',
     tag: 'Hobby',
     section: 'hobbies',
-    thumb: null,
+    thumb: 'assets/images/matlab-modeling/mbta-arrivals.png',
+    thumbAlt: 'Heat map of MBTA passenger arrival rates by station and time of day',
     menu: 'projects'
   },
   {

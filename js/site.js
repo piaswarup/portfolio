@@ -1,5 +1,5 @@
 /* ==========================================================
-   site.js — builds the shared parts of every page from the lists
+   site.js: builds the shared parts of every page from the lists
    in js/site-data.js:
      - top bar with Projects / Experience dropdowns + phone menu
      - footer
@@ -8,7 +8,7 @@
    It also swaps any image that fails to load for a
    "Photo coming soon" placeholder.
 
-   You shouldn't need to edit this file to add a page — edit
+   You shouldn't need to edit this file to add a page. Edit
    js/site-data.js instead.
    ========================================================== */
 
@@ -51,7 +51,8 @@
         html += '<li class="nav__group-label" role="presentation">' + SECTION_LABELS[p.section] + '</li>';
         lastSection = p.section;
       }
-      html += '<li><a href="' + pageUrl(p) + '"' + current(p.slug === CURRENT) + '>' + esc(p.title) + '</a></li>';
+      const role = p.role ? '<span class="nav__role">' + esc(p.role) + '</span>' : '';
+      html += '<li><a href="' + pageUrl(p) + '"' + current(p.slug === CURRENT) + '>' + esc(p.title) + role + '</a></li>';
     });
     return html;
   }
@@ -190,6 +191,7 @@
       media +
       '<div class="card__overlay">' +
         '<h3 class="card__title">' + esc(page.title) + '</h3>' +
+        (page.role ? '<p class="card__role">' + esc(page.role) + '</p>' : '') +
         '<p class="card__blurb">' + esc(page.blurb) + '</p>' +
       '</div>' +
     '</a>';

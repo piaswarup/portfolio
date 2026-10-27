@@ -1,7 +1,7 @@
 /* ==========================================================
-   Pia Swarup — portfolio styles
+   Pia Swarup: portfolio styles
 
-   1. Settings (colors, font, spacing, radius — tune here)
+   1. Settings (colors, font, spacing, radius: tune here)
    2. Base
    3. Layout
    4. Top bar & menus
@@ -190,7 +190,7 @@ a:hover {
   text-decoration: none;
 }
 
-/* Hamburger (phones only — see Responsive) */
+/* Hamburger (phones only, see Responsive) */
 .topbar__toggle {
   display: none;
   flex-direction: column;
@@ -297,6 +297,14 @@ a:hover {
   text-decoration: none;
 }
 
+/* Job title under a company name in the dropdown */
+.nav__role {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+}
+
 .nav__menu a:hover,
 .nav__menu a[aria-current="page"] {
   background: var(--color-tint);
@@ -377,6 +385,12 @@ a:hover {
   margin: 0;
   color: inherit;
   font-size: 1.125rem;
+}
+
+.card__role {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .card__blurb {
