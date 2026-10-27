@@ -613,6 +613,10 @@ img.page-hero--contain {
   object-fit: contain;
 }
 
+.prose .figure--small .gallery img {
+  max-height: 22rem;
+}
+
 .prose .gallery video {
   max-width: 100%;
 }
