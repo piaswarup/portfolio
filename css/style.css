@@ -6,7 +6,7 @@
    3. Layout
    4. Top bar & menus
    5. Cards & card grids
-   6. Tags & placeholders
+   6. Placeholders
    7. Home page
    8. Detail pages
    9. "More work" row
@@ -45,8 +45,9 @@
   --space-8: 6rem;
 
   /* Layout */
-  --max-width: 72rem;             /* widest content (card grids) */
-  --text-width: 46rem;            /* detail-page column */
+  --max-width: 80rem;             /* widest content: home grid + detail pages */
+  --text-width: var(--max-width); /* detail-page column: full width, like Phantom.
+                                     Set e.g. 60rem for a narrower column. */
   --gutter: 2.5rem;               /* left/right page padding */
   --grid-gap: 1.5rem;             /* space between cards */
   --header-height: 4.25rem;
@@ -406,36 +407,7 @@ a:hover {
 }
 
 
-/* ── 6. Tags & placeholders ────────────────────────────── */
-
-.tag {
-  display: inline-block;
-  padding: 0.2rem 0.6rem;
-  background: var(--color-tint);
-  border-radius: 999px;
-  color: var(--color-accent);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1.5;
-  text-transform: uppercase;
-}
-
-/* A list of tool/technology tags, e.g. on detail pages */
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.tags .tag {
-  font-size: 0.8125rem;
-  letter-spacing: 0;
-  text-transform: none;
-}
+/* ── 6. Placeholders ───────────────────────────────────── */
 
 /* "Photo coming soon" box. Same 4:3 shape as a photo by default;
    it picks up the hero / card shape when it replaces those images. */
@@ -502,45 +474,20 @@ a:hover {
   margin-bottom: var(--space-5);
 }
 
+/* Product renders / photos on white: show the whole image instead of cropping */
+img.page-hero--contain {
+  object-fit: contain;
+  background: var(--color-bg);
+}
+
 .page-tagline {
   color: var(--color-muted);
   font-size: 1.1875rem;
   line-height: 1.5;
 }
 
-/* Role · Dates · Location · Tools · Links */
-.facts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: var(--space-4) var(--space-5);
-  margin: var(--space-5) 0 var(--space-6);
-  padding-block: var(--space-4);
-  border-block: 1px solid var(--color-border);
-}
-
-.facts dt {
-  margin-bottom: var(--space-1);
-  color: var(--color-muted);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.facts dd {
-  margin: 0;
-  font-size: 0.9375rem;
-}
-
-.facts__wide {
-  grid-column: 1 / -1;
-}
-
-.facts__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-4);
-  font-weight: 500;
+.prose {
+  margin-top: var(--space-6);
 }
 
 .prose h2 {
