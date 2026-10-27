@@ -60,7 +60,8 @@ const SITE_PAGES = [
     blurb: 'An auger-based soil sampling attachment for an autonomous fleet of farm drones.',
     tag: 'Project',
     section: 'work',
-    thumb: null,
+    thumb: 'assets/images/soil-sampling-drone/thumb.jpg',
+    thumbAlt: 'CAD of the soil sampling attachment',
     menu: 'projects'
   },
   {
