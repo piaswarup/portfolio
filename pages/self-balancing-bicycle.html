@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Autonomous Self-Balancing Bicycle | Pia Swarup</title>
+  <meta name="description" content="A modular, open-source self-balancing bicycle with a high-inertia reaction wheel: mechanical design and manufacturing by Pia Swarup, with a co-authored technical paper.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/self-balancing-bicycle/bike_no_bg.jpg" alt="The self-balancing bicycle with its reaction wheel, electronics and battery mounted on the frame">
+      <h1>Autonomous Self-Balancing Bicycle</h1>
+      <p class="page-tagline">A modular, open-source bicycle that balances itself with a high-inertia reaction wheel.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          From February to May 2026, I worked on a small team project to build a bicycle that balances itself using a
+          high-inertia reaction wheel. We wanted to take on a hard controls problem and bring mechanical, electrical,
+          and software design together in one project. The bike is designed as a modular, open-source platform for
+          research on two-wheeled self-balancing vehicles: everything mounts to the tubular frame with 3D-printed
+          clamps, so sensors and actuators can be added or moved without drilling or welding. The long-term goal is a
+          driverless bicycle that navigates on its own; this phase focused on getting it to balance.
+        </p>
+        <p>
+          We co-authored a technical paper on the platform, and published the full CAD, firmware, and a bill of
+          materials for the under-$1,000 bare vehicle:
+          <a href="https://github.com/LuckyYoon/autonomous-self-balancing-vehicle/blob/main/docs/paper.pdf" target="_blank" rel="noopener">paper</a>,
+          <a href="https://github.com/LuckyYoon/autonomous-self-balancing-vehicle" target="_blank" rel="noopener">code and CAD on GitHub</a>,
+          <a href="https://github.com/LuckyYoon/autonomous-self-balancing-vehicle/blob/main/docs/bill_of_materials_full.md" target="_blank" rel="noopener">bill of materials</a>.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          The team had two committed members, and I did mostly the mechanical side. As Lead Mechanical Engineer, I led
+          the mechanical design, engineering, and manufacturing of the bicycle: the reaction wheel and its motor
+          interface, the steering system, and custom <strong>3D-printed</strong> mounts throughout.
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Reaction wheel</h3>
+        <p>
+          The heart of the system is a custom high-inertia reaction wheel, driven by a 100KV high-torque brushless DC
+          outrunner motor through an ODrive-based motor controller, under <strong>STM32</strong> control. I sized the
+          wheel using torque and other calculations, along with previous publications on similar reaction-wheel
+          projects. To get the most inertia for the least weight, I removed material near the center so the mass sits
+          at the rim, while making sure the wheel could withstand the centrifugal stresses at high speed.
+        </p>
+        <p>
+          One lesson cost us time: we started with an industrial NEMA motor, but it couldn't change direction fast
+          enough with the heavy steel reaction wheel on it, and we only switched to the more expensive brushless motor
+          quite late.
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/electronics.jpg" alt="Close-up of the bike's control electronics: an STM32 board and an ODESC V4.2 motor controller with wiring and a 50 W resistor" loading="lazy">
+          <figcaption>The control electronics, with the STM32 board and the ODESC V4.2 motor controller</figcaption>
+        </figure>
+
+        <h3>Balance control</h3>
+        <p>
+          A high-frequency <strong>PD</strong> loop on the STM32 sets the reaction wheel's torque from the difference
+          between the bike's tilt, measured with a filtered IMU, and a balance setpoint. Instead of a fixed setpoint,
+          an adaptive outer loop shifts the balance point based on the average reaction wheel torque. That acts like an
+          integral term: it removes steady-state error and stops the reaction wheel from spinning up to its maximum
+          speed (saturating) during persistent disturbances. The balance controller runs on its own battery, separate
+          from the navigation computer, so the bike stays upright even if the navigation software crashes.
+        </p>
+
+        <h3>Steering</h3>
+        <p>
+          I designed and built a custom bevel gear steering system so a servo can steer the bike. The bike's fork and
+          head tube sit at an angle to the top tube, so off-the-shelf bevel gears wouldn't line up; I designed custom
+          bevel gears at the matching angle and <strong>3D printed</strong> them. The angled gears also let the servo,
+          a 160 kg·cm, 270°, 24 V digital RC servo, sit as close as possible to the top tube, which keeps its weight
+          near the frame for better stability. The gears have a 1:1 ratio and are printed around a mount that clamps to
+          the inside of the front tube with a screw-based clamp.
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/steering.jpg" alt="The servo and 3D-printed bevel gears on the bike's front tube" loading="lazy">
+          <figcaption>The custom bevel gear steering system</figcaption>
+        </figure>
+
+        <h3>Manufacturing</h3>
+        <p>
+          The hardest part to make was the flywheel. I first tried to machine it entirely on the <strong>mill</strong>,
+          but couldn't hold the workpiece firmly enough. Next I cut it on the <strong>waterjet</strong>, but finding the
+          exact center of the stock was difficult, even with a Delrin jig, and the waterjet left inaccuracies and a
+          rough surface finish. So I put it back on the mill for a finishing pass to make every surface accurate, which
+          made a big difference to how much the bike wobbled. I also made an aluminum part to interface easily between
+          the motor and the steel flywheel.
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/manual-mill.jpg" alt="Pia machining a part on a manual mill with a digital readout" loading="lazy">
+          <figcaption>Machining on the manual mill</figcaption>
+        </figure>
+
+        <figure>
+          <div class="gallery">
+            <video controls preload="none" playsinline poster="../assets/images/self-balancing-bicycle/bike-waterjet-poster.jpg">
+              <source src="../assets/videos/bike-waterjet.mp4" type="video/mp4">
+            </video>
+            <video controls preload="none" playsinline poster="../assets/images/self-balancing-bicycle/bike-saw-poster.jpg">
+              <source src="../assets/videos/bike-saw.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>Cutting on the waterjet (left) and cutting stock on the saw (right)</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <p>
+          Tuning the PD loop was the hardest part of getting it to balance. At first the bike only stayed up for a few
+          seconds before the reaction wheel saturated; by the end it could balance indefinitely, limited only by its
+          battery and strong wind, and it kept its balance while driving. It recovers from a decent amount of
+          disturbance, though not perfectly.
+        </p>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/balance-data.png" alt="Two graphs over a 100-second test: bike tilt angle closely tracking the balance setpoint, and reaction wheel speed spiking to 20 to 27 revolutions per second at three disturbances before decaying back to zero" loading="lazy">
+          <figcaption>
+            Tilt and balance setpoint (top) and reaction wheel speed (bottom) over a 100 s test with three disturbances.
+            After each one, the outer loop shifts the setpoint and the wheel slows back toward zero. From our paper.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <video class="video--portrait" controls preload="none" playsinline poster="../assets/images/self-balancing-bicycle/bike-driving-poster.jpg">
+            <source src="../assets/videos/bike-driving.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/bike-driving.mp4">Download it here</a>.
+          </video>
+          <figcaption>The bike balancing while driving (sped up)</figcaption>
+        </figure>
+
+        <figure>
+          <img src="../assets/images/self-balancing-bicycle/with-pia.jpg" alt="Pia kneeling next to the self-balancing bicycle" loading="lazy">
+          <figcaption>With the finished bike</figcaption>
+        </figure>
+
+        <h2>Next steps</h2>
+        <p>
+          Next, the plan is an open-source, SLAM-based <strong>ROS2</strong> autonomy stack running on an
+          <strong>NVIDIA Jetson Orin Nano</strong> with a <strong>2D LiDAR</strong> and a stereo depth camera, so the
+          bike can map its surroundings and navigate on its own. The bike will also be a testbed for reinforcement
+          learning for steering control, blended with the existing reaction wheel stabilization, with simulation-ready
+          files for training.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

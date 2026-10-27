@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Soil Probing Ground Rover | Pia Swarup</title>
+  <meta name="description" content="GroundFleet: a gantry that lets the farm-ng Amiga rover autonomously probe soil moisture, so farmers know their soil health and how much to water. Mechanical design by Pia Swarup.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/soil-probing-rover/amiga.jpg" alt="The farm-ng Amiga rover: a four-wheeled frame with a handheld control screen on a mast">
+      <p class="page-hero__credit">Photo: farm-ng</p>
+      <h1>Soil Probing Ground Rover</h1>
+      <p class="page-tagline">A gantry that lets a farm rover autonomously probe soil moisture and health.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          GroundFleet is an autonomous rover that drives through a field and takes soil moisture and other soil
+          measurements, so farmers can know their soil health and how much water to give their crops. The goal is to
+          design, build, and field-test a ground-based soil probing system on the <strong>farm-ng Amiga</strong>
+          rover that can navigate to waypoints in a field and mechanically push a soil moisture probe into the ground
+          to take measurements in place. I've been working on it since September 2026, and the target for completing
+          phase 1 is April 2027. It's the ground-based counterpart to the
+          <a href="soil-sampling-drone.html">soil sampling drone attachment</a>; on the rover we're no longer
+          limited by weight.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          I co-lead the five-person team and lead the mechanical design. The mechanical team is two people, so we
+          do almost everything together, while the three-person software team works on GPS waypoint navigation in
+          <strong>ROS 2</strong> and computer vision for following crop rows. I design in <strong>Onshape</strong>.
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Learning from existing designs</h3>
+        <p>
+          We started with a literature review of other soil-probing robots. Most move along the field (x) by
+          driving the robot, move the probe up and down (z) with a linear actuator or a lead screw, and have no
+          side-to-side (y) motion. Some drill into the ground and some push a probe straight in. We compared the
+          two z-axis options:
+        </p>
+        <ul>
+          <li><strong>Lead screw:</strong> more compact, and drills into the ground.</li>
+          <li><strong>Linear actuator:</strong> stronger and faster, probes straight into the ground, and has fewer
+            moving parts.</li>
+        </ul>
+        <p>
+          Based on this, we chose a linear actuator that pushes the probe straight into the ground. Unlike most
+          existing designs, we added y-axis motion with a gantry, so the probe can move side to side and reach the
+          soil around crops.
+        </p>
+
+        <h3>Requirements</h3>
+        <ul>
+          <li>Mounts to the Amiga and doesn't stick out past the sides of the robot, which is 63 in wide
+            (45.5 in without wheels)</li>
+          <li>Pushes the probe 7 in into the ground, based on the probe's length</li>
+          <li>Keeps clearance between the probe and the ground while driving</li>
+          <li>Moves the probe side to side (y) and up and down (z)</li>
+        </ul>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/soil-probing-rover/sketch-layout.jpg" alt="Whiteboard sketch of the side and top views: robot bar, rack, stepper motor, carriage, linear actuator and probe" loading="lazy">
+            <img src="../assets/images/soil-probing-rover/sketch-stroke.jpg" alt="Whiteboard sketch of the actuator fully extended and fully retracted, with 20 in stroke, 7 in probe depth and 11 in ground clearance" loading="lazy">
+          </div>
+          <figcaption>
+            Early sketches: the gantry layout (left), and the stroke and clearance with the actuator fully extended
+            and fully retracted (right)
+          </figcaption>
+        </figure>
+
+        <h3>Gantry</h3>
+        <p>
+          The gantry uses a <strong>rack and pinion</strong> driven by a <strong>stepper motor</strong> for y motion
+          and a <strong>linear actuator</strong> for z. A carriage runs along a 45.5 in aluminum extrusion on
+          bearings, with a 45.5 in rack below it. Mounted about 2 ft above the ground, a 20 in stroke gives 11 in of
+          ground clearance with the probe retracted (a 24 in stroke would give 15 in), while still pushing the probe
+          7 in into the soil when fully extended.
+        </p>
+
+        <figure>
+          <img src="../assets/images/soil-probing-rover/gantry-cad.jpg" alt="CAD of the gantry: a carriage on aluminum extrusion with a rack, a stepper motor, and a vertical linear actuator holding the soil probe" loading="lazy">
+          <figcaption>Preliminary CAD of the y-z gantry system</figcaption>
+        </figure>
+
+        <figure>
+          <img src="../assets/images/soil-probing-rover/gantry-cad-front.jpg" alt="Front view CAD of the gantry: the stepper-driven pinion meshing with the rack on the carriage, between two aluminum extrusions" loading="lazy">
+          <figcaption>Front view of the gantry: the pinion on the carriage drives along the rack</figcaption>
+        </figure>
+
+        <p>
+          The actuator needed around 50 lb of force and had to be dirt and water resistant. The one we specced has
+          a 20 in stroke (52.8 in long when extended), runs on 12 VDC, gives 56 lb of dynamic force at 4.72 in/s
+          under full load, has a 15% duty cycle, and is rated IP66, so it's dust-tight and protected against
+          high-pressure water jets. We're also considering current limiting the actuator to prevent damage to the
+          probe.
+        </p>
+
+        <h2>Status and next steps</h2>
+        <p>
+          This project is in progress, and the design is being worked on right now. For the first sprint review we
+          specced the parts, created the bill of materials, and finished the initial sketches and CAD. Next, we're
+          finishing the CAD, ordering parts, and building a working prototype. The goal for the end of the semester
+          is a working second version of the mechanical system with y and z motion, with the software team getting
+          the rover to navigate to GPS waypoints and move the probe into the ground autonomously.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

@@ -4,123 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Pia Swarup Portfolio</title>
-  <meta name="description" content="Pia Swarup — Mechanical Engineer at Olin College of Engineering">
+  <title>Pia Swarup | Mechanical Engineering Portfolio</title>
+  <meta name="description" content="Pia Swarup, mechanical engineering student at Olin College of Engineering: robotics and hardware projects, internships, and leadership.">
 
-  <!-- ── Fonts ── -->
-  <!--
-    CoFo Sans: add your licensed font files to assets/fonts/
-    and uncomment the @font-face rules in css/styles.css.
-    The fallback stack (Inter → Helvetica Neue → Arial) is active by default.
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Using Inter as CoFo Sans fallback until you add the font files -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 
-  <!-- Temporarily override --font to use Inter until CoFo Sans is added -->
-  <style>
-    :root { --font: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
-  </style>
-
-  <!-- ── Three.js (ES module, so js/three-setup.js can import GLTFLoader) ── -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
-    }
-  }
-  </script>
-
-  <!-- ── Styles ── -->
-  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/site-data.js" defer></script>
+  <script src="js/site.js" defer></script>
 </head>
 <body>
 
-<div id="app">
+  <header id="site-header"></header>
 
-  <!-- ════════════════════════════════════════════════════
-       HORIZONTAL SCROLL TRACK
-       All sections live side-by-side inside this element.
-       JS applies transform: translate3d(-Xpx, 0, 0) to it.
-       ════════════════════════════════════════════════════ -->
-  <div id="scroll-track">
+  <main>
 
-    <!-- HERO ──────────────────────────────────────────── -->
-    <section class="section section--hero" id="section-hero" aria-label="Introduction">
-      <!-- populated by renderer.js -->
+    <!-- Intro: portrait, name, bio -->
+    <section class="container intro">
+      <div>
+        <h1 class="intro__name">Pia Swarup</h1>
+        <p class="intro__subtitle">Mechanical Engineering · Olin College of Engineering</p>
+        <p class="intro__bio">
+          I'm a mechanical engineering student at Olin College of Engineering, interested in robotics, assistive
+          technology and agritech. I love the full loop of designing, machining, building and testing hardware, from
+          reaction-wheel bicycles and farm robots to the suspension of an off-road racecar as Project Manager of Olin
+          Baja SAE. I've interned in hardware robotics at ReviMo and in warehouse robotics at Movu. Outside of
+          engineering I'm a karate black belt, and I spend my free time machining, hiking and playing soccer.
+          I'm currently looking for summer 2027 internships in mechanical engineering and robotics.
+        </p>
+      </div>
+      <img class="intro__portrait" src="assets/images/portrait.jpg" alt="Portrait of Pia Swarup" width="992" height="992">
     </section>
 
-    <!-- NAVIGATION ─────────────────────────────────────── -->
-    <section class="section section--nav" id="section-nav" aria-label="Navigation">
-      <!-- populated by renderer.js -->
+    <!-- Card grid: filled in automatically from js/site-data.js (entries with section: "work") -->
+    <section class="container section" aria-labelledby="work-title">
+      <h2 class="section__title" id="work-title">Projects &amp; Experience</h2>
+      <div class="card-grid" data-card-section="work"></div>
     </section>
 
-    <!-- EXPERIENCE ─────────────────────────────────────── -->
-    <section class="section section--experience" id="section-experience" aria-label="Experience">
-      <!-- populated by renderer.js -->
-    </section>
+  </main>
 
-    <!-- PROJECTS ───────────────────────────────────────── -->
-    <section class="section section--projects" id="section-projects" aria-label="Projects">
-      <!-- populated by renderer.js -->
-    </section>
-
-    <!-- LEADERSHIP ─────────────────────────────────────── -->
-    <section class="section section--leadership" id="section-leadership" aria-label="Entrepreneurship and Leadership">
-      <!-- populated by renderer.js -->
-    </section>
-
-    <!-- HOBBIES ────────────────────────────────────────── -->
-    <section class="section section--hobbies" id="section-hobbies" aria-label="Hobbies and Other">
-      <!-- populated by renderer.js -->
-    </section>
-
-    <!-- CONTACT ────────────────────────────────────────── -->
-    <section class="section section--contact" id="section-contact" aria-label="Contact">
-      <!-- populated by renderer.js -->
-    </section>
-
-  </div><!-- /scroll-track -->
-
-  <!-- ── Progress indicator ── -->
-  <div id="progress-bar" role="progressbar" aria-label="Portfolio scroll progress">
-    <div id="progress-fill"></div>
-  </div>
-
-  <!-- ── Section nav (top-right) ── -->
-  <nav id="section-label" aria-label="Portfolio sections"></nav>
-
-  <!-- ── Scroll hint ── -->
-  <div id="scroll-hint" aria-hidden="true">
-    <span>Scroll to explore</span>
-    <span class="scroll-hint-arrow"></span>
-  </div>
-
-</div><!-- /app -->
-
-<!-- ── Main module (ES module — requires serving over HTTP or a local server) ── -->
-<!--
-  IMPORTANT: ES modules do not load from file:// in all browsers.
-  To view the portfolio locally, use one of these options:
-
-  Option A (recommended): Python (no install needed on most systems)
-    python -m http.server 3000
-    then open http://localhost:3000
-
-  Option B: Node.js
-    npx serve .
-    or: npx http-server .
-
-  Option C: VS Code — install the "Live Server" extension, right-click
-    index.html → "Open with Live Server"
-
-  Option D (Windows): drag index.html into Chrome.
-    Three.js and animations will work, but data imports may fail in Chrome
-    on Windows from file://. Use a local server for best results.
--->
-<script type="module" src="js/main.js"></script>
+  <footer id="site-footer"></footer>
 
 </body>
 </html>

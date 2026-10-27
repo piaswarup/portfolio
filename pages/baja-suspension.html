@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Baja SAE Suspension | Pia Swarup</title>
+  <meta name="description" content="Wheel hub design, a lighter pedal assembly, fabrication and a CVT thermal model for Olin Baja SAE's off-road racing vehicle, by Pia Swarup.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/baja-suspension/pedal-final-cad.jpg" alt="CAD of the final top-mounted pedal assembly: two pedals hanging from steel plates that pin to tabs on the chassis tubes">
+      <h1>Baja SAE Suspension</h1>
+      <p class="page-tagline">Wheel hubs, a lighter pedal assembly, and a CVT cooling model for an off-road racing vehicle.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          Olin Baja SAE designs and manufactures a custom off-road racing vehicle for the Baja SAE collegiate
+          competition series. From September 2025 to May 2026, I worked on the car's wheel hubs, redesigned its
+          pedal assembly, helped fabricate it, and modeled how hot its CVT gets during an endurance race.
+        </p>
+        <p>
+          The suspension connects the wheels to the chassis: it absorbs shocks from the terrain, allows controlled
+          motion, and affects steering and braking. The wheel hub sits at the center of each corner. It carries road
+          loads into the suspension and chassis through the knuckle, holds the brake rotor and the wheel studs, and
+          transfers power from the CV axle to the wheel through a spline.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/suspension-corner.png" alt="Exploded CAD view of a suspension corner: wheel hub, brake rotor, caliper, knuckle and A-arms" loading="lazy">
+          <figcaption>A suspension corner: wheel hub, brake rotor and caliper, knuckle, and A-arms</figcaption>
+        </figure>
+
+        <h2>My role</h2>
+        <p>
+          I was on the suspension sub-team. I worked on wheel hub design, researched whether the car could use an
+          anti-roll bar, worked on redesigning and lightweighting the pedal assembly, and helped fabricate the car. For my
+          thermodynamics class I also built the cooling model of the car's CVT. I modeled in <strong>Onshape</strong>
+          and <strong>SOLIDWORKS</strong>, ran <strong>FEA</strong> in SOLIDWORKS, and machined parts on the
+          <strong>manual and CNC mill</strong>.
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Wheel hubs</h3>
+        <p>
+          The hub had to be machinable in-house and support every expected load, while matching the wheel studs'
+          hole size and pitch circle diameter, lining up with the brake rotor's mounting holes, and fitting the
+          splined hub's mounting pattern. My goal was to minimize weight while staying robust, since the hub is
+          unsprung mass. I moved from the previous round hub to a four-arm shape to remove unnecessary mass.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/baja-suspension/hub-original.png" alt="Previous round wheel hub design" loading="lazy">
+            <img src="../assets/images/baja-suspension/hub-design-304g.png" alt="Four-arm hub concept, 303.93 g" loading="lazy">
+            <img src="../assets/images/baja-suspension/hub-design-147g.png" alt="Skeletal four-arm hub concept, 146.56 g" loading="lazy">
+            <img src="../assets/images/baja-suspension/hub-design-488g.png" alt="Curved four-arm hub concept, 487.59 g" loading="lazy">
+          </div>
+          <figcaption>The previous round hub (left) and three four-arm concepts: 303.93 g, 146.56 g, and 487.59 g</figcaption>
+        </figure>
+
+        <p>
+          I presented the concepts at my first suspension design review in October 2025. In
+          <strong>SOLIDWORKS</strong> I ran FEA with remote loads for a jump (8,818 N) and a bump
+          (8,000 N, 13,600 N, and 8,000 N in x, y, and z). Under the jump load, Design 1 only reached a factor of
+          safety of 0.84, while Design 3 reached 2.1.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/baja-suspension/fea-jump-design1.png" alt="Von Mises stress plot of hub Design 1 under the jump load" loading="lazy">
+            <img src="../assets/images/baja-suspension/fea-jump-design3.png" alt="Von Mises stress plot of hub Design 3 under the jump load" loading="lazy">
+          </div>
+          <figcaption>Jump load case: Design 1 (left, factor of safety 0.84) and Design 3 (right, factor of safety 2.1)</figcaption>
+        </figure>
+
+        <p>
+          My next steps from the review were to put less emphasis on weight and more on structural integrity:
+          trying different materials and adding support at the weak spots the FEA showed.
+        </p>
+
+        <h3>Pedal assembly</h3>
+        <p>
+          We redesigned the throttle and brake pedal assembly (shown at the top of this page) to be much lighter,
+          top-mounted, and attached to the chassis with tabs, so the whole assembly can easily be removed and
+          repaired. The assembly is all <strong>steel</strong>, since it's welded to the chassis. The old assembly
+          weighed about 31.35 lb, and our goal was to stay below about 18 lb while getting the factor of safety
+          above 2 everywhere. The final assembly weighs 17.26 lb, about 45% less than the old one.
+        </p>
+
+        <p>
+          We optimized the throttle assembly first and used what we learned for the brake assembly. For the load
+          case, we assumed a driver can leg press 500 lb and push at up to 30° away from straight down on the pedal,
+          which gives a side load of about 1,000 N. The three things we varied were the vertical plate thickness
+          (high weight cost), the top and bottom plate width (medium weight cost), and the top and bottom plate
+          position, moving them closer to the pivot (no weight cost).
+        </p>
+
+        <p>
+          We iterated in <strong>SOLIDWORKS FEA</strong>:
+        </p>
+        <ul>
+          <li><strong>Iteration 1:</strong> the first steel check had a minimum factor of safety of 0.51.</li>
+          <li><strong>Iteration 2:</strong> lengthening the top plates raised it to 1.013, at 9.915 lb.</li>
+          <li><strong>Iteration 3:</strong> we added material around the holes in the top plates and removed the
+            pedal's top pin, which had been causing inaccuracy. Removing the pin dropped the minimum factor of safety
+            to 0.9172 (9.85 lb).</li>
+          <li><strong>Iteration 4:</strong> larger tabs brought it to 0.99 at 10.062 lb. The only region below a
+            factor of safety of 1 was on the pedal itself, which was being changed and strengthened for the final
+            design.</li>
+        </ul>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/baja-suspension/pedal-fea-iteration2.png" alt="Von Mises stress plot of the throttle assembly in iteration 2, mostly blue with green near the pivot plates" loading="lazy">
+            <img src="../assets/images/baja-suspension/pedal-fea-iteration4.png" alt="Von Mises stress plot of the throttle assembly in iteration 4, with the maximum stress marked on the pedal arm" loading="lazy">
+          </div>
+          <figcaption>Von Mises stress in iteration 2 (left) and iteration 4 (right), where the peak stress sits on the pedal arm</figcaption>
+        </figure>
+
+        <p>
+          For the brake pedal we also worked out how far the pedal needs to travel. The car has separate front and
+          back brake circuits, each with its own master cylinder, linked to the pedal by a bias bar. If one circuit
+          fails, the pedal must travel far enough to actuate the surviving circuit, but not so far that it hits the
+          hard stop before it generates braking force. We calculated the fluid volume needed to close the pad-to-rotor
+          clearance from the caliper piston areas, the master cylinder travel that needs, and the pedal travel
+          through the pedal ratio.
+        </p>
+
+        <h3>Fabrication</h3>
+        <p>
+          I <strong>3D printed</strong> jigs to hold parts in place for welding, and machined the wheel hubs and
+          smaller parts like the steering column spacers and a fork bushing housing (more on the
+          <a href="machining.html">Machining</a> page).
+        </p>
+
+        <h3>CVT thermal model</h3>
+        <p>
+          Every Baja SAE team runs the same engine, so performance depends heavily on the drivetrain and the
+          continuously variable transmission (CVT). The rubber belt CVT loses around 18% of the power passing through
+          it as heat (mean efficiency 0.818 while moving), and the rules require a guard that fully encloses it and
+          traps hot air. If the belt gets too hot, the rubber softens and glazes, grip drops, and the belt can fail
+          mid-race.
+        </p>
+        <p>
+          For Introduction to Thermodynamics, two teammates and I asked: how hot does our CVT get during
+          the 4-hour endurance race, and which design and driving factors control its temperature? We built a
+          thermal resistance network with four lumped nodes (sheaves, belt, guard air, and guard wall), included
+          heat from the engine, and simulated it second by second over a measured 114-minute drive cycle from
+          McMaster Baja's endurance GPS data.
+        </p>
+        <p>
+          I built the model of the CVT itself: every way heat moves and leaves inside the guard. Each node is
+          treated as one uniform temperature, since the metal conducts well and the spinning parts stir the air.
+        </p>
+        <ul>
+          <li><strong>Sheave convection:</strong> I modeled each sheave as a spinning disk (von Kármán). The
+            rotational Reynolds numbers are below the laminar-to-turbulent transition found by Cobb and Saunders,
+            giving h = 41.8 W/m²K on both sheaves. Inner faces count at reduced effectiveness, since air is trapped
+            between the rotating halves, and a calibration factor of 3 accounts for the turbulent guard air and
+            ribbed, non-smooth sheaves.</li>
+          <li><strong>Belt:</strong> convection off the back of the belt with a laminar flat plate model
+            (1.48 W/K), and conduction from the flexing rubber into the sheaves (0.79 W/K).</li>
+          <li><strong>Air exchange through the mesh:</strong> disk pumping from the spinning sheaves, wind along
+            the mesh (reduced by the firewall's shadow), and buoyancy, combined in quadrature: 0.0108 m³/s
+            (22.8 CFM), or 13.0 W/K.</li>
+          <li><strong>Guard walls, shaft, and radiation:</strong> guard air to wall (4.84 W/K) and wall to outside
+            (2.21 W/K), conduction down the shaft to the gearbox (0.30 W/K), and radiation through the mesh
+            (0.02 W/K).</li>
+        </ul>
+        <p>
+          The conductances depend on the film temperatures, so the steady-state network is solved as a matrix
+          system and iterated until every temperature changes by less than 0.01 °C. For the transient, each node
+          stores heat by lumped capacitance and is stepped forward every second with the explicit Euler method,
+          giving a system time constant of about 13 minutes.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/cvt-network.png" alt="Thermal resistance network of the CVT with conductances between sheaves, belt, guard air, guard wall and ambient" loading="lazy">
+          <figcaption>Thermal resistance network of the CVT (conductances in W/K at run-average conditions)</figcaption>
+        </figure>
+
+        <p>
+          At average conditions the belt reaches a steady-state temperature of about 109 °C (sheaves 106 °C).
+          Over the drive cycle, the belt crosses its ~93 °C continuous operating limit after about 35 minutes and
+          peaks at about 132 °C. About 87% of the heat (565 of 649 W) leaves by air exchange through the guard's
+          mesh panel, so mesh airflow is the main cooling path.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/cvt-temperatures.png" alt="Drive trace speed and predicted CVT belt, sheave, guard air and guard wall temperatures over the 114-minute run" loading="lazy">
+          <figcaption>Drive trace and predicted CVT temperatures; the belt passes its 93 °C limit after about 35 minutes</figcaption>
+        </figure>
+
+        <p>
+          To find a fix, we swept vehicle speed against airflow and the diameter of a ram-air intake duct. At the
+          3.45 m/s race average, a 4-inch duct brings the steady belt temperature down to about 91 °C, under the
+          limit, and lowers the transient peak from 132 °C to about 107 °C. A duct of at least 4 inches, combined
+          with more mesh area or less time idling, is needed to keep the belt within its limit for the whole race.
+        </p>
+
+        <figure>
+          <img src="../assets/images/baja-suspension/cvt-sweep.png" alt="Contour plot of steady-state belt temperature versus vehicle velocity and airflow factor" loading="lazy">
+          <figcaption>Steady-state belt temperature as a function of vehicle speed and airflow factor</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <p>
+          The car performed well overall, and we were happy with its performance at the 2026 Baja SAE competition
+          in Ohio.
+        </p>
+        <ul>
+          <li>46th overall and 25th in the maneuverability event at the 2026 Ohio competition</li>
+          <li>Pedal assembly redesigned to be top-mounted and removable, from 31.35 lb to 17.26 lb (about 45% lighter)</li>
+          <li>CVT model predicts a 132 °C belt peak; a 4-inch intake duct lowers it to about 107 °C</li>
+        </ul>
+
+        <h2>Next steps</h2>
+        <p>
+          Next, we're designing and fabricating a new car from scratch in one year. It will be a lot lighter and
+          smaller, with a more robust suspension: double wishbones front and rear with bushings instead of rod ends,
+          and better shocks.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

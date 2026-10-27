@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Robotics Software: State Machine, Particle Filter &amp; Computer Vision | Pia Swarup</title>
+  <meta name="description" content="Robot behaviors, localization, and vision in ROS2 and Python: a finite state machine for a Neato robot, a particle filter, and an eye-tracking system.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <video class="page-hero page-hero--natural" autoplay muted loop playsinline poster="../assets/images/robotics-software/pf-hero-poster.jpg" aria-label="Particle filter running on a Neato robot in Gazebo's Gauntlet world, with the particle cloud shown on the map in rviz2">
+        <source src="../assets/videos/pf-hero-loop.mp4" type="video/mp4">
+      </video>
+      <h1>Robotics Software: State Machine, Particle Filter &amp; Computer Vision</h1>
+      <p class="page-tagline">Robot behaviors, localization, and vision written in ROS2 and Python.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          Since September 2026, I've been working on a set of robotics software projects for Computational
+          Introduction to Robotics (ENGR3590) at Olin, using <strong>ROS2</strong> and <strong>Python</strong> on
+          Neato robots, both real and simulated: a finite state machine that chains robot behaviors, a particle
+          filter that localizes a robot on a known map, and a computer-vision eye-tracking system that's still in
+          progress.
+        </p>
+        <p>
+          Code on GitHub:
+          <a href="https://github.com/piaswarup/comprobo26_FSM_piavani" target="_blank" rel="noopener">State Machine</a>,
+          <a href="https://github.com/MatthewT1107/robot_localization_project" target="_blank" rel="noopener">Particle Filter</a>.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          I built the state machine and the particle filter, each with a teammate, writing in
+          <strong>Python</strong> and <strong>ROS2</strong> and testing with <strong>rviz2</strong>,
+          <strong>Gazebo</strong>, and recorded ROS bags. In the state machine I wrote the person-following
+          behavior. In the particle filter I wrote the odometry motion update, the laser weighting, the random
+          particle injection, and the augmented Monte Carlo logic that lets the filter recover when the robot is
+          kidnapped.
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Finite state machine</h3>
+        <p>
+          The robot runs three behaviors linked in one finite state machine. It searches by driving forward slowly
+          until its <strong>lidar</strong> sees an object within 0.6 m, follows that person for 30 seconds at a
+          0.2 m distance, turns 180° in place, then draws a pentagon with 72° turns at each corner. Following uses
+          proportional control on all 361 lidar readings per scan, and keeps turning toward the last-seen angle
+          for 0.7 s if it loses the target. The <strong>bump sensor</strong> acts as an emergency stop that
+          overrides every state. Everything runs from a timer-driven loop every 0.1 s instead of sleeps, so the
+          emergency stop keeps working even mid-turn.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/robotics-software/fsm-states.jpg" alt="Whiteboard sketch of the state sequence: person following, then a 180 degree turn after 30 seconds, then draw shape" loading="lazy">
+            <img src="../assets/images/robotics-software/fsm-follow.jpg" alt="Whiteboard sketch of person following: the robot keeps a 0.2 m distance to legs detected within 0.6 m" loading="lazy">
+          </div>
+          <figcaption>Sketches of the state sequence (left) and the person-following geometry (right)</figcaption>
+        </figure>
+
+        <figure>
+          <div class="embed embed--portrait">
+            <iframe src="https://www.youtube-nocookie.com/embed/ZRA7LjG8dLs" title="Finite state machine demo on a Neato robot" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <figcaption>The full state machine running on a Neato</figcaption>
+        </figure>
+
+        <p>
+          The real Neato behaved differently from the simulator: we had to increase the detection radius on the real
+          robot, and because the turn and the pentagon are timed rather than measured, they drift on the physical
+          robot. Adding odometry feedback to those two states is the next improvement.
+        </p>
+
+        <h3>Particle filter</h3>
+        <p>
+          Odometry drifts, and lidar alone can't tell similar-looking places apart, so the particle filter combines
+          both to estimate the robot's pose on a known map. It starts with 1,050 particles: 1,000 spread around the
+          initial pose estimate and 50 spread uniformly over the map. Each time the robot moves 0.2 m or turns π/6,
+          every particle is moved by the odometry change plus noise, then weighted with a likelihood field that
+          scores how well every fifth lidar beam lines up with the map. The pose estimate is the weighted mean, with
+          heading averaged on the circle so it wraps correctly at ±π. Resampling adds noise, and adaptive injection
+          (augmented Monte Carlo localization) adds random particles when the fit gets worse, which lets the filter
+          recover after being moved.
+        </p>
+
+        <p>
+          The hardest bug in my motion update was a coordinate frame problem: particles moved in the wrong direction
+          whenever their heading differed from the robot's odometry heading. The odometry change is in the odom
+          frame, but each particle needs it in its own frame, so the rotation has to go from the odom frame to the
+          robot frame to the particle frame, and a few <code>sin</code> terms had flipped signs. We caught it by
+          turning off the laser update and watching the cloud drive sideways in rviz2.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/robotics-software/pf-overview.png" alt="Flowchart of the particle filter: 2D pose estimate, initialize, wait for a new scan until the robot has moved more than 0.2 m or turned more than 30 degrees, then motion update, sensor update, estimate pose, resample, and publish the particle cloud" loading="lazy">
+            <img src="../assets/images/robotics-software/pf-nodes.png" alt="Diagram of ROS nodes and topics: map server, bag player, particle filter and rviz2" loading="lazy">
+          </div>
+          <figcaption>The particle filter's update loop (left) and its ROS nodes and topics (right)</figcaption>
+        </figure>
+
+        <h3>Fixed vs. adaptive injection</h3>
+        <p>
+          Our first resampler injected a fixed 25 random particles (4% of the 625-particle cloud we used at the time)
+          every update. That never adapts: when the filter is tracking well, the random particles are just noise that
+          dies out at the next resample, and when the robot is lost, 25 particles spread over the whole map are almost
+          never enough for one to land near the real pose. We replaced it with adaptive injection, which adds at least
+          5 random particles and up to the whole cloud depending on how much worse the current scan matches than usual.
+          When the filter is confident, almost the whole cloud tracks the robot; when the scans suddenly match worse,
+          the filter assumes it's lost and replaces a large part of the cloud with random particles to search the map.
+        </p>
+
+        <figure>
+          <video controls preload="none" playsinline poster="../assets/images/robotics-software/pf-fixed-injection-poster.jpg">
+            <source src="../assets/videos/pf-fixed-injection.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/pf-fixed-injection.mp4">Download it here</a>.
+          </video>
+          <figcaption>Fixed injection: the particle filter running on a recorded bag in rviz2</figcaption>
+        </figure>
+
+        <figure>
+          <video controls preload="none" playsinline poster="../assets/images/robotics-software/pf-adaptive-injection-poster.jpg">
+            <source src="../assets/videos/pf-adaptive-injection.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/pf-adaptive-injection.mp4">Download it here</a>.
+          </video>
+          <figcaption>Adaptive injection: the robot in Gazebo's Gauntlet world (left) and the particle filter in rviz2 (right)</figcaption>
+        </figure>
+
+        <p>
+          We tested in stages: unit tests with <strong>pytest</strong> for weight normalization, angle wrapping,
+          heading averaging, and initialization, then recorded bags in <strong>rviz2</strong>, then the Gauntlet
+          world in <strong>Gazebo</strong>.
+        </p>
+
+        <h3>Eye tracking (in progress)</h3>
+        <p>
+          With a teammate, I'm starting a computer-vision project that turns eye movement into mouse control: a
+          laptop webcam estimates where the user is looking on the screen and moves the cursor there, and a
+          deliberate blink of the left or right eye acts as a left or right click. The plan is to use
+          <strong>MediaPipe</strong> and <strong>OpenCV</strong> facial landmarks to find the irises, write our own
+          calibration that maps eye position to screen coordinates, and smooth the noisy gaze point with a
+          <strong>Kalman filter</strong>. The first goal is cursor movement from eye tracking, even at low accuracy;
+          the stretch goal is wink clicking and snapping the cursor to clickable spots on the screen. The idea is
+          aimed at accessibility, so people with limited mobility can use a computer with just their eyes, and the
+          same approach could later steer an assistive robot arm.
+        </p>
+
+        <h2>Results</h2>
+        <ul>
+          <li>The Neato follows a person, turns, and draws a pentagon, with a bump-sensor emergency stop that works in every state</li>
+          <li>The particle filter converged in 7–8 updates on recorded bags of the MAC 1st floor, with the main particle cluster within 0.22 m on average</li>
+          <li>It recovered from a 0.7 m kidnapping after 22 updates; a 2.8 m kidnapping locked onto the wrong spot</li>
+        </ul>
+
+        <h2>What I learned</h2>
+        <ul>
+          <li><strong>Plan before coding.</strong> On the state machine we jumped straight into coding the
+            behaviors and had to reorganize our files and merge code later. Sketching the behaviors and laying out
+            the files and pseudocode first would have saved that time.</li>
+          <li><strong>The real robot isn't the simulator.</strong> Friction and other real-world effects made the
+            timed turn and pentagon angles inaccurate on the physical Neato, even though they were clean in the
+            simulator.</li>
+          <li><strong>Test in stages and visualize everything.</strong> Testing each function on its own made
+            errors easy to find, and watching the particle cloud in rviz2 showed whether there was enough noise and
+            enough random particles.</li>
+          <li><strong>A particle filter needs randomness.</strong> The uniform starting grid, clusters collapsing
+            onto one point, and the robot getting stuck in the wrong spot after a kidnapping were all fixed by adding
+            noise and random particles.</li>
+          <li><strong>Use bags for debugging.</strong> Replaying recorded bags kept the sensor input constant, which
+            made it much easier to debug and tune parameters, and our data collection script let us measure the
+            filter's performance instead of guessing from the visuals.</li>
+          <li><strong>Divide the work clearly.</strong> We both wrote the same pose-update function without
+            realizing it, which caused merge conflicts; after that we claimed functions up front and pulled before
+            every commit.</li>
+        </ul>
+
+        <h2>Next steps</h2>
+        <ul>
+          <li>Use odometry feedback instead of timing for the state machine's turn and pentagon.</li>
+          <li>Smooth the particle filter's pose estimate, which jumps a little after each resample, with a Kalman
+            filter.</li>
+          <li>Only place random particles in free space, since some currently land inside obstacles where the robot
+            can't be.</li>
+          <li>Try ray casting instead of a likelihood field for more accurate (but slower) scan scoring, and bring
+            back grid sampling with faster convergence to improve kidnapping recovery.</li>
+          <li>Get the eye-tracking cursor working, then add blink clicking.</li>
+        </ul>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

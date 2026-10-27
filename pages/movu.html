@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Warehouse Robotics Intern at Movu NV | Pia Swarup</title>
+  <meta name="description" content="Warehouse robotics internship at Movu NV: 3D simulations of AGV fleets around the Eligo robotic picking arm to optimize picks per hour and throughput.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/movu/escala.jpg" alt="The Movu Escala warehouse robot">
+      <h1>Movu NV</h1>
+      <p class="page-tagline">3D simulations of AGV fleets around the Eligo robotic picking arm to optimize picks per hour and throughput.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          From February 2024 to July 2025, I was a Warehouse Robotics Intern at Movu NV in Lokeren, Belgium.
+          I created 3D simulations of AGV (automated guided vehicle) fleets moving through a conveyor system around
+          the Eligo robotic picking arm, to optimize picks per hour and throughput.
+        </p>
+        <p>
+          <a href="https://www.movu-robotics.com/en" target="_blank" rel="noopener">Movu</a> builds warehouse
+          robotics and automation, including pallet shuttles, autonomous mobile robots, and goods-to-person systems.
+          Eligo is its automated picking robot for sorting warehouse items: a robotic arm picks items from bins that
+          AGVs drive around the arm in a conveyor-like setup.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          This was a solo project that I worked on with my manager. I built the simulations in
+          <strong>Emulate3D</strong>, working in <strong>C#</strong>, and the team used them to optimize traffic
+          control and estimate throughput and picks per hour. Because the project is under an NDA, I can only
+          describe it at a high level.
+        </p>
+
+        <h2>What I did</h2>
+        <p>
+          I built custom <strong>3D simulation</strong> environments in Emulate3D that model AGV fleets navigating a
+          conveyor system around the Eligo picking arm. The simulation results informed how the conveyors are laid
+          out around the arm.
+        </p>
+
+        <figure>
+          <img src="../assets/images/movu/simulation.png" alt="Emulate3D simulation of an orange robotic arm on a grid of AGV paths and pick stations" loading="lazy">
+          <figcaption>One of the 3D simulation environments in Emulate3D</figcaption>
+        </figure>
+
+        <p>
+          I also redesigned the AGV traffic control logic in a real-world-calibrated model, raising simulated
+          throughput by 10%. The changes were to how bins flow through the system and how long they wait, both
+          around the arm and before entering the area around it.
+        </p>
+
+        <h2>Results</h2>
+        <ul>
+          <li>Simulated throughput raised by 10% through redesigned AGV traffic control logic</li>
+          <li>Simulation results used to shape the conveyor layout around Eligo</li>
+          <li>Simulations used by the team to estimate throughput and picks per hour</li>
+        </ul>
+
+        <h2>What I learned</h2>
+        <p>
+          I learned how to build and use simulations, and how hard it can be to work with industrial software that
+          has quite limited support. I also learned the limitations of simulations: they're a model of the real
+          system, so their results only go as far as their assumptions.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

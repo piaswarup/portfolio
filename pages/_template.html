@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    HOW TO USE THIS TEMPLATE  (pages/revimo.html is a finished example)
+    1. Copy this file to pages/<slug>.html  (e.g. pages/soil-probing-rover.html).
+    2. Add one entry for <slug> to SITE_PAGES in js/site-data.js.
+    3. Put images in assets/images/<slug>/ (hero.jpg, 01.jpg, 02.jpg, ...)
+       and replace SLUG in the image paths below. Until a file exists,
+       a "Photo coming soon" box is shown automatically.
+    4. Fill in everything in [square brackets] and delete what you don't need.
+  -->
+
+  <title>[Page title] | Pia Swarup</title>
+  <meta name="description" content="[One sentence describing this project for search results]">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <!-- Hero image, title, one-line tagline.
+           The hero is cropped to 16:9. For a render or cut-out on a white
+           background, use class="page-hero page-hero--contain" to show it whole.
+           If the subject is low in the photo, use "page-hero page-hero--bottom". -->
+      <img class="page-hero" src="../assets/images/SLUG/hero.jpg" alt="[Describe the hero photo]">
+      <h1>[Page title]</h1>
+      <p class="page-tagline">[One-line tagline]</p>
+
+      <!-- Write-up. Keep paragraphs short; put a photo between sections.
+           Mention your role, dates and location in the text, and wrap tools in
+           <strong>...</strong> so they stand out.
+           Copy a <figure> block to add more photos; delete <figcaption> if not needed. -->
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          [TODO: what the project is and what problem it solves. Include when and where,
+          e.g. "From [Month] to [Month Year] I ..."]
+        </p>
+        <p>
+          <!-- Delete this paragraph if there's no code or link -->
+          Code on <a href="[https://github.com/...]" target="_blank" rel="noopener">GitHub</a>.
+        </p>
+
+        <figure>
+          <img src="../assets/images/SLUG/01.jpg" alt="[Describe the photo]" loading="lazy">
+          <figcaption>[Optional short caption]</figcaption>
+        </figure>
+
+        <h2>My role</h2>
+        <p>
+          [TODO: your role, what you were responsible for, and who you worked with.
+          Name your tools in bold, e.g. "I designed it in <strong>Onshape</strong> and machined it on the <strong>CNC mill</strong>."]
+        </p>
+
+        <!-- Internship pages: rename this heading to "What I did" -->
+        <h2>Design &amp; build</h2>
+        <p>[TODO: how you designed and built it]</p>
+        <p>[TODO: what went wrong and how you fixed it]</p>
+
+        <figure>
+          <img src="../assets/images/SLUG/02.jpg" alt="[Describe the photo]" loading="lazy">
+          <figcaption>[Optional short caption]</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <ul>
+          <li>[Result with a number, e.g. "Cut part mass by X%"]</li>
+          <li>[Another result]</li>
+        </ul>
+
+        <h2>What I learned</h2>
+        <p>[TODO: what you learned]</p>
+
+        <h2>Next steps</h2>
+        <p>[TODO: what you'd do next, or delete this section]</p>
+      </div>
+
+    </article>
+
+    <!-- "More work": filled in automatically with 3 other pages -->
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

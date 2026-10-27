@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Peric the Flying Pig | Pia Swarup</title>
+  <meta name="description" content="An animatronic pig that spins faster when something approaches and pops out flapping wings at a loud noise, built with an Arduino, three servos, and a gear-and-linkage wing mechanism.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/animatronic-flying-pig/cad.jpg" alt="Isometric CAD view of Peric with a translucent pink shell over the chassis, gears, servos and wheels">
+      <h1>Peric the Flying Pig</h1>
+      <p class="page-tagline">An animatronic pig that spins faster when you approach and pops out flapping wings at a loud noise.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          For Mini Project 3 (Animatronic Animals) in PIE in October 2026, a teammate and I built Peric the Pig, a
+          curious little pig who dreams of making pigs fly. Peric dislikes being approached, so when something gets
+          close he speeds up to escape. He's also afraid of loud noises, which remind him of the butcher, so a sudden
+          loud sound makes him pop out his wings and flap them in an attempt to fly away.
+        </p>
+        <p>
+          An <strong>HC-SR04 ultrasonic sensor</strong> under his tail measures how close an object is, and a
+          <strong>MAX4466 microphone</strong> measures how loud his surroundings are. An <strong>Arduino UNO
+          R4</strong> with an <strong>Adafruit Motor Shield</strong> drives one DC gearmotor and three servos.
+        </p>
+
+        <figure>
+          <video class="video--portrait" controls preload="none" playsinline poster="../assets/images/animatronic-flying-pig/video-poster.jpg">
+            <source src="../assets/videos/animatronic-flying-pig.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/animatronic-flying-pig.mp4">Download it here</a>.
+          </video>
+          <figcaption>Peric in action</figcaption>
+        </figure>
+
+        <h2>My role</h2>
+        <p>
+          I did most of the mechanical design. I designed the custom chassis as a single printed part with
+          integrated gear shafts and mounts for the servos, DC motors, and Arduino, and I designed the wing mechanism,
+          choosing a gear-and-linkage system and iterating the gears and linkage three times. I wired the three servos,
+          routing their wires so they wouldn't tangle in the moving wings, and wrote the servo control code
+          (<code>flapWings()</code> and <code>wingAction()</code>), plus a calibration script that sweeps each servo
+          and pauses on a key press, which I used to find the exact flat, deployed, and flapping angles.
+        </p>
+
+        <h2>Design &amp; build</h2>
+
+        <h3>Wing mechanism</h3>
+        <p>
+          The wings hide inside the shell until Peric is startled. A central servo turns a central gear, which meshes
+          with a gear carrying the left wing platform; on the right, a linkage connects the central gear to the right
+          platform. The linkage saves space inside the shell while still moving the two platforms in opposite
+          directions. When the central servo rotates 63°, both platforms swing out through slots in the shell. Each
+          platform carries a small servo with a wing bolted to its horn, and the two sweep through mirrored 70° arcs
+          so the wings flap together. Fully deployed, the wingspan is about 18.5 in.
+        </p>
+
+        <figure>
+          <img src="../assets/images/animatronic-flying-pig/wing-mechanism.jpg" alt="Top view CAD of the wing mechanism: a central gear, a meshing gear on the left and a linkage on the right" loading="lazy">
+          <figcaption>Top view of the gear-and-linkage wing mechanism</figcaption>
+        </figure>
+
+        <h3>Fabrication</h3>
+        <p>
+          The shell, chassis, gears, and linkage were <strong>3D printed</strong> in PLA. To limit plastic use, the
+          shell is only 1.5 mm thick at 8% infill, and everything except the gears was printed below 10% infill. The
+          gears took three iterations: the linkage broke in an early version because it wasn't strong enough, and
+          some gear teeth had to be removed to prevent interference. Everything is assembled with M2 and M3 bolts,
+          with no adhesives, and the shell attaches with pins and tabs, so it lifts off by hand and every
+          course-provided part can be reused.
+        </p>
+
+        <h3>Sensing and control</h3>
+        <p>
+          The Arduino samples both sensors over a one-second window, keeping the closest distance and the loudest
+          sound. Below 25 cm, Peric's motor speed rises from 50 to 100, and below 10 cm to 150. Only one wheel is
+          driven, so he spins in circles rather than pulling against his power cable. If the microphone's
+          peak-to-peak amplitude passes 20 ADC counts, the wings deploy, flap for 5 s, and retract. We chose that
+          threshold by measuring the microphone with the motors running: the background averaged about 5 counts, so
+          20 sits well above the motor noise.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/animatronic-flying-pig/block-diagram.jpg" alt="Hand-drawn block diagram of the distance path and sound path from sensors through the Arduino to the motor and servos" loading="lazy">
+            <img src="../assets/images/animatronic-flying-pig/mic-noise.png" alt="Plot of microphone peak-to-peak readings over time with the DC motor running, mostly around 5 counts" loading="lazy">
+          </div>
+          <figcaption>System block diagram (left) and microphone readings with the motors running (right)</figcaption>
+        </figure>
+
+
+        <h3>Challenges</h3>
+        <ul>
+          <li>
+            <strong>Wing clearance.</strong> The first cardboard wings were too flimsy: they bent and caught on the
+            shell slots, and each catch bent them further. Switching to stiffer chipboard and tuning the servos' flat
+            angles in code helped, but the slots leave very little margin, and a wing still jammed after its second
+            activation in testing.
+          </li>
+          <li>
+            <strong>Sensing range.</strong> After testing, we found that the 1000 µs echo timeout in the code limited
+            the ultrasonic sensor to about 17 cm, so the medium-speed band was effectively 10–17 cm instead of
+            10–25 cm.
+          </li>
+        </ul>
+
+        <h2>Results</h2>
+
+        <figure>
+          <img src="../assets/images/animatronic-flying-pig/finished.jpg" alt="The finished Peric: a 3D-printed pig with a grey head and blue body on a workbench, with a slot in its side for the wings" loading="lazy">
+          <figcaption>The finished Peric</figcaption>
+        </figure>
+
+        <ul>
+          <li>No false triggers: the wings never deployed from the motors' own noise (5 of 5 trials)</li>
+          <li>Maximum speed triggered every time a foot was about 5 cm behind Peric (5 of 5)</li>
+          <li>A stomp deployed and flapped the wings in 3 of 5 trials</li>
+          <li>Medium speed triggered in about 3 of 5 trials with a foot about 15 cm away</li>
+        </ul>
+        <p>
+          The biggest lesson was that software parameters and physical design depend on each other: one timeout
+          value quietly limited our sensing range, and a few millimeters of slot clearance decided whether the wings
+          worked at all. Next time I'd widen or chamfer the wing slots, use a tougher wing material, print
+          load-bearing pins at higher infill, extend the ultrasonic timeout, and make the code non-blocking so Peric
+          can keep reacting while his wings move.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>

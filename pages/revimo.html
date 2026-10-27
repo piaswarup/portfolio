@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hardware Robotics Intern at ReviMo | Pia Swarup</title>
+  <meta name="description" content="Hardware robotics internship at ReviMo: advancing the mechanical design of the assistive robot ReviMo Niko toward production.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <img class="page-hero page-hero--contain" src="../assets/images/revimo/hero.jpg" alt="Render of the ReviMo Niko assistive robot: a wheeled frame with a padded seat, backrest, armrests and control panel">
+      <h1>ReviMo</h1>
+      <p class="page-tagline">Advancing the mechanical design of the assistive robot ReviMo Niko toward production.</p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          ReviMo Niko is an independent transfer device for elderly and paralyzed people, giving them back their
+          autonomy in everyday life. From May to August 2026 I was a Hardware Robotics Intern at ReviMo in Boston, MA, helping get Niko's
+          mechanical design ready for production and optimized for manufacturing.
+        </p>
+
+        <h2>My role</h2>
+        <p>
+          I worked closely with ReviMo's CEO, but mostly independently, with my own tasks day to day: lightweighting
+          parts, improving them for manufacturing, finding easier ways to make certain parts in-house, running tests,
+          and testing and speccing motors and actuators. I worked from the specs and could choose how to approach
+          each task. I sometimes worked with the electrical intern on circuit design. I designed in
+          <strong>Fusion 360</strong>, ran <strong>FEA</strong>, machined on the <strong>Amtrak CNC</strong>,
+          printed on <strong>Bambu Lab printers</strong>, and programmed an <strong>Arduino UNO</strong>.
+        </p>
+
+        <h2>What I did</h2>
+        <p>
+          I redesigned 16 parts in Autodesk Fusion for strength, manufacturability, and 3D printing, cutting part
+          mass by up to 36% and print time by 40%. For example, I redesigned the backrest to reduce its print time: I
+          ran <strong>FEA</strong> to find the regions most critical to the design, kept those at high infill, and
+          lowered the infill everywhere else, while making sure the backrest still kept its shape after many cycles on
+          the test rig. I also designed a custom wheel for manufacturing, based on the specifications I was given.
+        </p>
+
+        <p>
+          One part I worked on was Niko's two-part scooping seat. I iterated it using different infills for comfort and
+          different filament types, including various <strong>TPUs</strong> and <strong>PPA-CF</strong>.
+        </p>
+
+        <figure>
+          <img src="../assets/images/revimo/seat-iterations.jpg" alt="Eight 3D-printed seat parts in white and black, showing different infill patterns and filaments" loading="lazy">
+          <figcaption>Iterations of the two-part scooping seat in different infills and filaments</figcaption>
+        </figure>
+
+        <p>
+          I also optimized the armrest's design and print settings for print time, comfort, and finish, testing
+          infill percentage, wall count, flow, and nozzle temperature.
+        </p>
+
+        <figure>
+          <img src="../assets/images/revimo/armrest-print-tests.jpg" alt="White 3D-printed armrest and labeled test samples marked with infill percentages, wall counts and blob issues" loading="lazy">
+          <figcaption>Armrest print tests, each sample labeled with its infill and wall settings</figcaption>
+        </figure>
+
+        <p>
+          The surface finish of printed TPU armrests wasn't great, so as an alternative I made a foam armrest by
+          <strong>casting polyurethane</strong> in a <strong>3D-printed mold</strong>.
+        </p>
+
+        <figure>
+          <img src="../assets/images/revimo/foam-armrest-casting.jpg" alt="A yellow polyurethane foam armrest being removed from a black 3D-printed two-part mold" loading="lazy">
+          <figcaption>Demolding a polyurethane foam armrest from its 3D-printed mold</figcaption>
+        </figure>
+
+        <p>
+          To validate the designs, I built automated stress and fatigue test rigs with custom control and
+          data-logging electronics, cutting testing time by 70%. During high-speed testing I caught the TPU backrest
+          deforming at ~900 cycles; the redesigned backrest, with high infill kept only in the regions the FEA showed
+          were critical, lasted thousands of cycles.
+        </p>
+
+        <p>
+          One rig tested backrests: it ran duty cycle tests to measure how backrests printed in different materials
+          and infills deform over time.
+        </p>
+
+        <figure>
+          <img src="../assets/images/revimo/backrest-test-rig-parts.jpg" alt="3D-printed parts in white, black and grey for the backrest test rig" loading="lazy">
+          <figcaption>Parts for the backrest duty cycle test rig</figcaption>
+        </figure>
+
+        <figure>
+          <video class="video--portrait" controls preload="none" playsinline poster="../assets/images/revimo/backrest-test-rig-poster.jpg">
+            <source src="../assets/videos/revimo-backrest-test-rig.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/revimo-backrest-test-rig.mp4">Download it here</a>.
+          </video>
+          <figcaption>The backrest test rig checking a printed backrest for deformation</figcaption>
+        </figure>
+
+        <p>
+          I bench-tested 5 motors and actuators on torque, efficiency, noise, and heat to select the best fit for
+          each application. I also tuned 3D print settings, materials, and casting molds to validate production
+          processes, cutting production time by 85%.
+        </p>
+
+        <p>
+          I also made adjustable back leg extension parts out of steel, using the <strong>bandsaw</strong>,
+          <strong>grinder</strong>, and <strong>drill press</strong>. I then tested different extension lengths at
+          different incline angles, with 3 different front motors and with weights on the device, to find the setup
+          that performed best, with the least slipping. A 2.5 in extension was the most practical for the design,
+          and worked reasonably well on ramps up to 11° with 85 kg on the device.
+        </p>
+
+        <figure>
+          <div class="gallery">
+            <img src="../assets/images/revimo/back-leg-extension.jpg" alt="Close-up of the steel back leg extension bolted into the frame leg, with a caster wheel" loading="lazy">
+            <img src="../assets/images/revimo/incline-testing.jpg" alt="Pia testing the device on an inclined aluminum ramp in a workshop" loading="lazy">
+          </div>
+          <figcaption>A steel back leg extension (left) and incline testing on a ramp (right)</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <ul>
+          <li>16 parts redesigned: up to 36% lighter and 40% faster to print</li>
+          <li>Testing time cut by 70% with automated stress and fatigue rigs</li>
+          <li>TPU backrest that deformed at ~900 cycles redesigned to last thousands of cycles</li>
+          <li>Production time cut by 85% through tuned print settings, materials, and casting molds</li>
+        </ul>
+
+        <h2>What I learned</h2>
+        <p>
+          I learned <strong>Fusion 360</strong> CAD, FEA, weight-reduction analysis, and part geometry optimization.
+          I learned a lot about 3D printing: variable infills, different filament types, and how they behave under
+          different printer settings and filament moisture levels. I also learned other manufacturing techniques, like
+          casting foam, and a lot about design for assembly and assembly technique, since I rebuilt every mechanism of
+          the device from scratch at least once.
+        </p>
+      </div>
+
+    </article>
+
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>
