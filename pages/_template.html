@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!--
+    HOW TO USE THIS TEMPLATE
+    1. Copy this file to pages/<slug>.html  (e.g. pages/soil-probing-rover.html).
+    2. Add one entry for <slug> to SITE_PAGES in js/site-data.js.
+    3. Put images in assets/images/<slug>/ (hero.jpg, 01.jpg, 02.jpg, ...)
+       and replace SLUG in the image paths below. Until a file exists,
+       a "Photo coming soon" box is shown automatically.
+    4. Fill in everything in [square brackets] and delete what you don't need.
+  -->
+
+  <title>[Page title] | Pia Swarup</title>
+  <meta name="description" content="[One sentence describing this project for search results]">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../js/site-data.js" defer></script>
+  <script src="../js/site.js" defer></script>
+</head>
+<body>
+
+  <header id="site-header"></header>
+
+  <main>
+    <article class="container page">
+
+      <!-- Hero image, title, one-line tagline -->
+      <img class="page-hero" src="../assets/images/SLUG/hero.jpg" alt="[Describe the hero photo]">
+      <h1>[Page title]</h1>
+      <p class="page-tagline">[One-line tagline]</p>
+
+      <!-- Facts strip: delete any row that doesn't apply -->
+      <dl class="facts">
+        <div>
+          <dt>Role</dt>
+          <dd>[Your role]</dd>
+        </div>
+        <div>
+          <dt>Dates</dt>
+          <dd>[Month Year – Month Year]</dd>
+        </div>
+        <div>
+          <dt>Location</dt>
+          <dd>[City, Country]</dd>
+        </div>
+        <div class="facts__wide">
+          <dt>Tools</dt>
+          <dd>
+            <ul class="tags">
+              <li class="tag">[Tool 1]</li>
+              <li class="tag">[Tool 2]</li>
+            </ul>
+          </dd>
+        </div>
+        <div class="facts__wide">
+          <dt>Links</dt>
+          <dd class="facts__links">
+            <a href="[https://github.com/...]" target="_blank" rel="noopener">GitHub</a>
+          </dd>
+        </div>
+      </dl>
+
+      <!-- Write-up -->
+      <div class="prose">
+        <h2>Overview</h2>
+        <p>[TODO: what the project is and what problem it solves]</p>
+
+        <figure>
+          <img src="../assets/images/SLUG/01.jpg" alt="[Describe the photo]" loading="lazy">
+          <figcaption>[Optional short caption]</figcaption>
+        </figure>
+
+        <h2>My role</h2>
+        <p>[TODO: what you were responsible for]</p>
+
+        <!-- Internship pages: rename this heading to "What I did" -->
+        <h2>Design &amp; build</h2>
+        <p>[TODO: how you designed and built it, what went wrong and how you fixed it]</p>
+
+        <figure>
+          <img src="../assets/images/SLUG/02.jpg" alt="[Describe the photo]" loading="lazy">
+          <figcaption>[Optional short caption]</figcaption>
+        </figure>
+
+        <h2>Results</h2>
+        <p>[TODO: outcomes, numbers, and what you'd do next]</p>
+      </div>
+
+    </article>
+
+    <!-- "More work": filled in automatically with 3 other pages -->
+    <section id="more-work" class="container"></section>
+  </main>
+
+  <footer id="site-footer"></footer>
+
+</body>
+</html>
