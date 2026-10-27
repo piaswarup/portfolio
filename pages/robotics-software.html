@@ -103,6 +103,38 @@
           <figcaption>The particle filter's update loop (left) and its ROS nodes and topics (right)</figcaption>
         </figure>
 
+        <figure>
+          <img src="../assets/images/robotics-software/pf-poses.png" alt="Sketch of particle poses in the odom frame: incorrect poses in red and corrected, rotated poses in green" loading="lazy">
+          <figcaption>The motion update rotates each odometry change into the particle's own frame: incorrect (red) versus corrected, rotated poses (green)</figcaption>
+        </figure>
+
+        <h3>Fixed vs. adaptive injection</h3>
+        <p>
+          Our first resampler injected a fixed 25 random particles (4% of the 625-particle cloud we used at the time)
+          every update. That never adapts: when the filter is tracking well, the random particles are just noise that
+          dies out at the next resample, and when the robot is lost, 25 particles spread over the whole map are almost
+          never enough for one to land near the real pose. We replaced it with adaptive injection, which adds at least
+          5 random particles and up to the whole cloud depending on how much worse the current scan matches than usual.
+          When the filter is confident, almost the whole cloud tracks the robot; when the scans suddenly match worse,
+          the filter assumes it's lost and replaces a large part of the cloud with random particles to search the map.
+        </p>
+
+        <figure>
+          <video controls preload="none" playsinline poster="../assets/images/robotics-software/pf-fixed-injection-poster.jpg">
+            <source src="../assets/videos/pf-fixed-injection.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/pf-fixed-injection.mp4">Download it here</a>.
+          </video>
+          <figcaption>Fixed injection: the particle filter running on a recorded bag in rviz2</figcaption>
+        </figure>
+
+        <figure>
+          <video controls preload="none" playsinline poster="../assets/images/robotics-software/pf-adaptive-injection-poster.jpg">
+            <source src="../assets/videos/pf-adaptive-injection.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="../assets/videos/pf-adaptive-injection.mp4">Download it here</a>.
+          </video>
+          <figcaption>Adaptive injection: the robot in Gazebo's Gauntlet world (left) and the particle filter in rviz2 (right)</figcaption>
+        </figure>
+
         <p>
           We tested in stages: unit tests with <strong>pytest</strong> for weight normalization, angle wrapping,
           heading averaging, and initialization, then recorded bags in <strong>rviz2</strong>, then the Gauntlet
