@@ -5,6 +5,7 @@ desktop.ini
 
 # Editor/tool folders
 .claude/
+CLAUDE.md
 .vscode/
 .idea/
 
