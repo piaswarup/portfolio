@@ -46,9 +46,10 @@
 
         <h2>My role</h2>
         <p>
-          The team had two committed members, and I did mostly the mechanical side. As Lead Mechanical Engineer, I led
-          the mechanical design, engineering, and manufacturing of the bicycle: the reaction wheel and its motor
-          interface, the steering system, and custom <strong>3D-printed</strong> mounts throughout.
+          As Lead Mechanical Engineer, I led the mechanical design, engineering, and manufacturing of the bicycle,
+          including the reaction wheel, motor interface, custom steering system, and <strong>3D-printed</strong>
+          mounts. I also contributed to the control system, including the STM32-based balance controller and PD-loop
+          tuning, integrating the mechanical design with the embedded electronics and control software.
         </p>
 
         <h2>Design &amp; build</h2>
@@ -56,10 +57,11 @@
         <h3>Reaction wheel</h3>
         <p>
           The heart of the system is a custom high-inertia reaction wheel, driven by a 100KV high-torque brushless DC
-          outrunner motor through an ODrive-based motor controller, under <strong>STM32</strong> control. I sized the
-          wheel using torque and other calculations, along with previous publications on similar reaction-wheel
-          projects. To get the most inertia for the least weight, I removed material near the center so the mass sits
-          at the rim, while making sure the wheel could withstand the centrifugal stresses at high speed.
+          outrunner motor through an ODrive-based motor controller, under <strong>STM32</strong> control. I performed
+          hand calculations to determine the wheel's dimensions, referencing previous publications on similar
+          reaction-wheel systems. I optimized the wheel's mass distribution to maximize rotational inertia, removing
+          material near the center so most of the mass sits at the rim, while minimizing weight and ensuring
+          sufficient structural strength to withstand centrifugal stresses at high speeds.
         </p>
         <p>
           One lesson cost us time: we started with an industrial NEMA motor, but it couldn't change direction fast
